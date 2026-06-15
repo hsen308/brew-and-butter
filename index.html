@@ -240,26 +240,75 @@
     }
 
     .loader-inner {
-      width: min(420px, 76vw);
+      width: min(220px, 62vw);
+      display: grid;
+      place-items: center;
       text-align: center;
     }
 
-    .loader-brand {
-      font-family: "Anton", sans-serif;
-      font-size: clamp(2.5rem, 10vw, 5rem);
-      letter-spacing: -.02em;
-      line-height: 1;
-      text-transform: uppercase;
+    .loader-mark {
+      position: relative;
+      width: 164px;
+      padding-top: 46px;
     }
 
-    .loader-brand span {
-      color: var(--red);
+    .loader-steam {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 92px;
+      color: var(--yellow);
+      transform: translateX(-50%);
+    }
+
+    .loader-steam path {
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+    }
+
+    .loader-logo-wrap {
+      position: relative;
+      width: 126px;
+      height: 126px;
+      margin-inline: auto;
+    }
+
+    .loader-logo {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border: 5px solid rgba(255, 253, 247, .9);
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 22px 50px rgba(0, 0, 0, .3);
+    }
+
+    .loader-orbit {
+      position: absolute;
+      inset: -16px;
+      border: 1px solid rgba(255, 253, 247, .28);
+      border-radius: 50%;
+    }
+
+    .loader-orbit i {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 17px;
+      height: 10px;
+      border-radius: 75% 25% 75% 25%;
+      background: var(--red);
+      box-shadow: inset -3px -2px 0 rgba(36, 23, 15, .18);
+      transform: translate(-50%, -50%) rotate(25deg);
     }
 
     .loader-line {
-      width: 100%;
+      width: 118px;
       height: 3px;
-      margin-top: 24px;
+      margin: 30px auto 0;
       overflow: hidden;
       background: rgba(255, 255, 255, .16);
     }
@@ -465,6 +514,14 @@
       transform: rotate(7deg);
     }
 
+    .hero-stars {
+      bottom: 18px;
+      left: -32px;
+      width: 82px;
+      color: var(--cyan);
+      transform: rotate(-8deg);
+    }
+
     .hero-copy {
       position: relative;
       z-index: 3;
@@ -616,6 +673,14 @@
       color: var(--yellow);
     }
 
+    .story-arrow {
+      top: 48px;
+      left: 3%;
+      width: 92px;
+      color: var(--red);
+      transform: rotate(-12deg);
+    }
+
     .menu-section {
       position: relative;
       padding: 110px 0;
@@ -634,65 +699,157 @@
       max-width: 43ch;
     }
 
-    .menu-grid {
+    .menu-board {
       display: grid;
-      gap: 20px;
+      gap: 22px;
     }
 
-    .menu-card {
+    .menu-photo-strip {
+      display: grid;
+      grid-template-columns: 1fr 1.12fr 1fr;
+      gap: 12px;
+      margin: -6px 0 32px;
+    }
+
+    .menu-photo-strip figure {
       position: relative;
       min-width: 0;
-      padding: 12px 12px 24px;
-      border: 1px solid rgba(36, 23, 15, .08);
-      border-radius: 20px;
+      overflow: hidden;
+      border: 7px solid var(--white);
+      border-radius: 16px;
       background: var(--white);
-      transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+      box-shadow: 0 16px 38px rgba(36, 23, 15, .1);
     }
 
-    .menu-card:hover {
-      z-index: 2;
-      box-shadow: 0 24px 50px rgba(36, 23, 15, .12);
-      transform: translateY(-8px);
+    .menu-photo-strip figure:nth-child(1) {
+      transform: rotate(-1.4deg) translateY(8px);
     }
 
-    .menu-card img {
+    .menu-photo-strip figure:nth-child(2) {
+      z-index: 1;
+      transform: rotate(.8deg);
+    }
+
+    .menu-photo-strip figure:nth-child(3) {
+      transform: rotate(1.5deg) translateY(9px);
+    }
+
+    .menu-photo-strip img {
       width: 100%;
-      aspect-ratio: 4 / 3;
-      border-radius: 13px;
-      object-fit: cover;
-    }
-
-    .menu-index {
+      height: clamp(150px, 18vw, 225px);
       display: block;
-      margin: 20px 4px 8px;
-      color: var(--red);
-      font-size: .72rem;
-      font-weight: 800;
-      letter-spacing: .08em;
+      object-fit: cover;
+      transition: transform .7s var(--ease), filter .7s ease;
     }
 
-    .menu-card:nth-child(2) .menu-index {
-      color: #d69e00;
+    .menu-photo-strip figure:hover img {
+      filter: saturate(1.08);
+      transform: scale(1.045);
     }
 
-    .menu-card:nth-child(3) .menu-index {
-      color: var(--cyan);
+    .menu-column {
+      position: relative;
+      min-width: 0;
+      padding: clamp(24px, 4vw, 42px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--white);
+      box-shadow: 0 18px 45px rgba(36, 23, 15, .07);
     }
 
-    .menu-card h3 {
-      margin-inline: 4px;
+    .menu-column::before {
+      position: absolute;
+      top: 0;
+      right: clamp(24px, 4vw, 42px);
+      left: clamp(24px, 4vw, 42px);
+      height: 5px;
+      border-radius: 0 0 999px 999px;
+      background: var(--red);
+      content: "";
+    }
+
+    .menu-column--butter::before {
+      background: var(--yellow);
+    }
+
+    .menu-column-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      padding-bottom: 22px;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .menu-column-head h3 {
       font-family: "Anton", sans-serif;
-      font-size: clamp(2rem, 6vw, 3rem);
+      font-size: clamp(3rem, 7vw, 5.4rem);
       font-weight: 400;
-      letter-spacing: -.02em;
-      line-height: 1;
+      letter-spacing: -.025em;
+      line-height: .88;
       text-transform: uppercase;
     }
 
-    .menu-card p {
-      margin: 12px 4px 0;
+    .menu-column-head span {
       color: var(--muted);
-      line-height: 1.6;
+      font-family: "Caveat", cursive;
+      font-size: 1.4rem;
+      font-weight: 700;
+      transform: rotate(-2deg);
+    }
+
+    .menu-list {
+      margin-top: 10px;
+    }
+
+    .menu-row {
+      display: grid;
+      grid-template-columns: minmax(0, auto) minmax(20px, 1fr) auto;
+      grid-template-areas:
+        "item dots price"
+        "description description price";
+      gap: 2px 12px;
+      align-items: baseline;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(36, 23, 15, .11);
+    }
+
+    .menu-row:last-child {
+      border-bottom: 0;
+    }
+
+    .menu-item {
+      grid-area: item;
+      font-size: clamp(1rem, 2vw, 1.12rem);
+      font-weight: 800;
+    }
+
+    .menu-description {
+      grid-area: description;
+      color: var(--muted);
+      font-size: .82rem;
+      line-height: 1.45;
+    }
+
+    .menu-dots {
+      grid-area: dots;
+      min-width: 24px;
+      border-bottom: 2px dotted rgba(36, 23, 15, .25);
+      transform: translateY(-4px);
+    }
+
+    .menu-price {
+      grid-area: price;
+      align-self: center;
+      font-family: "Anton", sans-serif;
+      font-size: 1.45rem;
+      letter-spacing: .02em;
+    }
+
+    .menu-footnote {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: .77rem;
     }
 
     .menu-cta {
@@ -719,6 +876,22 @@
       width: 120px;
       color: var(--red);
       transform: rotate(10deg);
+    }
+
+    .menu-steam {
+      top: 350px;
+      left: 2.4%;
+      width: 76px;
+      color: var(--cyan);
+      transform: rotate(-8deg);
+    }
+
+    .menu-underline {
+      right: 7%;
+      bottom: 54px;
+      width: 136px;
+      color: var(--yellow);
+      transform: rotate(-4deg);
     }
 
     .moments {
@@ -791,6 +964,21 @@
       bottom: 42px;
       width: 110px;
       color: var(--cyan);
+    }
+
+    .moments-ring {
+      top: 66px;
+      left: 3.5%;
+      width: 84px;
+      color: var(--red);
+      transform: rotate(8deg);
+    }
+
+    .moments-spark {
+      top: 43%;
+      right: 3%;
+      width: 58px;
+      color: var(--yellow);
     }
 
     .visit {
@@ -883,6 +1071,14 @@
       color: var(--yellow);
     }
 
+    .visit-route {
+      right: 3%;
+      bottom: 48px;
+      width: 130px;
+      color: var(--cyan);
+      transform: rotate(6deg);
+    }
+
     .site-footer {
       position: relative;
       overflow: hidden;
@@ -961,6 +1157,14 @@
       opacity: .8;
     }
 
+    .footer-star {
+      top: 42px;
+      right: 7%;
+      width: 62px;
+      color: var(--yellow);
+      transform: rotate(12deg);
+    }
+
     .reveal {
       opacity: 0;
       transform: translateY(30px);
@@ -1009,16 +1213,8 @@
         grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
       }
 
-      .menu-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      .menu-card:nth-child(2) {
-        transform: translateY(24px);
-      }
-
-      .menu-card:nth-child(2):hover {
-        transform: translateY(16px);
+      .menu-board {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .moments-grid {
@@ -1134,8 +1330,31 @@
         padding-block: 82px;
       }
 
-      .menu-grid {
+      .menu-board {
         gap: 16px;
+      }
+
+      .menu-photo-strip {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+        margin-bottom: 24px;
+      }
+
+      .menu-photo-strip figure {
+        border-width: 4px;
+        border-radius: 11px;
+      }
+
+      .menu-photo-strip img {
+        height: 118px;
+      }
+
+      .menu-column {
+        padding: 24px 20px;
+      }
+
+      .menu-row {
+        gap: 2px 8px;
       }
 
       .moments-grid {
@@ -1155,8 +1374,15 @@
         min-height: 330px;
       }
 
-      .doodle:not(.hero-arc):not(.story-squiggle) {
+      .doodle:not(.hero-arc):not(.story-squiggle):not(.menu-underline) {
         display: none;
+      }
+
+      .menu-underline {
+        right: 18px;
+        bottom: 30px;
+        width: 86px;
+        opacity: .72;
       }
     }
 
@@ -1201,7 +1427,17 @@
 
   <div id="loader" aria-hidden="true">
     <div class="loader-inner">
-      <div class="loader-brand">Brew <span>&amp;</span> Butter</div>
+      <div class="loader-mark">
+        <svg class="loader-steam" viewBox="0 0 92 48">
+          <path pathLength="1" d="M18 42 C6 31 31 24 18 8" stroke-width="5"></path>
+          <path pathLength="1" d="M46 42 C34 30 59 23 46 5" stroke-width="5"></path>
+          <path pathLength="1" d="M74 42 C62 31 86 25 75 10" stroke-width="5"></path>
+        </svg>
+        <div class="loader-logo-wrap">
+          <img class="loader-logo" src="photos/logo.png" alt="">
+          <span class="loader-orbit"><i></i></span>
+        </div>
+      </div>
       <div class="loader-line"><span class="loader-progress"></span></div>
     </div>
   </div>
@@ -1264,6 +1500,9 @@
           <svg class="doodle hero-arc" viewBox="0 0 150 90" aria-hidden="true">
             <path pathLength="1" d="M12 76 C26 20 116 8 138 64" stroke-width="10"></path>
           </svg>
+          <svg class="doodle hero-stars" viewBox="0 0 90 70" aria-hidden="true">
+            <path pathLength="1" d="M20 7 V31 M8 19 H32 M63 36 V63 M50 50 H76" stroke-width="6"></path>
+          </svg>
           <figure class="hero-card">
             <img src="photos/croissant coffee and store front.JPG" alt="Croissant and latte in front of the Brew and Butter storefront">
             <figcaption>Coffee / Croissant / Downtown</figcaption>
@@ -1289,48 +1528,75 @@
           </svg>
         </div>
       </div>
+      <svg class="doodle story-arrow" viewBox="0 0 100 80" aria-hidden="true">
+        <path pathLength="1" d="M8 16 C34 10 62 24 78 54 M58 48 L78 55 L70 34" stroke-width="6"></path>
+      </svg>
     </section>
 
     <section id="menu" class="menu-section" aria-labelledby="menu-title">
       <svg class="doodle menu-arc" viewBox="0 0 130 100" aria-hidden="true">
         <path pathLength="1" d="M10 88 C22 18 105 10 120 70" stroke-width="7"></path>
       </svg>
+      <svg class="doodle menu-steam" viewBox="0 0 80 100" aria-hidden="true">
+        <path pathLength="1" d="M22 90 C2 68 48 51 22 18 M58 88 C38 66 76 51 58 8" stroke-width="7"></path>
+      </svg>
+      <svg class="doodle menu-underline" viewBox="0 0 150 42" aria-hidden="true">
+        <path pathLength="1" d="M5 25 C34 12 66 30 94 17 S128 20 145 8" stroke-width="8"></path>
+      </svg>
 
       <div class="shell">
         <div class="section-heading reveal">
           <div>
-            <p class="eyebrow">The shortlist</p>
+            <p class="eyebrow">In-store menu</p>
             <h2 id="menu-title" class="display section-title">Brew / Butter</h2>
           </div>
-          <p class="section-copy">A curated taste of what is waiting at the counter. The full lineup lives on Toters.</p>
+          <p class="section-copy">The cafe classics, split the way the name promises: coffee on one side, something buttery on the other.</p>
         </div>
 
-        <div class="menu-grid">
-          <article class="menu-card">
-            <img src="photos/photo_5_2026-06-15_18-28-18.jpg" alt="Iced matcha and iced coffee on a pink cafe table" loading="lazy">
-            <span class="menu-index">01 / SIP</span>
-            <h3>Iced duo</h3>
-            <p>Matcha or coffee, always made for slow mornings.</p>
+        <div class="menu-photo-strip reveal" aria-label="Cafe favorites">
+          <figure><img src="photos/photo_5_2026-06-15_18-28-18.jpg" alt="Fresh pastry served at Brew and Butter" loading="lazy"></figure>
+          <figure><img src="photos/photo_1_2026-06-15_18-28-18.jpg" alt="Pink iced latte in a Brew and Butter cup" loading="lazy"></figure>
+          <figure><img src="photos/photo_3_2026-06-15_18-28-18.jpg" alt="Two colorful iced drinks ready to serve" loading="lazy"></figure>
+        </div>
+
+        <div class="menu-board">
+          <article class="menu-column menu-column--brew">
+            <header class="menu-column-head">
+              <h3>Brew</h3>
+              <span>coffee first</span>
+            </header>
+            <div class="menu-list">
+              <div class="menu-row"><div class="menu-item">Espresso</div><span class="menu-dots"></span><div class="menu-price">$5</div><div class="menu-description">Short and bold</div></div>
+              <div class="menu-row"><div class="menu-item">Americano</div><span class="menu-dots"></span><div class="menu-price">$5</div><div class="menu-description">Espresso and hot water</div></div>
+              <div class="menu-row"><div class="menu-item">Cappuccino</div><span class="menu-dots"></span><div class="menu-price">$6</div><div class="menu-description">Espresso, steamed milk, foam</div></div>
+              <div class="menu-row"><div class="menu-item">Flat White</div><span class="menu-dots"></span><div class="menu-price">$6</div><div class="menu-description">Double shot and microfoam</div></div>
+              <div class="menu-row"><div class="menu-item">Latte</div><span class="menu-dots"></span><div class="menu-price">$6</div><div class="menu-description">Smooth espresso and milk</div></div>
+              <div class="menu-row"><div class="menu-item">Spanish Latte</div><span class="menu-dots"></span><div class="menu-price">$7</div><div class="menu-description">Sweet and creamy</div></div>
+              <div class="menu-row"><div class="menu-item">Iced Matcha</div><span class="menu-dots"></span><div class="menu-price">$7</div><div class="menu-description">Bright ceremonial matcha</div></div>
+              <div class="menu-row"><div class="menu-item">Cold Brew</div><span class="menu-dots"></span><div class="menu-price">$8</div><div class="menu-description">Slow steeped and chilled</div></div>
+            </div>
           </article>
 
-          <article class="menu-card">
-            <img src="photos/photo_1_2026-06-15_18-28-18.jpg" alt="Four decorated pastries arranged on a cafe tray" loading="lazy">
-            <span class="menu-index">02 / BITE</span>
-            <h3>Pastry lineup</h3>
-            <p>Four bold finishes, one difficult decision.</p>
-          </article>
-
-          <article class="menu-card">
-            <img src="photos/photo_3_2026-06-15_18-28-18.jpg" alt="Pink latte with heart-shaped foam art on a coral table" loading="lazy">
-            <span class="menu-index">03 / COLOR</span>
-            <h3>Pink latte</h3>
-            <p>A colorful pour with a soft, creamy finish.</p>
+          <article class="menu-column menu-column--butter">
+            <header class="menu-column-head">
+              <h3>Butter</h3>
+              <span>save room</span>
+            </header>
+            <div class="menu-list">
+              <div class="menu-row"><div class="menu-item">Cookie</div><span class="menu-dots"></span><div class="menu-price">$5</div><div class="menu-description">Baked soft in the center</div></div>
+              <div class="menu-row"><div class="menu-item">Butter Croissant</div><span class="menu-dots"></span><div class="menu-price">$5</div><div class="menu-description">Flaky house classic</div></div>
+              <div class="menu-row"><div class="menu-item">Pain au Chocolat</div><span class="menu-dots"></span><div class="menu-price">$6</div><div class="menu-description">Buttery layers and chocolate</div></div>
+              <div class="menu-row"><div class="menu-item">Cinnamon Roll</div><span class="menu-dots"></span><div class="menu-price">$6</div><div class="menu-description">Warm spice and glaze</div></div>
+              <div class="menu-row"><div class="menu-item">Éclair</div><span class="menu-dots"></span><div class="menu-price">$7</div><div class="menu-description">Filled and finished daily</div></div>
+              <div class="menu-row"><div class="menu-item">Basque Cheesecake</div><span class="menu-dots"></span><div class="menu-price">$8</div><div class="menu-description">Caramelized top, creamy center</div></div>
+            </div>
+            <p class="menu-footnote">Selection may change with the morning bake.</p>
           </article>
         </div>
 
         <div class="menu-cta reveal">
-          <p>See something you like?</p>
-          <a class="button" href="https://totersapp.com/nVnd" target="_blank" rel="noopener">View the full menu <span aria-hidden="true">&nearr;</span></a>
+          <p>Staying in? We still have you.</p>
+          <a class="button" href="https://totersapp.com/nVnd" target="_blank" rel="noopener">Order online</a>
         </div>
       </div>
     </section>
@@ -1368,12 +1634,24 @@
       <svg class="doodle moments-zig" viewBox="0 0 120 70" aria-hidden="true">
         <path pathLength="1" d="M5 58 L28 28 L52 52 L78 18 L112 54" stroke-width="7"></path>
       </svg>
+      <svg class="doodle moments-ring" viewBox="0 0 90 90" aria-hidden="true">
+        <circle pathLength="1" cx="45" cy="45" r="31" stroke-width="8"></circle>
+        <path pathLength="1" d="M68 18 L78 9 M20 70 L10 80" stroke-width="6"></path>
+      </svg>
+      <svg class="doodle moments-spark" viewBox="0 0 60 60" aria-hidden="true">
+        <path pathLength="1" d="M30 4 C31 20 40 29 56 30 C40 31 31 40 30 56 C29 40 20 31 4 30 C20 29 29 20 30 4" stroke-width="6"></path>
+      </svg>
     </section>
 
     <section id="visit" class="visit" aria-labelledby="visit-title">
       <svg class="doodle visit-burst" viewBox="0 0 100 100" aria-hidden="true">
         <circle pathLength="1" cx="50" cy="50" r="18" stroke-width="6"></circle>
         <path pathLength="1" d="M50 8 V22 M50 78 V92 M8 50 H22 M78 50 H92 M20 20 L30 30 M70 70 L80 80 M80 20 L70 30 M30 70 L20 80" stroke-width="6"></path>
+      </svg>
+      <svg class="doodle visit-route" viewBox="0 0 140 75" aria-hidden="true">
+        <path pathLength="1" d="M6 58 C30 17 54 69 82 30 S119 24 133 8" stroke-width="7"></path>
+        <circle pathLength="1" cx="7" cy="58" r="4" stroke-width="5"></circle>
+        <circle pathLength="1" cx="133" cy="8" r="4" stroke-width="5"></circle>
       </svg>
 
       <div class="shell visit-layout">
@@ -1439,6 +1717,9 @@
     <svg class="doodle footer-circle" viewBox="0 0 190 190" aria-hidden="true">
       <circle pathLength="1" cx="95" cy="95" r="72" stroke-width="11"></circle>
     </svg>
+    <svg class="doodle footer-star" viewBox="0 0 70 70" aria-hidden="true">
+      <path pathLength="1" d="M35 5 C36 22 47 34 65 35 C47 36 36 48 35 65 C34 48 23 36 5 35 C23 34 34 22 35 5" stroke-width="7"></path>
+    </svg>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -1498,7 +1779,7 @@
         .from('.site-header', { autoAlpha: 0, y: -12, duration: .24 })
         .from('.hero-kicker', { autoAlpha: 0, y: 16, duration: .2 }, '-=.06')
         .from('.hero-title .line > span', { autoAlpha: 0, yPercent: 110, stagger: .065, duration: .38 }, '-=.08')
-        .from('.hero-card, .hero-badge, .hero-arc', { autoAlpha: 0, scale: .95, rotation: -2, stagger: .04, duration: .45 }, '-=.34')
+        .from('.hero-card, .hero-badge, .hero-arc, .hero-stars', { autoAlpha: 0, scale: .95, rotation: -2, stagger: .04, duration: .45 }, '-=.34')
         .from('.hero-support, .hero-actions, .trust-item', { autoAlpha: 0, y: 14, stagger: .045, duration: .24 }, '-=.24');
     }
 
@@ -1524,15 +1805,28 @@
         });
       });
 
-      gsap.from('.menu-card', {
+      gsap.from('.menu-column', {
         opacity: 0,
         y: 34,
-        stagger: .11,
+        stagger: .14,
         duration: .7,
         ease: 'power3.out',
         scrollTrigger: {
-          trigger: '.menu-grid',
+          trigger: '.menu-board',
           start: 'top 80%',
+          once: true
+        }
+      });
+
+      gsap.from('.menu-row', {
+        opacity: 0,
+        x: -12,
+        stagger: .025,
+        duration: .35,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.menu-board',
+          start: 'top 74%',
           once: true
         }
       });
@@ -1576,16 +1870,18 @@
       }
 
       gsap.timeline({ onComplete: initScrollMotion })
-        .from('.loader-brand', { autoAlpha: 0, y: 16, duration: .34, ease: 'power3.out' })
-        .to('.loader-progress', { scaleX: 1, duration: .4 })
+        .from('.loader-logo', { autoAlpha: 0, scale: .72, duration: .3, ease: 'back.out(1.7)' })
+        .to('.loader-steam path', { strokeDashoffset: 0, stagger: .04, duration: .28, ease: 'power2.out' }, '-=.16')
+        .to('.loader-orbit', { rotation: 250, duration: .46, ease: 'power2.inOut' }, '-=.28')
+        .to('.loader-progress', { scaleX: 1, duration: .34 }, '-=.4')
         .to('#loader', {
           yPercent: -102,
-          duration: .52,
+          duration: .46,
           ease: 'power3.inOut',
           onStart: () => document.body.classList.remove('is-loading'),
           onComplete: () => loader.classList.add('is-done')
-        }, '+=.08')
-        .add(playHeroIntro(), '-=.22');
+        }, '+=.04')
+        .add(playHeroIntro(), '-=.2');
     });
   </script>
 </body>
