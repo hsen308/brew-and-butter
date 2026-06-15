@@ -224,6 +224,14 @@
       stroke-dashoffset: 1;
     }
 
+    .doodle-heart {
+      color: var(--red);
+    }
+
+    .doodle-cup {
+      color: var(--cyan);
+    }
+
     #loader {
       position: fixed;
       inset: 0;
@@ -247,30 +255,6 @@
     }
 
     .loader-mark {
-      position: relative;
-      width: 164px;
-      padding-top: 46px;
-    }
-
-    .loader-steam {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      width: 92px;
-      color: var(--yellow);
-      transform: translateX(-50%);
-    }
-
-    .loader-steam path {
-      fill: none;
-      stroke: currentColor;
-      stroke-linecap: round;
-      stroke-dasharray: 1;
-      stroke-dashoffset: 1;
-    }
-
-    .loader-logo-wrap {
-      position: relative;
       width: 126px;
       height: 126px;
       margin-inline: auto;
@@ -286,30 +270,12 @@
       box-shadow: 0 22px 50px rgba(0, 0, 0, .3);
     }
 
-    .loader-orbit {
-      position: absolute;
-      inset: -16px;
-      border: 1px solid rgba(255, 253, 247, .28);
-      border-radius: 50%;
-    }
-
-    .loader-orbit i {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      width: 17px;
-      height: 10px;
-      border-radius: 75% 25% 75% 25%;
-      background: var(--red);
-      box-shadow: inset -3px -2px 0 rgba(36, 23, 15, .18);
-      transform: translate(-50%, -50%) rotate(25deg);
-    }
-
     .loader-line {
-      width: 118px;
+      width: 92px;
       height: 3px;
-      margin: 30px auto 0;
+      margin: 24px auto 0;
       overflow: hidden;
+      border-radius: 999px;
       background: rgba(255, 255, 255, .16);
     }
 
@@ -318,6 +284,7 @@
       height: 100%;
       display: block;
       background: var(--yellow);
+      border-radius: inherit;
       transform: scaleX(0);
       transform-origin: left;
     }
@@ -522,6 +489,13 @@
       transform: rotate(-8deg);
     }
 
+    .hero-heart {
+      top: -34px;
+      right: 4%;
+      width: 58px;
+      transform: rotate(8deg);
+    }
+
     .hero-copy {
       position: relative;
       z-index: 3;
@@ -679,6 +653,13 @@
       width: 92px;
       color: var(--red);
       transform: rotate(-12deg);
+    }
+
+    .story-cup {
+      top: 72px;
+      right: 3.5%;
+      width: 68px;
+      transform: rotate(7deg);
     }
 
     .menu-section {
@@ -894,6 +875,13 @@
       transform: rotate(-4deg);
     }
 
+    .menu-heart {
+      bottom: 94px;
+      left: 2.5%;
+      width: 62px;
+      transform: rotate(-10deg);
+    }
+
     .moments {
       position: relative;
       padding: 110px 0 120px;
@@ -979,6 +967,13 @@
       right: 3%;
       width: 58px;
       color: var(--yellow);
+    }
+
+    .moments-cup {
+      bottom: 36px;
+      left: 3%;
+      width: 68px;
+      transform: rotate(-6deg);
     }
 
     .visit {
@@ -1079,6 +1074,13 @@
       transform: rotate(6deg);
     }
 
+    .visit-heart {
+      top: 70px;
+      left: 3%;
+      width: 58px;
+      transform: rotate(-8deg);
+    }
+
     .site-footer {
       position: relative;
       overflow: hidden;
@@ -1163,6 +1165,13 @@
       width: 62px;
       color: var(--yellow);
       transform: rotate(12deg);
+    }
+
+    .footer-cup {
+      top: 34px;
+      left: 51%;
+      width: 66px;
+      transform: rotate(6deg);
     }
 
     .reveal {
@@ -1374,7 +1383,7 @@
         min-height: 330px;
       }
 
-      .doodle:not(.hero-arc):not(.story-squiggle):not(.menu-underline) {
+      .doodle:not(.hero-arc):not(.hero-heart):not(.story-squiggle):not(.story-cup):not(.menu-underline):not(.menu-heart):not(.moments-cup):not(.visit-heart):not(.footer-cup) {
         display: none;
       }
 
@@ -1383,6 +1392,44 @@
         bottom: 30px;
         width: 86px;
         opacity: .72;
+      }
+
+      .hero-heart {
+        top: -18px;
+        right: 7%;
+        width: 42px;
+      }
+
+      .story-cup {
+        top: 24px;
+        right: 18px;
+        width: 48px;
+      }
+
+      .menu-heart {
+        bottom: 28px;
+        left: 18px;
+        width: 44px;
+      }
+
+      .moments-cup {
+        bottom: 18px;
+        left: 18px;
+        width: 48px;
+      }
+
+      .visit-heart {
+        top: 22px;
+        right: 18px;
+        left: auto;
+        width: 42px;
+      }
+
+      .footer-cup {
+        top: 26px;
+        right: 18px;
+        left: auto;
+        width: 48px;
       }
     }
 
@@ -1428,15 +1475,7 @@
   <div id="loader" aria-hidden="true">
     <div class="loader-inner">
       <div class="loader-mark">
-        <svg class="loader-steam" viewBox="0 0 92 48">
-          <path pathLength="1" d="M18 42 C6 31 31 24 18 8" stroke-width="5"></path>
-          <path pathLength="1" d="M46 42 C34 30 59 23 46 5" stroke-width="5"></path>
-          <path pathLength="1" d="M74 42 C62 31 86 25 75 10" stroke-width="5"></path>
-        </svg>
-        <div class="loader-logo-wrap">
-          <img class="loader-logo" src="photos/logo.png" alt="">
-          <span class="loader-orbit"><i></i></span>
-        </div>
+        <img class="loader-logo" src="photos/logo.png" alt="">
       </div>
       <div class="loader-line"><span class="loader-progress"></span></div>
     </div>
@@ -1494,6 +1533,9 @@
               <span>Coffee and bakes</span>
             </div>
           </div>
+          <svg class="doodle doodle-heart hero-heart" viewBox="0 0 64 58" aria-hidden="true">
+            <path pathLength="1" d="M32 52 C24 43 6 32 7 18 C8 5 25 4 32 16 C39 4 56 5 57 18 C58 32 40 43 32 52" stroke-width="5"></path>
+          </svg>
         </div>
 
         <div class="hero-visual">
@@ -1531,6 +1573,10 @@
       <svg class="doodle story-arrow" viewBox="0 0 100 80" aria-hidden="true">
         <path pathLength="1" d="M8 16 C34 10 62 24 78 54 M58 48 L78 55 L70 34" stroke-width="6"></path>
       </svg>
+      <svg class="doodle doodle-cup story-cup" viewBox="0 0 80 70" aria-hidden="true">
+        <path pathLength="1" d="M10 20 H52 V42 C52 54 43 61 31 61 C19 61 10 54 10 42 Z M52 27 H61 C72 27 72 45 60 47 H52" stroke-width="5"></path>
+        <path pathLength="1" d="M18 12 C22 7 25 14 29 8 M38 12 C42 7 45 14 49 8" stroke-width="5"></path>
+      </svg>
     </section>
 
     <section id="menu" class="menu-section" aria-labelledby="menu-title">
@@ -1542,6 +1588,9 @@
       </svg>
       <svg class="doodle menu-underline" viewBox="0 0 150 42" aria-hidden="true">
         <path pathLength="1" d="M5 25 C34 12 66 30 94 17 S128 20 145 8" stroke-width="8"></path>
+      </svg>
+      <svg class="doodle doodle-heart menu-heart" viewBox="0 0 64 58" aria-hidden="true">
+        <path pathLength="1" d="M32 52 C24 43 6 32 7 18 C8 5 25 4 32 16 C39 4 56 5 57 18 C58 32 40 43 32 52" stroke-width="5"></path>
       </svg>
 
       <div class="shell">
@@ -1641,6 +1690,10 @@
       <svg class="doodle moments-spark" viewBox="0 0 60 60" aria-hidden="true">
         <path pathLength="1" d="M30 4 C31 20 40 29 56 30 C40 31 31 40 30 56 C29 40 20 31 4 30 C20 29 29 20 30 4" stroke-width="6"></path>
       </svg>
+      <svg class="doodle doodle-cup moments-cup" viewBox="0 0 80 70" aria-hidden="true">
+        <path pathLength="1" d="M10 20 H52 V42 C52 54 43 61 31 61 C19 61 10 54 10 42 Z M52 27 H61 C72 27 72 45 60 47 H52" stroke-width="5"></path>
+        <path pathLength="1" d="M18 12 C22 7 25 14 29 8 M38 12 C42 7 45 14 49 8" stroke-width="5"></path>
+      </svg>
     </section>
 
     <section id="visit" class="visit" aria-labelledby="visit-title">
@@ -1652,6 +1705,9 @@
         <path pathLength="1" d="M6 58 C30 17 54 69 82 30 S119 24 133 8" stroke-width="7"></path>
         <circle pathLength="1" cx="7" cy="58" r="4" stroke-width="5"></circle>
         <circle pathLength="1" cx="133" cy="8" r="4" stroke-width="5"></circle>
+      </svg>
+      <svg class="doodle doodle-heart visit-heart" viewBox="0 0 64 58" aria-hidden="true">
+        <path pathLength="1" d="M32 52 C24 43 6 32 7 18 C8 5 25 4 32 16 C39 4 56 5 57 18 C58 32 40 43 32 52" stroke-width="5"></path>
       </svg>
 
       <div class="shell visit-layout">
@@ -1719,6 +1775,10 @@
     </svg>
     <svg class="doodle footer-star" viewBox="0 0 70 70" aria-hidden="true">
       <path pathLength="1" d="M35 5 C36 22 47 34 65 35 C47 36 36 48 35 65 C34 48 23 36 5 35 C23 34 34 22 35 5" stroke-width="7"></path>
+    </svg>
+    <svg class="doodle doodle-cup footer-cup" viewBox="0 0 80 70" aria-hidden="true">
+      <path pathLength="1" d="M10 20 H52 V42 C52 54 43 61 31 61 C19 61 10 54 10 42 Z M52 27 H61 C72 27 72 45 60 47 H52" stroke-width="5"></path>
+      <path pathLength="1" d="M18 12 C22 7 25 14 29 8 M38 12 C42 7 45 14 49 8" stroke-width="5"></path>
     </svg>
   </footer>
 
@@ -1870,10 +1930,8 @@
       }
 
       gsap.timeline({ onComplete: initScrollMotion })
-        .from('.loader-logo', { autoAlpha: 0, scale: .72, duration: .3, ease: 'back.out(1.7)' })
-        .to('.loader-steam path', { strokeDashoffset: 0, stagger: .04, duration: .28, ease: 'power2.out' }, '-=.16')
-        .to('.loader-orbit', { rotation: 250, duration: .46, ease: 'power2.inOut' }, '-=.28')
-        .to('.loader-progress', { scaleX: 1, duration: .34 }, '-=.4')
+        .from('.loader-logo', { autoAlpha: 0, scale: .86, duration: .28, ease: 'power2.out' })
+        .to('.loader-progress', { scaleX: 1, duration: .38, ease: 'power2.inOut' }, '-=.08')
         .to('#loader', {
           yPercent: -102,
           duration: .46,
