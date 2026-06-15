@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brew &amp; Butter | Good Coffee. Good Day.</title>
+  <meta name="description" content="Brew & Butter is a specialty coffee and pastry spot on Riad El Solh Street in Downtown Beirut.">
+  <meta name="theme-color" content="#f8f1e6">
+
+  <meta property="og:title" content="Brew & Butter | Good Coffee. Good Day.">
+  <meta property="og:description" content="Specialty coffee, golden pastries, and mornings worth staying for in Downtown Beirut.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="photos/og.jpg">
+
+  <link rel="icon" href="photos/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --paper: #f8f1e6;
+      --paper-deep: #efe4d3;
+      --ink: #24170f;
+      --muted: #726154;
+      --red: #ee3c31;
+      --red-dark: #d82e25;
+      --yellow: #ffd447;
+      --cyan: #20aabd;
+      --white: #fffdf7;
+      --line: #d8cab7;
+      --max: 1240px;
+      --radius: 24px;
+      --ease: cubic-bezier(.22, 1, .36, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    * {
+      margin: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 88px;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      min-width: 320px;
+      overflow-x: hidden;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.5;
+      text-rendering: optimizeLegibility;
+    }
+
+    body.is-loading,
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      color: inherit;
+      font: inherit;
+    }
+
+    ::selection {
+      background: var(--yellow);
+      color: var(--ink);
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--cyan);
+      outline-offset: 4px;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 2000;
+      padding: 11px 16px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--white);
+      font-weight: 700;
+      transform: translateY(-150%);
+      transition: transform .2s ease;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .shell {
+      width: min(100% - 40px, var(--max));
+      margin-inline: auto;
+    }
+
+    .display {
+      font-family: "Anton", sans-serif;
+      font-weight: 400;
+      letter-spacing: -.025em;
+      line-height: .9;
+      text-transform: uppercase;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--red);
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      content: "";
+    }
+
+    .section-title {
+      max-width: 850px;
+      margin-top: 14px;
+      font-size: clamp(3.25rem, 8vw, 7rem);
+    }
+
+    .section-copy {
+      max-width: 48ch;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      line-height: 1.7;
+    }
+
+    .button {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 12px 20px;
+      border: 2px solid transparent;
+      border-radius: 999px;
+      background: var(--red);
+      color: var(--white);
+      font-size: .83rem;
+      font-weight: 800;
+      letter-spacing: .035em;
+      text-transform: uppercase;
+      transition: transform .25s var(--ease), background .25s ease, box-shadow .25s ease;
+    }
+
+    .button:hover {
+      background: var(--red-dark);
+      box-shadow: 0 12px 24px rgba(238, 60, 49, .2);
+      transform: translateY(-2px);
+    }
+
+    .button--outline {
+      border-color: var(--ink);
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .button--outline:hover {
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: none;
+    }
+
+    .button--light {
+      border-color: rgba(255, 253, 247, .65);
+      background: transparent;
+      color: var(--white);
+    }
+
+    .button--light:hover {
+      border-color: var(--white);
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    .doodle {
+      position: absolute;
+      z-index: 2;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .doodle path,
+    .doodle circle,
+    .doodle line {
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+    }
+
+    #loader {
+      position: fixed;
+      inset: 0;
+      z-index: 1500;
+      display: grid;
+      place-items: center;
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    #loader.is-done {
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    .loader-inner {
+      width: min(420px, 76vw);
+      text-align: center;
+    }
+
+    .loader-brand {
+      font-family: "Anton", sans-serif;
+      font-size: clamp(2.5rem, 10vw, 5rem);
+      letter-spacing: -.02em;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .loader-brand span {
+      color: var(--red);
+    }
+
+    .loader-line {
+      width: 100%;
+      height: 3px;
+      margin-top: 24px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, .16);
+    }
+
+    .loader-progress {
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: var(--yellow);
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 500;
+      width: 100%;
+      padding-block: 18px;
+      transition: padding .25s ease, background .25s ease, box-shadow .25s ease;
+    }
+
+    .site-header.is-scrolled {
+      padding-block: 10px;
+      background: rgba(248, 241, 230, .9);
+      box-shadow: 0 10px 35px rgba(36, 23, 15, .08);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav-shell {
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      position: relative;
+      z-index: 502;
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-size: .94rem;
+      font-weight: 800;
+      letter-spacing: .045em;
+      text-transform: uppercase;
+    }
+
+    .brand img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(18px, 2.6vw, 34px);
+    }
+
+    .nav-links > a:not(.button) {
+      position: relative;
+      padding-block: 14px;
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .nav-links > a:not(.button)::after {
+      position: absolute;
+      right: 0;
+      bottom: 8px;
+      left: 0;
+      height: 2px;
+      background: var(--red);
+      content: "";
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform .25s var(--ease);
+    }
+
+    .nav-links > a:not(.button):hover::after,
+    .nav-links > a:not(.button):focus-visible::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .nav-toggle {
+      position: relative;
+      z-index: 502;
+      width: 48px;
+      height: 48px;
+      display: none;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .nav-toggle span {
+      position: absolute;
+      left: 11px;
+      width: 26px;
+      height: 2px;
+      background: currentColor;
+      transition: transform .25s var(--ease), top .25s var(--ease);
+    }
+
+    .nav-toggle span:first-child {
+      top: 19px;
+    }
+
+    .nav-toggle span:last-child {
+      top: 28px;
+    }
+
+    .nav-toggle[aria-expanded="true"] span:first-child {
+      top: 24px;
+      transform: rotate(45deg);
+    }
+
+    .nav-toggle[aria-expanded="true"] span:last-child {
+      top: 24px;
+      transform: rotate(-45deg);
+    }
+
+    #hero {
+      position: relative;
+      min-height: 100svh;
+      padding: 122px 0 64px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 92% 10%, rgba(255, 212, 71, .18), transparent 28%),
+        var(--paper);
+    }
+
+    .hero-layout {
+      display: grid;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .hero-visual {
+      position: relative;
+      width: min(100%, 620px);
+      margin-inline: auto;
+    }
+
+    .hero-card {
+      position: relative;
+      z-index: 1;
+      padding: 12px 12px 48px;
+      background: var(--white);
+      box-shadow: 0 28px 70px rgba(36, 23, 15, .18);
+    }
+
+    .hero-card img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+    }
+
+    .hero-card figcaption {
+      position: absolute;
+      right: 16px;
+      bottom: 14px;
+      left: 16px;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .hero-badge {
+      position: absolute;
+      right: -12px;
+      bottom: 48px;
+      z-index: 3;
+      width: 88px;
+      height: 88px;
+      display: grid;
+      place-items: center;
+      border: 6px solid var(--paper);
+      border-radius: 50%;
+      background: var(--red);
+      color: var(--white);
+      font-size: .76rem;
+      font-weight: 800;
+      line-height: 1;
+      text-align: center;
+      text-transform: uppercase;
+      transform: rotate(6deg);
+    }
+
+    .hero-arc {
+      top: -38px;
+      right: 10px;
+      width: 150px;
+      color: var(--yellow);
+      transform: rotate(7deg);
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 3;
+    }
+
+    .hero-kicker {
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: clamp(4rem, 17vw, 6.3rem);
+    }
+
+    .hero-title .line {
+      display: block;
+      overflow: hidden;
+    }
+
+    .hero-title .line > span {
+      display: block;
+    }
+
+    .hero-support {
+      max-width: 35ch;
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 3.8vw, 1.25rem);
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .trust-strip {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px 16px;
+      margin-top: 42px;
+      padding-top: 26px;
+      border-top: 1px solid var(--line);
+    }
+
+    .trust-item {
+      position: relative;
+      padding-left: 19px;
+    }
+
+    .trust-item::before {
+      position: absolute;
+      top: 7px;
+      left: 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+      content: "";
+    }
+
+    .trust-item:nth-child(2)::before {
+      background: var(--cyan);
+    }
+
+    .trust-item:nth-child(3)::before {
+      background: var(--yellow);
+    }
+
+    .trust-item strong,
+    .trust-item span {
+      display: block;
+    }
+
+    .trust-item strong {
+      font-size: .74rem;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .trust-item span {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .story {
+      position: relative;
+      padding: 100px 0;
+      overflow: hidden;
+      background: var(--paper-deep);
+    }
+
+    .story-layout {
+      display: grid;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .story-photo {
+      position: relative;
+    }
+
+    .story-photo::after {
+      position: absolute;
+      inset: 14px -14px -14px 14px;
+      z-index: 0;
+      border: 2px solid rgba(36, 23, 15, .18);
+      border-radius: var(--radius);
+      content: "";
+    }
+
+    .story-photo img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: var(--radius);
+      object-fit: cover;
+    }
+
+    .story-copy {
+      position: relative;
+    }
+
+    .story-copy .section-title {
+      font-size: clamp(3.25rem, 8vw, 6.5rem);
+    }
+
+    .story-copy .section-copy {
+      margin-top: 24px;
+    }
+
+    .story-note {
+      display: inline-block;
+      margin-top: 28px;
+      color: var(--red);
+      font-family: "Caveat", cursive;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 700;
+      transform: rotate(-2deg);
+    }
+
+    .story-squiggle {
+      right: -30px;
+      bottom: -12px;
+      width: 150px;
+      color: var(--yellow);
+    }
+
+    .menu-section {
+      position: relative;
+      padding: 110px 0;
+      overflow: hidden;
+      background: var(--paper);
+    }
+
+    .section-heading {
+      display: grid;
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 48px;
+    }
+
+    .section-heading .section-copy {
+      max-width: 43ch;
+    }
+
+    .menu-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .menu-card {
+      position: relative;
+      min-width: 0;
+      padding: 12px 12px 24px;
+      border: 1px solid rgba(36, 23, 15, .08);
+      border-radius: 20px;
+      background: var(--white);
+      transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+    }
+
+    .menu-card:hover {
+      z-index: 2;
+      box-shadow: 0 24px 50px rgba(36, 23, 15, .12);
+      transform: translateY(-8px);
+    }
+
+    .menu-card img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 13px;
+      object-fit: cover;
+    }
+
+    .menu-index {
+      display: block;
+      margin: 20px 4px 8px;
+      color: var(--red);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+
+    .menu-card:nth-child(2) .menu-index {
+      color: #d69e00;
+    }
+
+    .menu-card:nth-child(3) .menu-index {
+      color: var(--cyan);
+    }
+
+    .menu-card h3 {
+      margin-inline: 4px;
+      font-family: "Anton", sans-serif;
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 400;
+      letter-spacing: -.02em;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .menu-card p {
+      margin: 12px 4px 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .menu-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 34px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+    }
+
+    .menu-cta p {
+      color: var(--muted);
+      font-family: "Caveat", cursive;
+      font-size: 1.65rem;
+      font-weight: 700;
+    }
+
+    .menu-arc {
+      top: 90px;
+      right: max(20px, calc((100vw - var(--max)) / 2));
+      width: 120px;
+      color: var(--red);
+      transform: rotate(10deg);
+    }
+
+    .moments {
+      position: relative;
+      padding: 110px 0 120px;
+      overflow: hidden;
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .moments .eyebrow {
+      color: var(--yellow);
+    }
+
+    .moments .section-copy {
+      color: #cdbdab;
+    }
+
+    .moments-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 44px;
+    }
+
+    .moment {
+      position: relative;
+      min-width: 0;
+      overflow: hidden;
+      border-radius: 16px;
+      background: #3b2a20;
+    }
+
+    .moment:nth-child(1),
+    .moment:nth-child(4) {
+      transform: translateY(18px);
+    }
+
+    .moment img {
+      width: 100%;
+      height: 100%;
+      min-height: 210px;
+      object-fit: cover;
+      transition: transform .7s var(--ease), filter .7s ease;
+    }
+
+    .moment:hover img {
+      filter: saturate(1.08);
+      transform: scale(1.045);
+    }
+
+    .moment figcaption {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      left: 10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(36, 23, 15, .76);
+      font-size: .65rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-align: center;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
+    }
+
+    .moments-zig {
+      right: 5%;
+      bottom: 42px;
+      width: 110px;
+      color: var(--cyan);
+    }
+
+    .visit {
+      position: relative;
+      padding: 110px 0;
+      overflow: hidden;
+      background: var(--paper);
+    }
+
+    .visit-layout {
+      display: grid;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .visit-copy .section-copy {
+      margin-top: 24px;
+    }
+
+    .visit-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .visit-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      margin-top: 38px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+    }
+
+    .visit-detail strong,
+    .visit-detail span {
+      display: block;
+    }
+
+    .visit-detail strong {
+      font-size: .75rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .visit-detail span {
+      margin-top: 5px;
+      color: var(--muted);
+    }
+
+    .map-card {
+      position: relative;
+      min-height: 390px;
+      overflow: hidden;
+      border: 12px solid var(--white);
+      border-radius: var(--radius);
+      box-shadow: 0 28px 60px rgba(36, 23, 15, .14);
+    }
+
+    .map-card iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 390px;
+      display: block;
+      border: 0;
+      filter: sepia(.18) saturate(.78) contrast(.96);
+    }
+
+    .map-pin {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      z-index: 2;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--red);
+      color: var(--white);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      box-shadow: 0 10px 25px rgba(238, 60, 49, .28);
+    }
+
+    .visit-burst {
+      top: 58px;
+      right: 4%;
+      width: 85px;
+      color: var(--yellow);
+    }
+
+    .site-footer {
+      position: relative;
+      overflow: hidden;
+      padding: 80px 0 34px;
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .footer-top {
+      display: grid;
+      gap: 44px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid rgba(255, 253, 247, .16);
+    }
+
+    .footer-brand {
+      font-family: "Anton", sans-serif;
+      font-size: clamp(3.25rem, 10vw, 7.5rem);
+      letter-spacing: -.025em;
+      line-height: .9;
+      text-transform: uppercase;
+    }
+
+    .footer-brand span {
+      color: var(--red);
+    }
+
+    .footer-tag {
+      margin-top: 15px;
+      color: var(--yellow);
+      font-size: .85rem;
+      font-weight: 800;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .footer-nav {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px 30px;
+      align-content: start;
+    }
+
+    .footer-nav a {
+      color: #d7c8b8;
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      transition: color .2s ease;
+    }
+
+    .footer-nav a:hover {
+      color: var(--yellow);
+    }
+
+    .footer-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-top: 26px;
+      color: #9f8d7c;
+      font-size: .78rem;
+      line-height: 1.7;
+    }
+
+    .footer-bottom a {
+      color: #d7c8b8;
+    }
+
+    .footer-circle {
+      right: -45px;
+      bottom: -55px;
+      width: 180px;
+      color: var(--red);
+      opacity: .8;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    @media (min-width: 700px) {
+      .shell {
+        width: min(100% - 64px, var(--max));
+      }
+
+      .hero-layout {
+        grid-template-columns: minmax(0, .82fr) minmax(420px, 1.18fr);
+        grid-template-areas: "copy visual";
+        gap: 56px;
+      }
+
+      .hero-copy {
+        grid-area: copy;
+      }
+
+      .hero-visual {
+        grid-area: visual;
+        transform: rotate(1.8deg);
+        transition: transform .5s var(--ease);
+      }
+
+      .hero-visual:hover {
+        transform: rotate(.4deg) translateY(-8px);
+      }
+
+      .hero-title {
+        font-size: clamp(5rem, 8.7vw, 8.7rem);
+      }
+
+      .trust-strip {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .story-layout,
+      .visit-layout {
+        grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+        gap: clamp(56px, 7vw, 100px);
+      }
+
+      .section-heading {
+        grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
+      }
+
+      .menu-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .menu-card:nth-child(2) {
+        transform: translateY(24px);
+      }
+
+      .menu-card:nth-child(2):hover {
+        transform: translateY(16px);
+      }
+
+      .moments-grid {
+        grid-template-columns: .95fr 1.08fr .95fr 1.08fr;
+        gap: 18px;
+      }
+
+      .moment img {
+        min-height: 390px;
+      }
+
+      .moment:nth-child(2) img,
+      .moment:nth-child(4) img {
+        min-height: 350px;
+      }
+
+      .footer-top {
+        grid-template-columns: minmax(0, 1.3fr) minmax(300px, .7fr);
+        align-items: end;
+      }
+
+      .footer-bottom {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    @media (max-width: 899px) {
+      .site-header {
+        padding-block: 10px;
+        background: rgba(248, 241, 230, .94);
+        backdrop-filter: blur(14px);
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        inset: 0;
+        z-index: 501;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 12px;
+        padding: 110px max(24px, 8vw) 50px;
+        background: var(--paper);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-20px);
+        transition: opacity .3s ease, visibility .3s ease, transform .3s var(--ease);
+      }
+
+      .nav-links.open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .nav-links > a:not(.button) {
+        font-family: "Anton", sans-serif;
+        font-size: clamp(2.8rem, 13vw, 5rem);
+        font-weight: 400;
+        letter-spacing: -.02em;
+        line-height: 1;
+      }
+
+      .nav-links .button {
+        margin-top: 22px;
+      }
+
+      .hero-visual {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 639px) {
+      .shell {
+        width: min(100% - 30px, var(--max));
+      }
+
+      #hero {
+        padding-top: 104px;
+      }
+
+      .hero-card {
+        padding: 9px 9px 40px;
+      }
+
+      .hero-badge {
+        right: -5px;
+        bottom: 40px;
+        width: 76px;
+        height: 76px;
+      }
+
+      .hero-arc {
+        top: -26px;
+        width: 112px;
+      }
+
+      .hero-title {
+        font-size: clamp(3.55rem, 17vw, 4.75rem);
+      }
+
+      .story,
+      .menu-section,
+      .moments,
+      .visit {
+        padding-block: 82px;
+      }
+
+      .menu-grid {
+        gap: 16px;
+      }
+
+      .moments-grid {
+        gap: 9px;
+      }
+
+      .moment img {
+        min-height: 175px;
+      }
+
+      .moment figcaption {
+        display: none;
+      }
+
+      .map-card,
+      .map-card iframe {
+        min-height: 330px;
+      }
+
+      .doodle:not(.hero-arc):not(.story-squiggle) {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+
+      .doodle path,
+      .doodle circle,
+      .doodle line {
+        stroke-dashoffset: 0;
+      }
+    }
+  </style>
+
+  <noscript>
+    <style>
+      #loader { display: none !important; }
+      body { overflow: auto !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+    </style>
+  </noscript>
+</head>
+
+<body class="is-loading">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <div class="loader-brand">Brew <span>&amp;</span> Butter</div>
+      <div class="loader-line"><span class="loader-progress"></span></div>
+    </div>
+  </div>
+
+  <header id="header" class="site-header">
+    <div class="shell nav-shell">
+      <a class="brand" href="#hero" aria-label="Brew and Butter home">
+        <img src="photos/logo.png" alt="">
+        <span>Brew &amp; Butter</span>
+      </a>
+
+      <nav id="navLinks" class="nav-links" aria-label="Primary navigation">
+        <a href="#story">Story</a>
+        <a href="#menu">Menu</a>
+        <a href="#moments">Moments</a>
+        <a href="#visit">Visit</a>
+        <a class="button" href="https://totersapp.com/nVnd" target="_blank" rel="noopener">Order <span aria-hidden="true">&nearr;</span></a>
+      </nav>
+
+      <button id="navToggle" class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="hero" aria-labelledby="hero-title">
+      <div class="shell hero-layout">
+        <div class="hero-copy">
+          <p class="eyebrow hero-kicker">Downtown Beirut &bull; Good mornings start here</p>
+          <h1 id="hero-title" class="display hero-title">
+            <span class="line"><span>Brew.</span></span>
+            <span class="line"><span>Butter.</span></span>
+            <span class="line"><span>Repeat.</span></span>
+          </h1>
+          <p class="hero-support">Specialty coffee, golden pastries, and mornings worth staying for.</p>
+          <div class="hero-actions">
+            <a class="button" href="#menu">Explore the menu</a>
+            <a class="button button--outline" href="#visit">Find us</a>
+          </div>
+
+          <div class="trust-strip" aria-label="Cafe highlights">
+            <div class="trust-item">
+              <strong>Riad El Solh</strong>
+              <span>Downtown Beirut</span>
+            </div>
+            <div class="trust-item">
+              <strong>5.0 Google</strong>
+              <span>Loved locally</span>
+            </div>
+            <div class="trust-item">
+              <strong>Fresh daily</strong>
+              <span>Coffee and bakes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <svg class="doodle hero-arc" viewBox="0 0 150 90" aria-hidden="true">
+            <path pathLength="1" d="M12 76 C26 20 116 8 138 64" stroke-width="10"></path>
+          </svg>
+          <figure class="hero-card">
+            <img src="photos/croissant coffee and store front.JPG" alt="Croissant and latte in front of the Brew and Butter storefront">
+            <figcaption>Coffee / Croissant / Downtown</figcaption>
+          </figure>
+          <span class="hero-badge">Good<br>day</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="story" class="story" aria-labelledby="story-title">
+      <div class="shell story-layout">
+        <div class="story-photo reveal">
+          <img src="photos/brunch.JPG" alt="Friends sharing coffee and brunch outside Brew and Butter" loading="lazy">
+        </div>
+
+        <div class="story-copy reveal">
+          <p class="eyebrow">The story</p>
+          <h2 id="story-title" class="display section-title">Two halves of a good morning.</h2>
+          <p class="section-copy">Brew is the coffee. Butter is everything flaky, golden, and worth ordering beside it. Together, they make the kind of morning people come back for.</p>
+          <p class="story-note">A small cafe with big morning energy.</p>
+          <svg class="doodle story-squiggle" viewBox="0 0 160 54" aria-hidden="true">
+            <path pathLength="1" d="M4 34 C20 6 36 50 52 24 S84 44 100 20 S132 42 156 10" stroke-width="7"></path>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu" class="menu-section" aria-labelledby="menu-title">
+      <svg class="doodle menu-arc" viewBox="0 0 130 100" aria-hidden="true">
+        <path pathLength="1" d="M10 88 C22 18 105 10 120 70" stroke-width="7"></path>
+      </svg>
+
+      <div class="shell">
+        <div class="section-heading reveal">
+          <div>
+            <p class="eyebrow">The shortlist</p>
+            <h2 id="menu-title" class="display section-title">Brew / Butter</h2>
+          </div>
+          <p class="section-copy">A curated taste of what is waiting at the counter. The full lineup lives on Toters.</p>
+        </div>
+
+        <div class="menu-grid">
+          <article class="menu-card">
+            <img src="photos/photo_5_2026-06-15_18-28-18.jpg" alt="Iced matcha and iced coffee on a pink cafe table" loading="lazy">
+            <span class="menu-index">01 / SIP</span>
+            <h3>Iced duo</h3>
+            <p>Matcha or coffee, always made for slow mornings.</p>
+          </article>
+
+          <article class="menu-card">
+            <img src="photos/photo_1_2026-06-15_18-28-18.jpg" alt="Four decorated pastries arranged on a cafe tray" loading="lazy">
+            <span class="menu-index">02 / BITE</span>
+            <h3>Pastry lineup</h3>
+            <p>Four bold finishes, one difficult decision.</p>
+          </article>
+
+          <article class="menu-card">
+            <img src="photos/photo_3_2026-06-15_18-28-18.jpg" alt="Pink latte with heart-shaped foam art on a coral table" loading="lazy">
+            <span class="menu-index">03 / COLOR</span>
+            <h3>Pink latte</h3>
+            <p>A colorful pour with a soft, creamy finish.</p>
+          </article>
+        </div>
+
+        <div class="menu-cta reveal">
+          <p>See something you like?</p>
+          <a class="button" href="https://totersapp.com/nVnd" target="_blank" rel="noopener">View the full menu <span aria-hidden="true">&nearr;</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="moments" class="moments" aria-labelledby="moments-title">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <div>
+            <p class="eyebrow">Morning moments</p>
+            <h2 id="moments-title" class="display section-title">From the window.</h2>
+          </div>
+          <p class="section-copy">Real coffee, real people, real Beirut. A few frames from an ordinary good day.</p>
+        </div>
+
+        <div class="moments-grid">
+          <figure class="moment">
+            <img src="photos/photo_2_2026-06-15_18-28-18.jpg" alt="Overhead view of iced matcha and iced coffee" loading="lazy">
+            <figcaption>Pick your side</figcaption>
+          </figure>
+          <figure class="moment">
+            <img src="photos/coffee with heart.JPG" alt="Barista pouring a heart into a latte" loading="lazy">
+            <figcaption>Made with care</figcaption>
+          </figure>
+          <figure class="moment">
+            <img src="photos/machine.JPG" alt="Espresso flowing from the cafe espresso machine" loading="lazy">
+            <figcaption>Fresh shots</figcaption>
+          </figure>
+          <figure class="moment">
+            <img src="photos/photo_4_2026-06-15_18-28-18.jpg" alt="Two customers holding Brew and Butter iced coffees" loading="lazy">
+            <figcaption>Better together</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <svg class="doodle moments-zig" viewBox="0 0 120 70" aria-hidden="true">
+        <path pathLength="1" d="M5 58 L28 28 L52 52 L78 18 L112 54" stroke-width="7"></path>
+      </svg>
+    </section>
+
+    <section id="visit" class="visit" aria-labelledby="visit-title">
+      <svg class="doodle visit-burst" viewBox="0 0 100 100" aria-hidden="true">
+        <circle pathLength="1" cx="50" cy="50" r="18" stroke-width="6"></circle>
+        <path pathLength="1" d="M50 8 V22 M50 78 V92 M8 50 H22 M78 50 H92 M20 20 L30 30 M70 70 L80 80 M80 20 L70 30 M30 70 L20 80" stroke-width="6"></path>
+      </svg>
+
+      <div class="shell visit-layout">
+        <div class="visit-copy reveal">
+          <p class="eyebrow">Come by</p>
+          <h2 id="visit-title" class="display section-title">Your next good morning.</h2>
+          <p class="section-copy">Find Brew &amp; Butter on Riad El Solh Street in Downtown Beirut. Coffee, pastry, and a seat waiting.</p>
+
+          <div class="visit-actions">
+            <a class="button" href="https://maps.app.goo.gl/ivsNw6WE26BhJt158" target="_blank" rel="noopener">Get directions <span aria-hidden="true">&nearr;</span></a>
+            <a class="button button--outline" href="https://totersapp.com/nVnd" target="_blank" rel="noopener">Order on Toters</a>
+          </div>
+
+          <div class="visit-details">
+            <div class="visit-detail">
+              <strong>Where</strong>
+              <span>Riad El Solh Street</span>
+            </div>
+            <div class="visit-detail">
+              <strong>Neighborhood</strong>
+              <span>Downtown Beirut</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="map-card reveal">
+          <span class="map-pin">Brew &amp; Butter</span>
+          <iframe
+            title="Map showing Brew and Butter in Downtown Beirut"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=Brew%20and%20Butter%20Riad%20El%20Solh%20Beirut&output=embed">
+          </iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand">Brew <span>&amp;</span> Butter</div>
+          <p class="footer-tag">Good coffee. Good day.</p>
+        </div>
+
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="#story">Story</a>
+          <a href="#menu">Menu</a>
+          <a href="#moments">Moments</a>
+          <a href="#visit">Visit</a>
+          <a href="https://totersapp.com/nVnd" target="_blank" rel="noopener">Order</a>
+          <a href="#hero">Back to top</a>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <p>Riad El Solh Street, Downtown Beirut &bull; &copy; <span id="year"></span> Brew &amp; Butter</p>
+        <a href="https://www.novustudios.com" target="_blank" rel="noopener">Website concept by Novu Studios</a>
+      </div>
+    </div>
+
+    <svg class="doodle footer-circle" viewBox="0 0 190 190" aria-hidden="true">
+      <circle pathLength="1" cx="95" cy="95" r="72" stroke-width="11"></circle>
+    </svg>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const loader = document.getElementById('loader');
+    const header = document.getElementById('header');
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function setMenu(open) {
+      navLinks.classList.toggle('open', open);
+      navToggle.setAttribute('aria-expanded', String(open));
+      navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      document.body.classList.toggle('menu-open', open);
+    }
+
+    navToggle.addEventListener('click', () => {
+      setMenu(navToggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    navLinks.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => setMenu(false));
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        setMenu(false);
+        navToggle.focus();
+      }
+    });
+
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('is-scrolled', window.scrollY > 24);
+    }, { passive: true });
+
+    function showPage() {
+      document.body.classList.remove('is-loading');
+      loader.classList.add('is-done');
+    }
+
+    function showStaticSections() {
+      document.querySelectorAll('.reveal').forEach((element) => {
+        element.style.opacity = '1';
+        element.style.transform = 'none';
+      });
+      document.querySelectorAll('.doodle path, .doodle circle, .doodle line').forEach((stroke) => {
+        stroke.style.strokeDashoffset = '0';
+      });
+    }
+
+    function playHeroIntro() {
+      return gsap.timeline({ defaults: { ease: 'power3.out' } })
+        .from('.site-header', { autoAlpha: 0, y: -12, duration: .24 })
+        .from('.hero-kicker', { autoAlpha: 0, y: 16, duration: .2 }, '-=.06')
+        .from('.hero-title .line > span', { autoAlpha: 0, yPercent: 110, stagger: .065, duration: .38 }, '-=.08')
+        .from('.hero-card, .hero-badge, .hero-arc', { autoAlpha: 0, scale: .95, rotation: -2, stagger: .04, duration: .45 }, '-=.34')
+        .from('.hero-support, .hero-actions, .trust-item', { autoAlpha: 0, y: 14, stagger: .045, duration: .24 }, '-=.24');
+    }
+
+    function initScrollMotion() {
+      if (typeof ScrollTrigger === 'undefined') {
+        showStaticSections();
+        return;
+      }
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.utils.toArray('.reveal').forEach((element) => {
+        gsap.to(element, {
+          opacity: 1,
+          y: 0,
+          duration: .75,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: element,
+            start: 'top 86%',
+            once: true
+          }
+        });
+      });
+
+      gsap.from('.menu-card', {
+        opacity: 0,
+        y: 34,
+        stagger: .11,
+        duration: .7,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.menu-grid',
+          start: 'top 80%',
+          once: true
+        }
+      });
+
+      gsap.from('.moment', {
+        opacity: 0,
+        y: 28,
+        stagger: .09,
+        duration: .65,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.moments-grid',
+          start: 'top 82%',
+          once: true
+        }
+      });
+
+      gsap.utils.toArray('.doodle').forEach((doodle) => {
+        const strokes = doodle.querySelectorAll('path, circle, line');
+        if (!strokes.length) return;
+
+        gsap.to(strokes, {
+          strokeDashoffset: 0,
+          duration: .9,
+          stagger: .05,
+          ease: 'power2.inOut',
+          scrollTrigger: {
+            trigger: doodle,
+            start: 'top 92%',
+            once: true
+          }
+        });
+      });
+    }
+
+    window.addEventListener('load', () => {
+      if (reduceMotion || typeof gsap === 'undefined') {
+        showPage();
+        showStaticSections();
+        return;
+      }
+
+      gsap.timeline({ onComplete: initScrollMotion })
+        .from('.loader-brand', { autoAlpha: 0, y: 16, duration: .34, ease: 'power3.out' })
+        .to('.loader-progress', { scaleX: 1, duration: .4 })
+        .to('#loader', {
+          yPercent: -102,
+          duration: .52,
+          ease: 'power3.inOut',
+          onStart: () => document.body.classList.remove('is-loading'),
+          onComplete: () => loader.classList.add('is-done')
+        }, '+=.08')
+        .add(playHeroIntro(), '-=.22');
+    });
+  </script>
+</body>
+</html>
