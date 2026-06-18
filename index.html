@@ -2431,7 +2431,7 @@
   <section id="branchGate" class="branch-gate is-open" aria-labelledby="branchGateTitle" aria-modal="true" role="dialog">
     <div class="branch-gate-panel">
       <div class="branch-gate-head">
-        <p class="eyebrow">Brew &amp; Butter</p>
+        <p class="eyebrow" data-cms-name>Brew &amp; Butter</p>
         <h2 id="branchGateTitle" class="display">Choose your branch.</h2>
         <div class="branch-meta" aria-label="Branch services">
           <span>Mon - Sun, 8 AM - 11 PM</span>
@@ -2459,7 +2459,7 @@
     <div class="shell nav-shell">
       <a class="brand" href="#hero" aria-label="Brew and Butter home">
         <img src="photos/logo.png" alt="">
-        <span>Brew &amp; Butter</span>
+        <span data-cms-name>Brew &amp; Butter</span>
       </a>
 
       <nav id="navLinks" class="nav-links" aria-label="Primary navigation">
@@ -2528,7 +2528,7 @@
             <path pathLength="1" d="M20 7 V31 M8 19 H32 M63 36 V63 M50 50 H76" stroke-width="6"></path>
           </svg>
           <figure class="hero-card">
-            <img src="photos/croissant coffee and store front.JPG" alt="Croissant and latte in front of the Brew and Butter storefront">
+            <img id="heroImage" src="photos/croissant coffee and store front.JPG" alt="Croissant and latte in front of the Brew and Butter storefront">
             <figcaption>Coffee / Croissant / Downtown</figcaption>
           </figure>
           <span class="hero-badge">Good<br>day</span>
@@ -2744,7 +2744,7 @@
     <div class="shell">
       <div class="footer-top">
         <div>
-          <div class="footer-brand">Brew <span>&amp;</span> Butter</div>
+          <div class="footer-brand" data-cms-name-rich>Brew <span>&amp;</span> Butter</div>
           <p class="footer-tag">Good coffee. Good day.</p>
         </div>
 
@@ -2989,6 +2989,7 @@
     const heroBranch = document.getElementById('heroBranch');
     const heroAddress = document.getElementById('heroAddress');
     const heroNeighborhood = document.getElementById('heroNeighborhood');
+    const heroImage = document.getElementById('heroImage');
     const visitCopy = document.getElementById('visitCopy');
     const visitAddress = document.getElementById('visitAddress');
     const visitNeighborhood = document.getElementById('visitNeighborhood');
@@ -3368,6 +3369,131 @@
         <span>Subtotal: ${formatPrice(getCartSubtotal())} | Delivery: ${formatPrice(getDeliveryFee())} | Total: ${formatPrice(getCartTotal())}</span>
         <span>Payment: ${PAYMENT_METHOD}. Coupons are checked manually by the branch.</span>
       `;
+    }
+
+    function normalizeWhatsappNumber(phone) {
+      const digits = String(phone || '').replace(/\D/g, '');
+
+      if (!digits) return '';
+      if (digits.length === 8) return `961${digits}`;
+      if (digits.startsWith('0') && digits.length >= 8) return `961${digits.slice(1)}`;
+
+      return digits.length >= 10 ? digits : '';
+    }
+
+    function parseCmsPrice(price) {
+      if (typeof price === 'number' && Number.isFinite(price)) return price;
+
+      const match = String(price || '').replace(',', '.').match(/-?\d+(\.\d+)?/);
+      return match ? Number(match[0]) : 0;
+    }
+
+    function slugifyMenuItem(name, index) {
+      const slug = String(name || '')
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+
+      return `cms-${slug || 'item'}-${index}`;
+    }
+
+    function normalizeCmsMenuItem(item, index) {
+      const name = String(item?.name || '').trim() || `Menu item ${index + 1}`;
+      const description = String(item?.desc || item?.description || '').trim();
+
+      return {
+        id: slugifyMenuItem(name, index),
+        name,
+        category: 'Menu',
+        price: parseCmsPrice(item?.price),
+        description,
+        options: [],
+        nutrition: null,
+        tags: item?.tags || [],
+        image: item?.image || ''
+      };
+    }
+
+    let cmsMenuItems = null;
+
+    function formatCafeNameHtml(name) {
+      return escapeHtml(name).replace(/\s+(?:and|&)\s+/i, ' <span>&amp;</span> ');
+    }
+
+    function applyCmsSettings(settings) {
+      if (!settings || typeof settings !== 'object') return;
+
+      const name = String(settings.name || '').trim();
+      const address = String(settings.address || '').trim();
+      const phoneNumber = normalizeWhatsappNumber(settings.phone);
+      const heroImagePath = String(settings.hero_image || '').trim();
+
+      if (name) {
+        document.querySelectorAll('[data-cms-name]').forEach((element) => {
+          element.textContent = name;
+        });
+        document.querySelectorAll('[data-cms-name-rich]').forEach((element) => {
+          element.innerHTML = formatCafeNameHtml(name);
+        });
+        document.title = `${name} | Coffee, Food & Study Spots in Beirut`;
+      }
+
+      if (address) {
+        branches.downtown.address = address;
+        branches.downtown.exactLocation = address;
+        const downtownLocation = document.querySelector('[data-branch-card="downtown"] span');
+        if (downtownLocation) downtownLocation.textContent = address;
+      }
+
+      if (phoneNumber) {
+        Object.values(branches).forEach((branch) => {
+          branch.whatsappNumber = phoneNumber;
+        });
+      }
+
+      if (heroImagePath) {
+        heroImage.src = heroImagePath;
+        if (name) {
+          heroImage.alt = `${name} cafe hero image`;
+        }
+      }
+
+      updateBranchContent();
+    }
+
+    function applyCmsMenu(menuData) {
+      const items = Array.isArray(menuData?.items)
+        ? menuData.items.map(normalizeCmsMenuItem).filter((item) => item.name)
+        : [];
+
+      if (!items.length) return;
+
+      cmsMenuItems = items;
+      Object.values(branches).forEach((branch) => {
+        branch.menu = cmsMenuItems;
+      });
+      activeCategory = getCategories()[0] || 'Menu';
+      renderMenu();
+      renderCart();
+    }
+
+    async function loadCmsData() {
+      try {
+        const settingsResponse = await fetch('data/setting.json');
+        if (!settingsResponse.ok) throw new Error('Settings fetch failed');
+        applyCmsSettings(await settingsResponse.json());
+      } catch (error) {
+        console.warn('Using fallback settings.', error);
+      }
+
+      try {
+        const menuResponse = await fetch('data/menu.json');
+        if (!menuResponse.ok) throw new Error('Menu fetch failed');
+        applyCmsMenu(await menuResponse.json());
+      } catch (error) {
+        console.warn('Using fallback menu.', error);
+      }
     }
 
     function getBranch() {
@@ -4097,10 +4223,18 @@
       if (checkoutModal.classList.contains('is-open')) closeCheckout();
     });
 
+    heroImage.dataset.fallbackSrc = heroImage.src;
+    heroImage.addEventListener('error', () => {
+      if (heroImage.src !== heroImage.dataset.fallbackSrc) {
+        heroImage.src = heroImage.dataset.fallbackSrc;
+      }
+    });
+
     updateBranchContent();
     syncDeliveryLocationRequirement();
     renderMenu();
     renderCart();
+    loadCmsData();
 
     window.addEventListener('load', () => {
       window.setTimeout(() => {

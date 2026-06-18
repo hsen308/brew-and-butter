@@ -1,4 +1,7 @@
 $html = Get-Content -LiteralPath (Join-Path $PSScriptRoot '..\index.html') -Raw
+$projectRoot = Resolve-Path (Join-Path $PSScriptRoot '..')
+$settingsPath = Join-Path $projectRoot 'data\setting.json'
+$settingsJson = Get-Content -LiteralPath $settingsPath -Raw | ConvertFrom-Json
 $failures = [System.Collections.Generic.List[string]]::new()
 
 function Require-Match([string]$Pattern, [string]$Message) {
@@ -29,6 +32,15 @@ Require-Match 'BREW10' '10 percent coupon code is missing'
 Require-Match 'BREW20' '20 percent coupon code is missing'
 Require-Match 'applyCoupon' 'Coupon apply behavior is missing'
 Require-Match 'couponCode' 'Coupon code input is missing'
+Require-Match "fetch\('data/setting\.json'\)" 'CMS settings fetch is missing'
+Require-Match "fetch\('data/menu\.json'\)" 'CMS menu fetch is missing'
+Require-Match 'loadCmsData' 'CMS data loader is missing'
+Require-Match 'applyCmsSettings' 'CMS settings renderer is missing'
+Require-Match 'applyCmsMenu' 'CMS menu renderer is missing'
+Require-Match 'normalizeCmsMenuItem' 'CMS menu item normalizer is missing'
+Require-Match 'cmsMenuItems' 'CMS menu fallback state is missing'
+Require-Match 'catch' 'CMS fetch needs a fallback path'
+Require-Match 'heroImage' 'Hero image should be replaceable from setting.json'
 Require-Match 'id="branchGate"' 'Missing first-screen branch selector'
 Require-Match 'Downtown Beirut' 'Downtown branch is missing'
 Require-Match 'Mousaytbe' 'Mousaytbe branch is missing'
@@ -115,6 +127,24 @@ Forbid-Match 'productImage|product-media' 'Menu item cards should not show photo
 Forbid-Match "Iced', price: \.5" 'Iced drink option should not cost extra'
 Forbid-Match 'FREEDELIVERY' 'Free delivery coupon should be removed'
 Forbid-Match 'Included' 'Free unselected options should not be labeled Included'
+
+if ($settingsJson.phone -match 'X{2,}' -or [string]::IsNullOrWhiteSpace($settingsJson.phone)) {
+  $failures.Add('CMS setting phone still uses a placeholder')
+}
+
+if ($settingsJson.address -match 'Your Address Here|placeholder' -or [string]::IsNullOrWhiteSpace($settingsJson.address)) {
+  $failures.Add('CMS setting address still uses a placeholder')
+}
+
+if ([string]::IsNullOrWhiteSpace($settingsJson.hero_image)) {
+  $failures.Add('CMS setting hero image is empty')
+} else {
+  $heroPath = $settingsJson.hero_image -replace '^/', ''
+  $resolvedHeroPath = Join-Path $projectRoot $heroPath
+  if (-not (Test-Path -LiteralPath $resolvedHeroPath)) {
+    $failures.Add("CMS setting hero image does not exist: $($settingsJson.hero_image)")
+  }
+}
 
 $doodleCount = ([regex]::Matches($html, '<svg class="doodle')).Count
 if ($doodleCount -lt 8) {
