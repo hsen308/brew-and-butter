@@ -17,17 +17,16 @@ export default async function handler(req, res) {
   const data = await response.json();
   const token = data.access_token;
 
-  const content = `
+  res.setHeader('Content-Type', 'text/html');
+  res.send(`
     <html>
     <body>
     <script>
       (function() {
+        var token = "${token}";
+        var message = 'authorization:github:success:' + JSON.stringify({ token: token });
         function receiveMessage(e) {
-          console.log("receiveMessage %o", e);
-          window.opener.postMessage(
-            'authorization:github:success:${JSON.stringify({ token: "${token}" })}',
-            e.origin
-          );
+          window.opener.postMessage(message, e.origin);
         }
         window.addEventListener("message", receiveMessage, false);
         window.opener.postMessage("authorizing:github", "*");
@@ -35,8 +34,5 @@ export default async function handler(req, res) {
     <\/script>
     </body>
     </html>
-  `;
-
-  res.setHeader('Content-Type', 'text/html');
-  res.send(content);
+  `);
 }

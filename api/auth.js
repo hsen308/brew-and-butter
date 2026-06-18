@@ -1,7 +1,7 @@
 export default function handler(req, res) {
   const params = new URLSearchParams({
     client_id: process.env.GITHUB_CLIENT_ID,
-    scope: 'repo',
+    scope: 'repo user',
     redirect_uri: `https://${req.headers.host}/api/callback`
   });
   res.redirect(`https://github.com/login/oauth/authorize?${params}`);
