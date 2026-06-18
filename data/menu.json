@@ -2,15 +2,135 @@
   "items": [
     {
       "name": "Espresso",
-      "price": "$3",
-      "desc": "Rich and bold single shot",
-      "image": "/photos/espresso.jpg"
+      "price": "$2.50",
+      "desc": "Short, bold, and fast.",
+      "image": ""
     },
     {
-      "name": "Croissant",
-      "price": "$4",
-      "desc": "Buttery fresh baked croissant",
-      "image": "/photos/croissant.jpg"
+      "name": "Americano",
+      "price": "$3.00",
+      "desc": "Espresso opened up with hot water.",
+      "image": ""
+    },
+    {
+      "name": "Cappuccino",
+      "price": "$4.00",
+      "desc": "Espresso, steamed milk, and foam.",
+      "image": ""
+    },
+    {
+      "name": "Flat White",
+      "price": "$4.50",
+      "desc": "Double shot with smooth microfoam.",
+      "image": ""
+    },
+    {
+      "name": "Latte",
+      "price": "$4.50",
+      "desc": "Smooth espresso and milk.",
+      "image": ""
+    },
+    {
+      "name": "Spanish Latte",
+      "price": "$5.00",
+      "desc": "Sweet, creamy, and easy to love.",
+      "image": ""
+    },
+    {
+      "name": "Iced Matcha",
+      "price": "$5.50",
+      "desc": "Bright matcha served cold.",
+      "image": ""
+    },
+    {
+      "name": "Cold Brew",
+      "price": "$5.00",
+      "desc": "Slow steeped, chilled, and clean.",
+      "image": ""
+    },
+    {
+      "name": "Cookie",
+      "price": "$3.00",
+      "desc": "Soft center, golden edge.",
+      "image": ""
+    },
+    {
+      "name": "Butter Croissant",
+      "price": "$3.00",
+      "desc": "Flaky house classic.",
+      "image": ""
+    },
+    {
+      "name": "Pain au Chocolat",
+      "price": "$3.50",
+      "desc": "Buttery layers with chocolate.",
+      "image": ""
+    },
+    {
+      "name": "Cinnamon Roll",
+      "price": "$4.00",
+      "desc": "Warm spice and glaze.",
+      "image": ""
+    },
+    {
+      "name": "Eclair",
+      "price": "$4.50",
+      "desc": "Filled and finished daily.",
+      "image": ""
+    },
+    {
+      "name": "Basque Cheesecake",
+      "price": "$6.00",
+      "desc": "Caramelized top, creamy center.",
+      "image": ""
+    },
+    {
+      "name": "Turkey Croissant",
+      "price": "$6.50",
+      "desc": "Turkey, cheese, greens, and house sauce.",
+      "image": ""
+    },
+    {
+      "name": "Halloumi Pesto Sandwich",
+      "price": "$6.50",
+      "desc": "Grilled halloumi, pesto, tomato, and greens.",
+      "image": ""
+    },
+    {
+      "name": "Chicken Avocado Sandwich",
+      "price": "$7.50",
+      "desc": "Chicken, avocado, lettuce, and sauce.",
+      "image": ""
+    },
+    {
+      "name": "Tuna Melt",
+      "price": "$6.75",
+      "desc": "Tuna, melted cheese, pickles, and toast.",
+      "image": ""
+    },
+    {
+      "name": "Chicken Caesar Bowl",
+      "price": "$9.00",
+      "desc": "Chicken, greens, parmesan, croutons, and Caesar dressing.",
+      "image": ""
+    },
+    {
+      "name": "Tuna Protein Bowl",
+      "price": "$8.50",
+      "desc": "Tuna, egg, corn, greens, and house dressing.",
+      "image": ""
+    },
+    {
+      "name": "Halloumi Quinoa Bowl",
+      "price": "$9.00",
+      "desc": "Halloumi, quinoa, avocado, tomato, and greens.",
+      "image": ""
+    },
+    {
+      "name": "Salmon Avocado Bowl",
+      "price": "$11.00",
+      "desc": "Salmon, avocado, rice, greens, and sesame sauce.",
+      "image": ""
     }
   ]
 }

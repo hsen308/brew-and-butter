@@ -2,6 +2,9 @@ $html = Get-Content -LiteralPath (Join-Path $PSScriptRoot '..\index.html') -Raw
 $projectRoot = Resolve-Path (Join-Path $PSScriptRoot '..')
 $settingsPath = Join-Path $projectRoot 'data\setting.json'
 $settingsJson = Get-Content -LiteralPath $settingsPath -Raw | ConvertFrom-Json
+$menuPath = Join-Path $projectRoot 'data\menu.json'
+$menuJson = Get-Content -LiteralPath $menuPath -Raw | ConvertFrom-Json
+$adminConfig = Get-Content -LiteralPath (Join-Path $projectRoot 'admin\config.yml') -Raw
 $failures = [System.Collections.Generic.List[string]]::new()
 
 function Require-Match([string]$Pattern, [string]$Message) {
@@ -144,6 +147,14 @@ if ([string]::IsNullOrWhiteSpace($settingsJson.hero_image)) {
   if (-not (Test-Path -LiteralPath $resolvedHeroPath)) {
     $failures.Add("CMS setting hero image does not exist: $($settingsJson.hero_image)")
   }
+}
+
+if (-not $menuJson.items -or $menuJson.items.Count -lt 20) {
+  $failures.Add("CMS menu should include the full menu, not demo items only; found $($menuJson.items.Count)")
+}
+
+if ($adminConfig -notmatch 'name:\s*"image".*required:\s*false') {
+  $failures.Add('CMS menu image field should be optional while the public menu is text-only')
 }
 
 $doodleCount = ([regex]::Matches($html, '<svg class="doodle')).Count
