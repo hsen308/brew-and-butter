@@ -985,6 +985,30 @@
       margin-top: 44px;
     }
 
+    .social-proof {
+      display: grid;
+      gap: 10px;
+      margin-top: 26px;
+      padding: 18px;
+      border: 1px solid rgba(255, 253, 247, .3);
+      border-radius: 8px;
+      background: rgba(255, 253, 247, .1);
+    }
+
+    .social-proof strong {
+      color: var(--white);
+      font-size: .84rem;
+      font-weight: 900;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .social-proof span {
+      color: rgba(255, 253, 247, .78);
+      font-size: .95rem;
+      line-height: 1.6;
+    }
+
     .moment {
       position: relative;
       min-width: 0;
@@ -2494,8 +2518,8 @@
           <small>Choose this branch</small>
         </button>
         <button class="branch-card" type="button" data-branch-card="mousaytbe">
-          <strong>Mousaytbe, Beirut</strong>
-          <span>Mousaytbe branch location</span>
+          <strong>Mousaytbe</strong>
+          <span>Mousaytbe, Beirut</span>
           <small>Choose this branch</small>
         </button>
       </div>
@@ -2704,6 +2728,11 @@
             <img src="photos/photo_4_2026-06-15_18-28-18.jpg" alt="Two customers holding Brew and Butter iced coffees" loading="lazy">
             <figcaption>Better together</figcaption>
           </figure>
+        </div>
+
+        <div class="social-proof reveal">
+          <strong>Made for long stays</strong>
+          <span>Free Wi-Fi, study-friendly tables, fresh coffee, and enough food to turn a quick stop into a full work session.</span>
         </div>
       </div>
 
@@ -3342,7 +3371,7 @@
         name: 'Mousaytbe',
         short: 'Mousaytbe',
         area: 'Mousaytbe, Beirut',
-        exactLocation: 'Mousaytbe branch location',
+        exactLocation: 'Mousaytbe, Beirut',
         address: 'Mousaytbe, Beirut',
         neighborhood: 'Mousaytbe',
         hours: BUSINESS_HOURS,
@@ -3570,14 +3599,16 @@
       const activeFamily = getCategoryFamily(activeCategory);
 
       menuFamilyStrip.innerHTML = `
-        <button class="menu-family-card${activeFamily === 'brew' ? ' is-active' : ''}" type="button" data-family="brew">
-          <strong>Brew</strong>
-          <span>drinks</span>
-        </button>
-        <button class="menu-family-card${activeFamily === 'butter' ? ' is-active' : ''}" type="button" data-family="butter">
-          <strong>Butter</strong>
-          <span>food</span>
-        </button>
+        <div class="menu-family-tabs">
+          <button class="menu-family-tab${activeFamily === 'brew' ? ' is-active' : ''}" type="button" data-family="brew">
+            <strong>Brew</strong>
+            <span>drinks</span>
+          </button>
+          <button class="menu-family-tab${activeFamily === 'butter' ? ' is-active' : ''}" type="button" data-family="butter">
+            <strong>Butter</strong>
+            <span>food</span>
+          </button>
+        </div>
       `;
 
       categoryTabs.innerHTML = categories.map((category) => `
@@ -3589,7 +3620,9 @@
       const items = getBranch().menu.filter((item) => item.category === activeCategory);
       menuGrid.innerHTML = items.map((item) => `
         <article class="product-card">
+          ${item.productImage ? `<div class="product-media"><img src="${escapeHtml(item.productImage)}" alt="${escapeHtml(item.name)}" loading="lazy"></div>` : ''}
           <div>
+            ${item.tags?.length ? `<div class="product-tags">${item.tags.map((tag) => `<span class="product-tag">${escapeHtml(tag)}</span>`).join('')}</div>` : ''}
             <h3>${escapeHtml(item.name)}</h3>
             <p>${escapeHtml(item.description)}</p>
             ${nutritionBadges(item)}
@@ -3731,6 +3764,12 @@
         notes: itemNotes.value.trim()
       });
 
+      trackEvent('add_to_cart', {
+        item: currentItem.name,
+        category: currentItem.category,
+        quantity: currentQuantity,
+        value: unitPrice * currentQuantity
+      });
       closeItemModal();
       renderCart();
       openCart();
@@ -3745,7 +3784,7 @@
     }
 
     function getDeliveryFee() {
-      return cart.length ? DELIVERY_FEE : 0;
+      return cart.length && getSelectedDeliveryMode() === 'delivery' ? DELIVERY_FEE : 0;
     }
 
     function getCouponDiscount() {
@@ -3776,13 +3815,18 @@
     }
 
     function renderCart() {
-      cartCount.textContent = String(getCartQuantity());
+      const quantity = getCartQuantity();
+      cartCount.textContent = String(quantity);
+      mobileActionCount.textContent = String(quantity);
       cartSubtotal.textContent = formatPrice(getCartSubtotal());
       deliveryFee.textContent = formatPrice(getDeliveryFee());
       discountValue.textContent = `-${formatPrice(getCouponDiscount())}`;
       discountLine.hidden = !getCouponDiscount();
       cartTotal.textContent = formatPrice(getCartTotal());
       checkoutOpen.disabled = cart.length === 0;
+      if (checkoutModal.classList.contains('is-open')) {
+        renderCheckoutSummary();
+      }
 
       if (!cart.length) {
         cartList.innerHTML = '<p class="empty-cart">Your cart is empty.</p>';
@@ -3831,6 +3875,7 @@
 
       activeCoupon = { code, ...coupon };
       couponMessage.textContent = `${coupon.label} applied.`;
+      trackEvent('coupon_applied', { coupon: code, discount: getCouponDiscount() });
       renderCart();
     }
 
@@ -3848,9 +3893,12 @@
     function openCheckout() {
       if (!cart.length) return;
       checkoutError.textContent = '';
+      syncDeliveryLocationRequirement();
+      renderCheckoutSummary();
       closeCart();
       checkoutModal.classList.add('is-open');
       document.body.classList.add('modal-open');
+      trackEvent('checkout_opened', { value: getCartTotal(), fulfillment: getFulfillmentLabel() });
     }
 
     function closeCheckout() {
@@ -3860,12 +3908,15 @@
 
     function buildWhatsAppMessage(customer) {
       const branch = getBranch();
+      const modeLabel = getFulfillmentLabel(customer.deliveryMode);
       const lines = [
         'Brew & Butter Order',
         `Branch: ${branch.name}`,
+        `Fulfillment: ${modeLabel}`,
         `Customer: ${customer.firstName} ${customer.lastName}`,
         `Phone: ${customer.phone}`,
-        `Location: ${customer.location}`,
+        `Payment: ${PAYMENT_METHOD}`,
+        customer.deliveryMode === 'delivery' ? `Location: ${customer.location}` : `Pickup branch: ${branch.name} - ${branch.address}`,
         '',
         'Items:'
       ];
@@ -3956,15 +4007,48 @@
       });
     });
 
-    [cartOpen, cartOpenSecondary].forEach((button) => {
+    [cartOpen, cartOpenSecondary, mobileActionCart].forEach((button) => {
       button.addEventListener('click', openCart);
     });
 
     websiteOrderChoice.addEventListener('click', () => {
+      trackEvent('website_order_clicked');
       menuGrid.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
     });
+
+    mobileActionOrder.addEventListener('click', () => {
+      trackEvent('mobile_order_clicked');
+    });
+
+    [totersOrderLink, heroTotersLink].forEach((link) => {
+      link.addEventListener('click', () => {
+        trackEvent('toters_clicked');
+      });
+    });
+
+    [directionsLink, heroDirectionsLink, mobileActionDirections].forEach((link) => {
+      link.addEventListener('click', () => {
+        trackEvent('directions_clicked');
+      });
+    });
+
+    [whatsappBranchLink, mobileActionWhatsapp].forEach((link) => {
+      link.addEventListener('click', () => {
+        trackEvent('branch_whatsapp_clicked');
+      });
+    });
+
     continueShopping.addEventListener('click', closeCart);
     applyCouponButton.addEventListener('click', applyCoupon);
+
+    checkoutForm.querySelectorAll('input[name="deliveryMode"]').forEach((input) => {
+      input.addEventListener('change', () => {
+        syncDeliveryLocationRequirement();
+        renderCart();
+        renderCheckoutSummary();
+        trackEvent('fulfillment_changed', { fulfillment: getFulfillmentLabel() });
+      });
+    });
 
     couponCode.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
@@ -3975,6 +4059,7 @@
 
     mapOpenLink.addEventListener('click', (event) => {
       event.preventDefault();
+      trackEvent('map_card_clicked');
       openBranchMap();
     });
 
@@ -4053,6 +4138,7 @@
 
       const formData = new FormData(checkoutForm);
       const customer = {
+        deliveryMode: getSelectedDeliveryMode(),
         firstName: String(formData.get('firstName') || '').trim(),
         lastName: String(formData.get('lastName') || '').trim(),
         phone: String(formData.get('customerPhone') || '').trim(),
@@ -4060,8 +4146,10 @@
         notes: String(formData.get('checkoutNotes') || '').trim()
       };
 
-      if (!customer.firstName || !customer.lastName || !customer.phone || !customer.location) {
-        checkoutError.textContent = 'Please fill in your name, phone number, and location.';
+      if (!customer.firstName || !customer.lastName || !customer.phone || (customer.deliveryMode === 'delivery' && !customer.location)) {
+        checkoutError.textContent = customer.deliveryMode === 'delivery'
+          ? 'Please fill in your name, phone number, and delivery location.'
+          : 'Please fill in your name and phone number.';
         return;
       }
 
@@ -4071,6 +4159,11 @@
       }
 
       checkoutError.textContent = '';
+      trackEvent('whatsapp_order', {
+        fulfillment: getFulfillmentLabel(customer.deliveryMode),
+        value: getCartTotal(),
+        coupon: activeCoupon ? activeCoupon.code : ''
+      });
       window.open(getWhatsAppUrl(buildWhatsAppMessage(customer)), '_blank', 'noopener');
     });
 
@@ -4083,6 +4176,7 @@
     });
 
     updateBranchContent();
+    syncDeliveryLocationRequirement();
     renderMenu();
     renderCart();
 
