@@ -1,3 +1,6 @@
 Thumbs.db
 .DS_Store
 .superpowers/
+
+.vercel
+.env*.local

@@ -1,0 +1,16 @@
+{
+  "items": [
+    {
+      "name": "Espresso",
+      "price": "$3",
+      "desc": "Rich and bold single shot",
+      "image": "/photos/espresso.jpg"
+    },
+    {
+      "name": "Croissant",
+      "price": "$4",
+      "desc": "Buttery fresh baked croissant",
+      "image": "/photos/croissant.jpg"
+    }
+  ]
+}

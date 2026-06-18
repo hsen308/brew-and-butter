@@ -378,8 +378,10 @@
       width: 48px;
       height: 48px;
       display: none;
-      border: 0;
-      background: transparent;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: var(--white);
+      box-shadow: 0 10px 24px rgba(36, 23, 15, .14);
       cursor: pointer;
     }
 
@@ -408,6 +410,11 @@
     .nav-toggle[aria-expanded="true"] span:last-child {
       top: 24px;
       transform: rotate(-45deg);
+    }
+
+    .nav-toggle[aria-expanded="true"] {
+      background: var(--ink);
+      color: var(--white);
     }
 
     #hero {
@@ -1510,6 +1517,33 @@
       white-space: nowrap;
     }
 
+    .nutrition-facts {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid rgba(36, 23, 15, .18);
+      border-radius: 8px;
+      background: #fff6df;
+    }
+
+    .nutrition-facts[hidden] {
+      display: none;
+    }
+
+    .nutrition-facts > span {
+      color: var(--muted);
+      font-size: .74rem;
+      font-weight: 900;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .nutrition-values {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
     .product-meta {
       display: flex;
       align-items: center;
@@ -1614,9 +1648,9 @@
     }
 
     .choice {
-      display: flex;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
       align-items: center;
-      justify-content: space-between;
       gap: 12px;
       min-height: 48px;
       padding: 11px 13px;
@@ -1627,6 +1661,16 @@
       cursor: pointer;
     }
 
+    .choice-copy {
+      display: grid;
+      gap: 3px;
+      min-width: 0;
+    }
+
+    .choice-copy > span {
+      overflow-wrap: anywhere;
+    }
+
     .choice input {
       accent-color: var(--red);
     }
@@ -1634,6 +1678,7 @@
     .choice small {
       color: var(--muted);
       font-weight: 800;
+      line-height: 1.35;
     }
 
     .quantity-row,
@@ -1701,6 +1746,7 @@
       background: rgba(36, 23, 15, .48);
       opacity: 0;
       visibility: hidden;
+      overscroll-behavior: contain;
       transition: opacity .2s ease, visibility .2s ease;
     }
 
@@ -1712,8 +1758,10 @@
     .cart-panel {
       width: min(100%, 470px);
       height: 100%;
+      min-height: 0;
       display: grid;
-      grid-template-rows: auto 1fr auto;
+      grid-template-rows: auto minmax(0, 1fr) minmax(0, auto);
+      overflow: hidden;
       background: var(--white);
       box-shadow: -20px 0 60px rgba(0, 0, 0, .22);
       transform: translateX(100%);
@@ -1728,7 +1776,9 @@
       display: grid;
       align-content: start;
       gap: 12px;
+      min-height: 0;
       overflow: auto;
+      overscroll-behavior: contain;
       padding: 18px;
     }
 
@@ -1773,6 +1823,9 @@
     .cart-footer {
       display: grid;
       gap: 14px;
+      max-height: 48svh;
+      overflow-y: auto;
+      overscroll-behavior: contain;
       padding: 18px;
       border-top: 1px solid var(--line);
       background: var(--white);
@@ -1973,8 +2026,11 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 12px;
+        min-height: 100svh;
+        overflow-y: auto;
+        overscroll-behavior: contain;
         padding: 110px max(24px, 8vw) 50px;
         background: var(--paper);
         opacity: 0;
@@ -2508,6 +2564,13 @@
         <p id="itemModalDescription" class="section-copy"></p>
         <div id="itemModalNutrition" class="nutrition-row"></div>
         <div id="modalOptions"></div>
+        <div id="itemModalFinalNutrition" class="nutrition-facts" hidden>
+          <span>Final nutrition facts</span>
+          <div class="nutrition-values">
+            <strong id="finalNutritionCalories" class="nutrition-pill">0 cal</strong>
+            <strong id="finalNutritionProtein" class="nutrition-pill">0g protein</strong>
+          </div>
+        </div>
         <div id="itemNotesField" class="field">
           <label for="itemNotes">Notes</label>
           <textarea id="itemNotes" name="itemNotes"></textarea>
@@ -2649,6 +2712,9 @@
     const itemModalCategory = document.getElementById('itemModalCategory');
     const itemModalDescription = document.getElementById('itemModalDescription');
     const itemModalNutrition = document.getElementById('itemModalNutrition');
+    const itemModalFinalNutrition = document.getElementById('itemModalFinalNutrition');
+    const finalNutritionCalories = document.getElementById('finalNutritionCalories');
+    const finalNutritionProtein = document.getElementById('finalNutritionProtein');
     const modalOptions = document.getElementById('modalOptions');
     const itemNotesField = document.getElementById('itemNotesField');
     const itemNotes = document.getElementById('itemNotes');
@@ -2848,8 +2914,8 @@
         type: 'radio',
         choices: [
           { label: 'Sourdough', price: 0 },
-          { label: 'Croissant', price: .75 },
-          { label: 'Wrap', price: 0 }
+          { label: 'Croissant', price: .75, nutritionDelta: { calories: 110, protein: 2 } },
+          { label: 'Wrap', price: 0, nutritionDelta: { calories: -40, protein: -1 } }
         ]
       },
       {
@@ -2857,9 +2923,9 @@
         label: 'Add-ons',
         type: 'checkbox',
         choices: [
-          { label: 'Extra cheese', price: 1 },
-          { label: 'Avocado', price: 1.25 },
-          { label: 'Extra protein', price: 2 }
+          { label: 'Extra cheese', price: 1, nutritionDelta: { calories: 90, protein: 6 } },
+          { label: 'Avocado', price: 1.25, nutritionDelta: { calories: 80, protein: 1 } },
+          { label: 'Extra protein', price: 2, nutritionDelta: { calories: 150, protein: 22 } }
         ]
       },
       {
@@ -2867,10 +2933,10 @@
         label: 'Remove stuff',
         type: 'checkbox',
         choices: [
-          { label: 'No tomato', price: 0 },
-          { label: 'No pickles', price: 0 },
-          { label: 'No sauce', price: 0 },
-          { label: 'No lettuce', price: 0 }
+          { label: 'No tomato', price: 0, nutritionDelta: { calories: -10, protein: 0 } },
+          { label: 'No pickles', price: 0, nutritionDelta: { calories: -5, protein: 0 } },
+          { label: 'No sauce', price: 0, nutritionDelta: { calories: -90, protein: 0 } },
+          { label: 'No lettuce', price: 0, nutritionDelta: { calories: -5, protein: 0 } }
         ]
       }
     ];
@@ -2882,7 +2948,7 @@
         type: 'radio',
         choices: [
           { label: 'Regular bowl', price: 0 },
-          { label: 'Large bowl', price: 3 }
+          { label: 'Large bowl', price: 3, nutritionDelta: { calories: 180, protein: 8 } }
         ]
       },
       {
@@ -2890,10 +2956,10 @@
         label: 'Add-ons',
         type: 'checkbox',
         choices: [
-          { label: 'Extra chicken', price: 2.5 },
-          { label: 'Boiled egg', price: 1.25 },
-          { label: 'Avocado', price: 1.5 },
-          { label: 'Feta', price: 1 }
+          { label: 'Extra chicken', price: 2.5, nutritionDelta: { calories: 160, protein: 30 } },
+          { label: 'Boiled egg', price: 1.25, nutritionDelta: { calories: 75, protein: 6 } },
+          { label: 'Avocado', price: 1.5, nutritionDelta: { calories: 80, protein: 1 } },
+          { label: 'Feta', price: 1, nutritionDelta: { calories: 70, protein: 4 } }
         ]
       },
       {
@@ -2901,9 +2967,9 @@
         label: 'Remove stuff',
         type: 'checkbox',
         choices: [
-          { label: 'No onions', price: 0 },
-          { label: 'No tomatoes', price: 0 },
-          { label: 'No corn', price: 0 },
+          { label: 'No onions', price: 0, nutritionDelta: { calories: -10, protein: 0 } },
+          { label: 'No tomatoes', price: 0, nutritionDelta: { calories: -20, protein: -1 } },
+          { label: 'No corn', price: 0, nutritionDelta: { calories: -60, protein: -2 } },
           { label: 'Dressing on the side', price: 0 }
         ]
       }
@@ -3017,15 +3083,45 @@
       return getCategories().filter((category) => getCategoryFamily(category) === family);
     }
 
+    function formatNutritionValue(value) {
+      const rounded = Math.round(Number(value) * 10) / 10;
+      return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
+    }
+
+    function nutritionPills(nutrition) {
+      return `
+        <span class="nutrition-pill">${formatNutritionValue(nutrition.calories)} cal</span>
+        <span class="nutrition-pill">${formatNutritionValue(nutrition.protein)}g protein</span>
+      `;
+    }
+
     function nutritionBadges(item) {
       if (!item.nutrition) return '';
 
       return `
         <div class="nutrition-row" aria-label="Nutrition information">
-          <span class="nutrition-pill">${item.nutrition.calories} cal</span>
-          <span class="nutrition-pill">${item.nutrition.protein}g protein</span>
+          ${nutritionPills(item.nutrition)}
         </div>
       `;
+    }
+
+    function formatSignedNutrition(value, unit) {
+      if (!Number(value)) return '';
+      const sign = Number(value) > 0 ? '+' : '-';
+      return `${sign}${formatNutritionValue(Math.abs(Number(value)))}${unit}`;
+    }
+
+    function nutritionDeltaLabel(choice) {
+      if (!choice.nutritionDelta) return '';
+
+      return [
+        formatSignedNutrition(choice.nutritionDelta.calories, ' cal'),
+        formatSignedNutrition(choice.nutritionDelta.protein, 'g protein')
+      ].filter(Boolean).join(' / ');
+    }
+
+    function nutritionSummary(nutrition) {
+      return `${formatNutritionValue(nutrition.calories)} cal / ${formatNutritionValue(nutrition.protein)}g protein`;
     }
 
     function setMenu(open) {
@@ -3164,13 +3260,17 @@
               const inputType = group.type;
               const inputName = group.type === 'radio' ? optionInputName(group) : `${optionInputName(group)}-${index}`;
               const checked = group.type === 'radio' && index === 0 ? ' checked' : '';
-              const priceText = choice.price ? `+${formatPrice(choice.price)}` : 'Included';
+              const priceText = choice.price ? `+${formatPrice(choice.price)}` : '';
+              const deltaText = nutritionDeltaLabel(choice);
+              const metaText = [priceText, deltaText].filter(Boolean).join(' | ');
 
               return `
                 <label class="choice">
-                  <span>${escapeHtml(choice.label)}</span>
-                  <small>${priceText}</small>
-                  <input type="${inputType}" name="${escapeHtml(inputName)}" data-label="${escapeHtml(choice.label)}" data-price="${choice.price}"${checked}>
+                  <span class="choice-copy">
+                    <span>${escapeHtml(choice.label)}</span>
+                    ${metaText ? `<small>${escapeHtml(metaText)}</small>` : ''}
+                  </span>
+                  <input type="${inputType}" name="${escapeHtml(inputName)}" data-label="${escapeHtml(choice.label)}" data-price="${choice.price}" data-calories="${choice.nutritionDelta?.calories || 0}" data-protein="${choice.nutritionDelta?.protein || 0}"${checked}>
                 </label>
               `;
             }).join('')}
@@ -3189,10 +3289,36 @@
       }, currentItem ? currentItem.price : 0);
     }
 
+    function calculateCurrentNutrition() {
+      if (!currentItem || !currentItem.nutrition) return null;
+
+      return selectedOptionInputs().reduce((total, input) => ({
+        calories: total.calories + Number(input.dataset.calories || 0),
+        protein: total.protein + Number(input.dataset.protein || 0)
+      }), {
+        calories: currentItem.nutrition.calories,
+        protein: currentItem.nutrition.protein
+      });
+    }
+
+    function updateFinalNutrition() {
+      const nutrition = calculateCurrentNutrition();
+
+      if (!nutrition) {
+        itemModalFinalNutrition.hidden = true;
+        return;
+      }
+
+      finalNutritionCalories.textContent = `${formatNutritionValue(nutrition.calories)} cal`;
+      finalNutritionProtein.textContent = `${formatNutritionValue(nutrition.protein)}g protein`;
+      itemModalFinalNutrition.hidden = false;
+    }
+
     function updateItemTotal() {
       const unitPrice = calculateCurrentUnitPrice();
       itemQty.textContent = String(currentQuantity);
       itemModalTotal.textContent = formatPrice(unitPrice * currentQuantity);
+      updateFinalNutrition();
     }
 
     function openItemModal(productId) {
@@ -3204,7 +3330,9 @@
       itemModalCategory.textContent = item.category;
       itemModalTitle.textContent = item.name;
       itemModalDescription.textContent = item.description;
-      itemModalNutrition.innerHTML = nutritionBadges(item);
+      itemModalNutrition.innerHTML = item.nutrition ? nutritionPills(item.nutrition) : '';
+      itemModalNutrition.hidden = !item.nutrition;
+      itemModalFinalNutrition.hidden = true;
       itemNotes.value = '';
       itemNotesField.hidden = item.options.length === 0;
       renderItemOptions(item);
@@ -3239,6 +3367,7 @@
         quantity: currentQuantity,
         unitPrice,
         options: selectedOptionSummary(),
+        nutrition: calculateCurrentNutrition(),
         notes: itemNotes.value.trim()
       });
 
@@ -3277,6 +3406,15 @@
       return cart.reduce((total, item) => total + item.quantity, 0);
     }
 
+    function getLineNutrition(item) {
+      if (!item.nutrition) return null;
+
+      return {
+        calories: item.nutrition.calories * item.quantity,
+        protein: item.nutrition.protein * item.quantity
+      };
+    }
+
     function renderCart() {
       cartCount.textContent = String(getCartQuantity());
       cartSubtotal.textContent = formatPrice(getCartSubtotal());
@@ -3296,6 +3434,7 @@
           <div>
             <strong>${escapeHtml(item.name)}</strong>
             ${item.options.length ? `<small>${escapeHtml(item.options.join(', '))}</small>` : ''}
+            ${item.nutrition ? `<small>Nutrition: ${escapeHtml(nutritionSummary(getLineNutrition(item)))}</small>` : ''}
             ${item.notes ? `<small>Note: ${escapeHtml(item.notes)}</small>` : ''}
           </div>
           <div class="cart-item-actions">
@@ -3375,6 +3514,9 @@
         lines.push(`${index + 1}. ${item.quantity} x ${item.name} - ${formatPrice(item.unitPrice * item.quantity)}`);
         if (item.options.length) {
           lines.push(`   Options: ${item.options.join(', ')}`);
+        }
+        if (item.nutrition) {
+          lines.push(`   Nutrition: ${nutritionSummary(getLineNutrition(item))}`);
         }
         if (item.notes) {
           lines.push(`   Note: ${item.notes}`);

@@ -1,0 +1,34 @@
+backend:
+  name: github
+  repo: hsen308/brew-and-butter
+  branch: main
+  base_url: https://brew-and-butter.vercel.app
+  auth_endpoint: /api/auth
+
+media_folder: "photos"
+public_folder: "/photos"
+
+collections:
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - name: "general"
+        label: "General Info"
+        file: "data/setting.json"
+        fields:
+          - { label: "Cafe Name", name: "name", widget: "string" }
+          - { label: "Phone Number", name: "phone", widget: "string" }
+          - { label: "Address", name: "address", widget: "string" }
+          - { label: "Hero Image", name: "hero_image", widget: "image" }
+      - name: "menu"
+        label: "Menu"
+        file: "data/menu.json"
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Item Name", name: "name", widget: "string" }
+              - { label: "Price", name: "price", widget: "string" }
+              - { label: "Description", name: "desc", widget: "string" }
+              - { label: "Image", name: "image", widget: "image" }
