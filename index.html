@@ -765,49 +765,6 @@
       gap: 22px;
     }
 
-    .menu-photo-strip {
-      display: grid;
-      grid-template-columns: 1fr 1.12fr 1fr;
-      gap: 12px;
-      margin: -6px 0 32px;
-    }
-
-    .menu-photo-strip figure {
-      position: relative;
-      min-width: 0;
-      overflow: hidden;
-      border: 7px solid var(--white);
-      border-radius: 16px;
-      background: var(--white);
-      box-shadow: 0 16px 38px rgba(36, 23, 15, .1);
-    }
-
-    .menu-photo-strip figure:nth-child(1) {
-      transform: rotate(-1.4deg) translateY(8px);
-    }
-
-    .menu-photo-strip figure:nth-child(2) {
-      z-index: 1;
-      transform: rotate(.8deg);
-    }
-
-    .menu-photo-strip figure:nth-child(3) {
-      transform: rotate(1.5deg) translateY(9px);
-    }
-
-    .menu-photo-strip img {
-      width: 100%;
-      height: clamp(150px, 18vw, 225px);
-      display: block;
-      object-fit: cover;
-      transition: transform .7s var(--ease), filter .7s ease;
-    }
-
-    .menu-photo-strip figure:hover img {
-      filter: saturate(1.08);
-      transform: scale(1.045);
-    }
-
     .menu-column {
       position: relative;
       min-width: 0;
@@ -1617,19 +1574,6 @@
       box-shadow: 0 14px 32px rgba(36, 23, 15, .06);
     }
 
-    .product-media {
-      position: relative;
-      overflow: hidden;
-      border-radius: 8px;
-      background: var(--paper-deep);
-    }
-
-    .product-media img {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      object-fit: cover;
-    }
-
     .product-tags {
       display: flex;
       flex-wrap: wrap;
@@ -2361,21 +2305,6 @@
         gap: 16px;
       }
 
-      .menu-photo-strip {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 6px;
-        margin-bottom: 24px;
-      }
-
-      .menu-photo-strip figure {
-        border-width: 4px;
-        border-radius: 11px;
-      }
-
-      .menu-photo-strip img {
-        height: 118px;
-      }
-
       .menu-column {
         padding: 24px 20px;
       }
@@ -2674,12 +2603,6 @@
             <h2 id="menu-title" class="display section-title">Pick. Edit. Send.</h2>
           </div>
           <p class="section-copy">Choose a branch, customize each item, review the cart, then send the finished order through WhatsApp.</p>
-        </div>
-
-        <div class="menu-photo-strip reveal" aria-label="Cafe favorites">
-          <figure><img src="photos/photo_5_2026-06-15_18-28-18.jpg" alt="Fresh pastry served at Brew and Butter" loading="lazy"></figure>
-          <figure><img src="photos/photo_1_2026-06-15_18-28-18.jpg" alt="Pink iced latte in a Brew and Butter cup" loading="lazy"></figure>
-          <figure><img src="photos/photo_3_2026-06-15_18-28-18.jpg" alt="Two colorful iced drinks ready to serve" loading="lazy"></figure>
         </div>
 
         <div class="active-branch" aria-live="polite">
@@ -3320,15 +3243,15 @@
       product('americano', 'Americano', 'Coffee', 3, 'Espresso opened up with hot water.', americanoOptions),
       product('cappuccino', 'Cappuccino', 'Coffee', 4, 'Espresso, steamed milk, and foam.', milkCoffeeOptions),
       product('flat-white', 'Flat White', 'Coffee', 4.5, 'Double shot with smooth microfoam.', milkCoffeeOptions),
-      product('latte', 'Latte', 'Coffee', 4.5, 'Smooth espresso and milk.', milkCoffeeOptions, null, { tags: ['Popular'], productImage: 'photos/photo_1_2026-06-15_18-28-18.jpg' }),
+      product('latte', 'Latte', 'Coffee', 4.5, 'Smooth espresso and milk.', milkCoffeeOptions, null, { tags: ['Popular'] }),
       product('spanish-latte', 'Spanish Latte', 'Coffee', 5, 'Sweet, creamy, and easy to love.', milkCoffeeOptions),
-      product('iced-matcha', 'Iced Matcha', 'Coffee', 5.5, 'Bright matcha served cold.', matchaOptions, null, { tags: ['Popular'], productImage: 'photos/photo_3_2026-06-15_18-28-18.jpg' }),
+      product('iced-matcha', 'Iced Matcha', 'Coffee', 5.5, 'Bright matcha served cold.', matchaOptions, null, { tags: ['Popular'] }),
       product('cold-brew', 'Cold Brew', 'Coffee', 5, 'Slow steeped, chilled, and clean.', coldBrewOptions)
     ];
 
     const pastryItems = [
       product('cookie', 'Cookie', 'Pastries', 3, 'Soft center, golden edge.', cookieOptions),
-      product('butter-croissant', 'Butter Croissant', 'Pastries', 3, 'Flaky house classic.', simplePastryOptions, null, { tags: ['Popular'], productImage: 'photos/photo_5_2026-06-15_18-28-18.jpg' }),
+      product('butter-croissant', 'Butter Croissant', 'Pastries', 3, 'Flaky house classic.', simplePastryOptions, null, { tags: ['Popular'] }),
       product('pain-au-chocolat', 'Pain au Chocolat', 'Pastries', 3.5, 'Buttery layers with chocolate.', simplePastryOptions),
       product('cinnamon-roll', 'Cinnamon Roll', 'Pastries', 4, 'Warm spice and glaze.', simplePastryOptions),
       product('eclair', 'Eclair', 'Pastries', 4.5, 'Filled and finished daily.', simplePastryOptions),
@@ -3338,12 +3261,12 @@
     const sandwichItems = [
       product('turkey-croissant', 'Turkey Croissant', 'Sandwiches', 6.5, 'Turkey, cheese, greens, and house sauce.', sandwichOptions, { calories: 520, protein: 29 }),
       product('halloumi-pesto', 'Halloumi Pesto Sandwich', 'Sandwiches', 6.5, 'Grilled halloumi, pesto, tomato, and greens.', sandwichOptions, { calories: 610, protein: 24 }),
-      product('chicken-avocado', 'Chicken Avocado Sandwich', 'Sandwiches', 7.5, 'Chicken, avocado, lettuce, and sauce.', sandwichOptions, { calories: 640, protein: 38 }, { tags: ['Popular', 'High protein'], productImage: 'photos/brunch.JPG' }),
+      product('chicken-avocado', 'Chicken Avocado Sandwich', 'Sandwiches', 7.5, 'Chicken, avocado, lettuce, and sauce.', sandwichOptions, { calories: 640, protein: 38 }, { tags: ['Popular', 'High protein'] }),
       product('tuna-melt', 'Tuna Melt', 'Sandwiches', 6.75, 'Tuna, melted cheese, pickles, and toast.', sandwichOptions, { calories: 560, protein: 34 })
     ];
 
     const bowlItems = [
-      product('chicken-caesar-bowl', 'Chicken Caesar Bowl', 'Powerbowls', 9, 'Chicken, greens, parmesan, croutons, and Caesar dressing.', bowlOptions, { calories: 690, protein: 46 }, { tags: ['High protein'], productImage: 'photos/brunch.JPG' }),
+      product('chicken-caesar-bowl', 'Chicken Caesar Bowl', 'Powerbowls', 9, 'Chicken, greens, parmesan, croutons, and Caesar dressing.', bowlOptions, { calories: 690, protein: 46 }, { tags: ['High protein'] }),
       product('tuna-protein-bowl', 'Tuna Protein Bowl', 'Powerbowls', 8.5, 'Tuna, egg, corn, greens, and house dressing.', bowlOptions, { calories: 620, protein: 42 }, { tags: ['High protein'] }),
       product('halloumi-quinoa-bowl', 'Halloumi Quinoa Bowl', 'Powerbowls', 9, 'Halloumi, quinoa, avocado, tomato, and greens.', bowlOptions, { calories: 740, protein: 31 }),
       product('salmon-avocado-bowl', 'Salmon Avocado Bowl', 'Powerbowls', 11, 'Salmon, avocado, rice, greens, and sesame sauce.', bowlOptions, { calories: 780, protein: 44 }, { tags: ['High protein'] })
@@ -3620,7 +3543,6 @@
       const items = getBranch().menu.filter((item) => item.category === activeCategory);
       menuGrid.innerHTML = items.map((item) => `
         <article class="product-card">
-          ${item.productImage ? `<div class="product-media"><img src="${escapeHtml(item.productImage)}" alt="${escapeHtml(item.name)}" loading="lazy"></div>` : ''}
           <div>
             ${item.tags?.length ? `<div class="product-tags">${item.tags.map((tag) => `<span class="product-tag">${escapeHtml(tag)}</span>`).join('')}</div>` : ''}
             <h3>${escapeHtml(item.name)}</h3>
