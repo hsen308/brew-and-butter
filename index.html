@@ -44,6 +44,10 @@
       margin: 0;
     }
 
+    [hidden] {
+      display: none !important;
+    }
+
     html {
       scroll-behavior: smooth;
       scroll-padding-top: 88px;
@@ -1044,6 +1048,13 @@
       filter: sepia(.18) saturate(.78) contrast(.96);
     }
 
+    .map-open-link {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      cursor: pointer;
+    }
+
     .map-pin {
       position: absolute;
       top: 24px;
@@ -1412,6 +1423,14 @@
       white-space: nowrap;
     }
 
+    .order-choice {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin: 12px 0 18px;
+    }
+
     .category-tabs {
       display: flex;
       gap: 10px;
@@ -1466,6 +1485,29 @@
       color: var(--muted);
       font-size: .9rem;
       line-height: 1.5;
+    }
+
+    .nutrition-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .nutrition-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 6px 10px;
+      border: 1px solid rgba(36, 23, 15, .16);
+      border-radius: 999px;
+      background: #fff6df;
+      color: var(--ink);
+      font-size: .74rem;
+      font-weight: 900;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      white-space: nowrap;
     }
 
     .product-meta {
@@ -1734,6 +1776,67 @@
       padding: 18px;
       border-top: 1px solid var(--line);
       background: var(--white);
+    }
+
+    .coupon-box {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffaf0;
+    }
+
+    .coupon-box label {
+      font-size: .74rem;
+      font-weight: 900;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .coupon-entry {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+    }
+
+    .coupon-entry input {
+      min-height: 42px;
+      min-width: 0;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--ink);
+      font: inherit;
+      text-transform: uppercase;
+    }
+
+    .coupon-message {
+      min-height: 18px;
+      color: var(--muted);
+      font-size: .82rem;
+      font-weight: 800;
+    }
+
+    .total-lines {
+      display: grid;
+      gap: 7px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    .total-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: .9rem;
+      font-weight: 800;
+    }
+
+    .total-line--discount {
+      color: var(--red);
     }
 
     .empty-cart {
@@ -2094,7 +2197,6 @@
       <div class="branch-gate-head">
         <p class="eyebrow">Brew &amp; Butter</p>
         <h2 id="branchGateTitle" class="display">Choose your branch.</h2>
-        <p>Pick the cafe you want to order from. Each branch has its own menu and WhatsApp order summary.</p>
       </div>
       <div class="branch-cards">
         <button class="branch-card" type="button" data-branch-card="downtown">
@@ -2244,6 +2346,10 @@
         </div>
 
         <div id="menuFamilyStrip" class="menu-family-strip" aria-label="Menu families"></div>
+        <div class="order-choice" aria-label="Choose how to order">
+          <button id="websiteOrderChoice" class="button" type="button">Order from website</button>
+          <a id="totersOrderLink" class="button button--outline" href="https://totersapp.com/nVnd" target="_blank" rel="noopener">Order on Toters</a>
+        </div>
         <div id="categoryTabs" class="category-tabs" aria-label="Menu categories"></div>
         <div id="menuGrid" class="menu-grid" aria-live="polite"></div>
 
@@ -2322,6 +2428,7 @@
 
           <div class="visit-actions">
             <a id="directionsLink" class="button" href="https://maps.app.goo.gl/ivsNw6WE26BhJt158" target="_blank" rel="noopener">Get directions <span aria-hidden="true">&nearr;</span></a>
+            <a id="whatsappBranchLink" class="button button--outline" href="https://wa.me/96170786131" target="_blank" rel="noopener">WhatsApp branch</a>
             <button id="branchSwitchVisit" class="button button--outline" type="button">Change branch</button>
           </div>
 
@@ -2346,6 +2453,7 @@
             referrerpolicy="no-referrer-when-downgrade"
             src="https://www.google.com/maps?q=Brew%20and%20Butter%20Riad%20El%20Solh%20Beirut&output=embed">
           </iframe>
+          <a id="mapOpenLink" class="map-open-link" href="https://maps.app.goo.gl/ivsNw6WE26BhJt158" target="_blank" rel="noopener" aria-label="Open this branch in Google Maps"></a>
         </div>
       </div>
     </section>
@@ -2398,8 +2506,9 @@
       </div>
       <div class="modal-body">
         <p id="itemModalDescription" class="section-copy"></p>
+        <div id="itemModalNutrition" class="nutrition-row"></div>
         <div id="modalOptions"></div>
-        <div class="field">
+        <div id="itemNotesField" class="field">
           <label for="itemNotes">Notes</label>
           <textarea id="itemNotes" name="itemNotes"></textarea>
         </div>
@@ -2428,10 +2537,24 @@
       </div>
       <div id="cartList" class="cart-list"></div>
       <div class="cart-footer">
+        <div class="coupon-box">
+          <label for="couponCode">Coupon code</label>
+          <div class="coupon-entry">
+            <input id="couponCode" name="couponCode" autocomplete="off" aria-label="Coupon code">
+            <button id="applyCoupon" class="button button--outline" type="button">Apply</button>
+          </div>
+          <p id="couponMessage" class="coupon-message" aria-live="polite"></p>
+        </div>
+        <div class="total-lines">
+          <div class="total-line"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
+          <div class="total-line"><span>Delivery</span><span id="deliveryFee">$0.00</span></div>
+          <div id="discountLine" class="total-line total-line--discount" hidden><span>Coupon</span><span id="discountValue">-$0.00</span></div>
+        </div>
         <div class="cart-total">
           <span>Estimated total</span>
           <strong id="cartTotal" class="cart-total-value">$0.00</strong>
         </div>
+        <button id="continueShopping" class="button button--outline" type="button">Continue shopping</button>
         <button id="checkoutOpen" class="button" type="button">Checkout</button>
       </div>
     </div>
@@ -2476,7 +2599,20 @@
   </section>
 
   <script>
-    const WHATSAPP_NUMBER = "";
+    const WHATSAPP_NUMBER = "96170786131";
+    const DELIVERY_FEE = 2;
+    const couponCodes = {
+      BREW10: {
+        label: '10% off items',
+        type: 'percent',
+        value: 10
+      },
+      BREW20: {
+        label: '20% off items',
+        type: 'percent',
+        value: 20
+      }
+    };
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const loader = document.getElementById('loader');
     const header = document.getElementById('header');
@@ -2491,8 +2627,18 @@
     const cartDrawer = document.getElementById('cartDrawer');
     const cartList = document.getElementById('cartList');
     const cartCount = document.getElementById('cartCount');
+    const cartSubtotal = document.getElementById('cartSubtotal');
+    const deliveryFee = document.getElementById('deliveryFee');
+    const discountLine = document.getElementById('discountLine');
+    const discountValue = document.getElementById('discountValue');
     const cartTotal = document.getElementById('cartTotal');
     const checkoutOpen = document.getElementById('checkoutOpen');
+    const continueShopping = document.getElementById('continueShopping');
+    const couponCode = document.getElementById('couponCode');
+    const applyCouponButton = document.getElementById('applyCoupon');
+    const couponMessage = document.getElementById('couponMessage');
+    const websiteOrderChoice = document.getElementById('websiteOrderChoice');
+    const totersOrderLink = document.getElementById('totersOrderLink');
     const checkoutModal = document.getElementById('checkoutModal');
     const checkoutClose = document.getElementById('checkoutClose');
     const checkoutForm = document.getElementById('checkoutForm');
@@ -2502,7 +2648,9 @@
     const itemModalTitle = document.getElementById('itemModalTitle');
     const itemModalCategory = document.getElementById('itemModalCategory');
     const itemModalDescription = document.getElementById('itemModalDescription');
+    const itemModalNutrition = document.getElementById('itemModalNutrition');
     const modalOptions = document.getElementById('modalOptions');
+    const itemNotesField = document.getElementById('itemNotesField');
     const itemNotes = document.getElementById('itemNotes');
     const itemQty = document.getElementById('itemQty');
     const itemQtyMinus = document.getElementById('itemQtyMinus');
@@ -2520,35 +2668,67 @@
     const visitAddress = document.getElementById('visitAddress');
     const visitNeighborhood = document.getElementById('visitNeighborhood');
     const directionsLink = document.getElementById('directionsLink');
+    const whatsappBranchLink = document.getElementById('whatsappBranchLink');
     const branchMap = document.getElementById('branchMap');
+    const mapOpenLink = document.getElementById('mapOpenLink');
 
     const money = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD'
     });
 
-    const coffeeOptions = [
+    const temperatureOptions = {
+      name: 'temperature',
+      label: 'Temperature',
+      type: 'radio',
+      choices: [
+        { label: 'Hot', price: 0 },
+        { label: 'Iced', price: 0 }
+      ]
+    };
+
+    const milkOptions = {
+      name: 'milk',
+      label: 'Type of milk',
+      type: 'radio',
+      choices: [
+        { label: 'Regular milk', price: 0 },
+        { label: 'Skim milk', price: 0 },
+        { label: 'Oat milk', price: 1 },
+        { label: 'Almond milk', price: 1 },
+        { label: 'Lactose-free milk', price: .75 }
+      ]
+    };
+
+    const blackCoffeeOptions = [
       {
-        name: 'temperature',
-        label: 'Temperature',
-        type: 'radio',
+        name: 'blackCoffeeAdds',
+        label: 'Add-ons',
+        type: 'checkbox',
         choices: [
-          { label: 'Hot', price: 0 },
-          { label: 'Iced', price: .5 }
+          { label: 'Extra shot', price: 1 },
+          { label: 'Sweetener', price: 0 }
         ]
-      },
+      }
+    ];
+
+    const americanoOptions = [
+      temperatureOptions,
+      ...blackCoffeeOptions,
       {
-        name: 'milk',
-        label: 'Type of milk',
-        type: 'radio',
+        name: 'americanoAdjustments',
+        label: 'Remove stuff',
+        type: 'checkbox',
         choices: [
-          { label: 'Regular milk', price: 0 },
-          { label: 'Skim milk', price: 0 },
-          { label: 'Oat milk', price: 1 },
-          { label: 'Almond milk', price: 1 },
-          { label: 'Lactose-free milk', price: .75 }
+          { label: 'Less ice', price: 0 },
+          { label: 'No sugar', price: 0 }
         ]
-      },
+      }
+    ];
+
+    const milkCoffeeOptions = [
+      temperatureOptions,
+      milkOptions,
       {
         name: 'coffeeAdds',
         label: 'Add-ons',
@@ -2557,6 +2737,7 @@
           { label: 'Extra shot', price: 1 },
           { label: 'Vanilla', price: .5 },
           { label: 'Caramel', price: .5 },
+          { label: 'Sweetener', price: 0 },
           { label: 'Decaf', price: 0 }
         ]
       },
@@ -2572,9 +2753,57 @@
       }
     ];
 
-    const pastryOptions = [
+    const matchaOptions = [
+      milkOptions,
       {
-        name: 'serve',
+        name: 'matchaAdds',
+        label: 'Add-ons',
+        type: 'checkbox',
+        choices: [
+          { label: 'Vanilla', price: .5 },
+          { label: 'Caramel', price: .5 },
+          { label: 'Sweetener', price: 0 }
+        ]
+      },
+      {
+        name: 'matchaRemove',
+        label: 'Remove stuff',
+        type: 'checkbox',
+        choices: [
+          { label: 'Less ice', price: 0 },
+          { label: 'No sugar', price: 0 }
+        ]
+      }
+    ];
+
+    const coldBrewOptions = [
+      milkOptions,
+      {
+        name: 'coldBrewAdds',
+        label: 'Add-ons',
+        type: 'checkbox',
+        choices: [
+          { label: 'Sweetener', price: 0 },
+          { label: 'Vanilla', price: .5 },
+          { label: 'Caramel', price: .5 }
+        ]
+      },
+      {
+        name: 'coldBrewRemove',
+        label: 'Remove stuff',
+        type: 'checkbox',
+        choices: [
+          { label: 'Less ice', price: 0 },
+          { label: 'No sugar', price: 0 }
+        ]
+      }
+    ];
+
+    const simplePastryOptions = [];
+
+    const cookieOptions = [
+      {
+        name: 'cookieServe',
         label: 'Serve',
         type: 'radio',
         choices: [
@@ -2583,21 +2812,31 @@
         ]
       },
       {
-        name: 'pastryAdds',
+        name: 'cookieAdds',
         label: 'Add-ons',
         type: 'checkbox',
         choices: [
-          { label: 'Chocolate dip', price: .75 },
-          { label: 'Cream on the side', price: .75 }
+          { label: 'Chocolate dip', price: .75 }
+        ]
+      }
+    ];
+
+    const cheesecakeOptions = [
+      {
+        name: 'cheesecakeServe',
+        label: 'Serve',
+        type: 'radio',
+        choices: [
+          { label: 'Regular', price: 0 },
+          { label: 'Cold', price: 0 }
         ]
       },
       {
-        name: 'pastryRemove',
-        label: 'Remove stuff',
+        name: 'cheesecakeAdds',
+        label: 'Add-ons',
         type: 'checkbox',
         choices: [
-          { label: 'No powdered sugar', price: 0 },
-          { label: 'No glaze', price: 0 }
+          { label: 'Berry sauce', price: .75 }
         ]
       }
     ];
@@ -2670,42 +2909,42 @@
       }
     ];
 
-    function product(id, name, category, price, description, options) {
-      return { id, name, category, price, description, options };
+    function product(id, name, category, price, description, options, nutrition = null) {
+      return { id, name, category, price, description, options, nutrition };
     }
 
     const coffeeItems = [
-      product('espresso', 'Espresso', 'Coffee', 2.5, 'Short, bold, and fast.', coffeeOptions),
-      product('americano', 'Americano', 'Coffee', 3, 'Espresso opened up with hot water.', coffeeOptions),
-      product('cappuccino', 'Cappuccino', 'Coffee', 4, 'Espresso, steamed milk, and foam.', coffeeOptions),
-      product('flat-white', 'Flat White', 'Coffee', 4.5, 'Double shot with smooth microfoam.', coffeeOptions),
-      product('latte', 'Latte', 'Coffee', 4.5, 'Smooth espresso and milk.', coffeeOptions),
-      product('spanish-latte', 'Spanish Latte', 'Coffee', 5, 'Sweet, creamy, and easy to love.', coffeeOptions),
-      product('iced-matcha', 'Iced Matcha', 'Coffee', 5.5, 'Bright matcha served cold.', coffeeOptions),
-      product('cold-brew', 'Cold Brew', 'Coffee', 5, 'Slow steeped, chilled, and clean.', coffeeOptions)
+      product('espresso', 'Espresso', 'Coffee', 2.5, 'Short, bold, and fast.', blackCoffeeOptions),
+      product('americano', 'Americano', 'Coffee', 3, 'Espresso opened up with hot water.', americanoOptions),
+      product('cappuccino', 'Cappuccino', 'Coffee', 4, 'Espresso, steamed milk, and foam.', milkCoffeeOptions),
+      product('flat-white', 'Flat White', 'Coffee', 4.5, 'Double shot with smooth microfoam.', milkCoffeeOptions),
+      product('latte', 'Latte', 'Coffee', 4.5, 'Smooth espresso and milk.', milkCoffeeOptions),
+      product('spanish-latte', 'Spanish Latte', 'Coffee', 5, 'Sweet, creamy, and easy to love.', milkCoffeeOptions),
+      product('iced-matcha', 'Iced Matcha', 'Coffee', 5.5, 'Bright matcha served cold.', matchaOptions),
+      product('cold-brew', 'Cold Brew', 'Coffee', 5, 'Slow steeped, chilled, and clean.', coldBrewOptions)
     ];
 
     const pastryItems = [
-      product('cookie', 'Cookie', 'Pastries', 3, 'Soft center, golden edge.', pastryOptions),
-      product('butter-croissant', 'Butter Croissant', 'Pastries', 3, 'Flaky house classic.', pastryOptions),
-      product('pain-au-chocolat', 'Pain au Chocolat', 'Pastries', 3.5, 'Buttery layers with chocolate.', pastryOptions),
-      product('cinnamon-roll', 'Cinnamon Roll', 'Pastries', 4, 'Warm spice and glaze.', pastryOptions),
-      product('eclair', 'Eclair', 'Pastries', 4.5, 'Filled and finished daily.', pastryOptions),
-      product('basque-cheesecake', 'Basque Cheesecake', 'Pastries', 6, 'Caramelized top, creamy center.', pastryOptions)
+      product('cookie', 'Cookie', 'Pastries', 3, 'Soft center, golden edge.', cookieOptions),
+      product('butter-croissant', 'Butter Croissant', 'Pastries', 3, 'Flaky house classic.', simplePastryOptions),
+      product('pain-au-chocolat', 'Pain au Chocolat', 'Pastries', 3.5, 'Buttery layers with chocolate.', simplePastryOptions),
+      product('cinnamon-roll', 'Cinnamon Roll', 'Pastries', 4, 'Warm spice and glaze.', simplePastryOptions),
+      product('eclair', 'Eclair', 'Pastries', 4.5, 'Filled and finished daily.', simplePastryOptions),
+      product('basque-cheesecake', 'Basque Cheesecake', 'Pastries', 6, 'Caramelized top, creamy center.', cheesecakeOptions)
     ];
 
     const sandwichItems = [
-      product('turkey-croissant', 'Turkey Croissant', 'Sandwiches', 6.5, 'Turkey, cheese, greens, and house sauce.', sandwichOptions),
-      product('halloumi-pesto', 'Halloumi Pesto Sandwich', 'Sandwiches', 6.5, 'Grilled halloumi, pesto, tomato, and greens.', sandwichOptions),
-      product('chicken-avocado', 'Chicken Avocado Sandwich', 'Sandwiches', 7.5, 'Chicken, avocado, lettuce, and sauce.', sandwichOptions),
-      product('tuna-melt', 'Tuna Melt', 'Sandwiches', 6.75, 'Tuna, melted cheese, pickles, and toast.', sandwichOptions)
+      product('turkey-croissant', 'Turkey Croissant', 'Sandwiches', 6.5, 'Turkey, cheese, greens, and house sauce.', sandwichOptions, { calories: 520, protein: 29 }),
+      product('halloumi-pesto', 'Halloumi Pesto Sandwich', 'Sandwiches', 6.5, 'Grilled halloumi, pesto, tomato, and greens.', sandwichOptions, { calories: 610, protein: 24 }),
+      product('chicken-avocado', 'Chicken Avocado Sandwich', 'Sandwiches', 7.5, 'Chicken, avocado, lettuce, and sauce.', sandwichOptions, { calories: 640, protein: 38 }),
+      product('tuna-melt', 'Tuna Melt', 'Sandwiches', 6.75, 'Tuna, melted cheese, pickles, and toast.', sandwichOptions, { calories: 560, protein: 34 })
     ];
 
     const bowlItems = [
-      product('chicken-caesar-bowl', 'Chicken Caesar Bowl', 'Powerbowls', 9, 'Chicken, greens, parmesan, croutons, and Caesar dressing.', bowlOptions),
-      product('tuna-protein-bowl', 'Tuna Protein Bowl', 'Powerbowls', 8.5, 'Tuna, egg, corn, greens, and house dressing.', bowlOptions),
-      product('halloumi-quinoa-bowl', 'Halloumi Quinoa Bowl', 'Powerbowls', 9, 'Halloumi, quinoa, avocado, tomato, and greens.', bowlOptions),
-      product('salmon-avocado-bowl', 'Salmon Avocado Bowl', 'Powerbowls', 11, 'Salmon, avocado, rice, greens, and sesame sauce.', bowlOptions)
+      product('chicken-caesar-bowl', 'Chicken Caesar Bowl', 'Powerbowls', 9, 'Chicken, greens, parmesan, croutons, and Caesar dressing.', bowlOptions, { calories: 690, protein: 46 }),
+      product('tuna-protein-bowl', 'Tuna Protein Bowl', 'Powerbowls', 8.5, 'Tuna, egg, corn, greens, and house dressing.', bowlOptions, { calories: 620, protein: 42 }),
+      product('halloumi-quinoa-bowl', 'Halloumi Quinoa Bowl', 'Powerbowls', 9, 'Halloumi, quinoa, avocado, tomato, and greens.', bowlOptions, { calories: 740, protein: 31 }),
+      product('salmon-avocado-bowl', 'Salmon Avocado Bowl', 'Powerbowls', 11, 'Salmon, avocado, rice, greens, and sesame sauce.', bowlOptions, { calories: 780, protein: 44 })
     ];
 
     const branches = {
@@ -2716,6 +2955,8 @@
         neighborhood: 'Downtown Beirut',
         mapUrl: 'https://maps.app.goo.gl/ivsNw6WE26BhJt158',
         mapQuery: 'Brew and Butter Riad El Solh Beirut',
+        whatsappNumber: WHATSAPP_NUMBER,
+        totersUrl: 'https://totersapp.com/nVnd',
         visit: 'Downtown is the original stop for coffee, pastries, and sandwiches near Riad El Solh Street.',
         menu: [...coffeeItems, ...pastryItems, ...sandwichItems]
       },
@@ -2726,6 +2967,8 @@
         neighborhood: 'Mousaytbe',
         mapUrl: 'https://www.google.com/maps/search/?api=1&query=Brew%20and%20Butter%20Mousaytbe%20Beirut',
         mapQuery: 'Brew and Butter Mousaytbe Beirut',
+        whatsappNumber: WHATSAPP_NUMBER,
+        totersUrl: 'https://totersapp.com/nVnd',
         visit: 'Mousaytbe carries the same coffee and bakery favorites, plus Powerbowls with size choices and edits.',
         menu: [...coffeeItems, ...pastryItems, ...sandwichItems, ...bowlItems]
       }
@@ -2736,6 +2979,7 @@
     let cart = [];
     let currentItem = null;
     let currentQuantity = 1;
+    let activeCoupon = null;
 
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -2771,6 +3015,17 @@
 
     function getFamilyCategories(family) {
       return getCategories().filter((category) => getCategoryFamily(category) === family);
+    }
+
+    function nutritionBadges(item) {
+      if (!item.nutrition) return '';
+
+      return `
+        <div class="nutrition-row" aria-label="Nutrition information">
+          <span class="nutrition-pill">${item.nutrition.calories} cal</span>
+          <span class="nutrition-pill">${item.nutrition.protein}g protein</span>
+        </div>
+      `;
     }
 
     function setMenu(open) {
@@ -2818,6 +3073,9 @@
 
       if (branchId !== currentBranchId && cart.length) {
         cart = [];
+        activeCoupon = null;
+        couponCode.value = '';
+        couponMessage.textContent = '';
       }
 
       currentBranchId = branchId;
@@ -2840,7 +3098,10 @@
       visitAddress.textContent = branch.address;
       visitNeighborhood.textContent = branch.neighborhood;
       directionsLink.href = branch.mapUrl;
+      whatsappBranchLink.href = `https://wa.me/${branch.whatsappNumber}`;
+      totersOrderLink.href = branch.totersUrl;
       branchMap.src = `https://www.google.com/maps?q=${encodeURIComponent(branch.mapQuery)}&output=embed`;
+      mapOpenLink.href = branch.mapUrl;
     }
 
     function renderMenu() {
@@ -2875,6 +3136,7 @@
           <div>
             <h3>${escapeHtml(item.name)}</h3>
             <p>${escapeHtml(item.description)}</p>
+            ${nutritionBadges(item)}
           </div>
           <div class="product-meta">
             <strong class="product-price">${formatPrice(item.price)}</strong>
@@ -2889,6 +3151,11 @@
     }
 
     function renderItemOptions(item) {
+      if (!item.options.length) {
+        modalOptions.innerHTML = '';
+        return;
+      }
+
       modalOptions.innerHTML = item.options.map((group) => `
         <fieldset class="option-group">
           <legend>${escapeHtml(group.label)}</legend>
@@ -2937,7 +3204,9 @@
       itemModalCategory.textContent = item.category;
       itemModalTitle.textContent = item.name;
       itemModalDescription.textContent = item.description;
+      itemModalNutrition.innerHTML = nutritionBadges(item);
       itemNotes.value = '';
+      itemNotesField.hidden = item.options.length === 0;
       renderItemOptions(item);
       updateItemTotal();
       itemModal.classList.add('is-open');
@@ -2979,7 +3248,29 @@
     }
 
     function getCartTotal() {
+      return Math.max(0, getCartSubtotal() + getDeliveryFee() - getCouponDiscount());
+    }
+
+    function getCartSubtotal() {
       return cart.reduce((total, item) => total + item.unitPrice * item.quantity, 0);
+    }
+
+    function getDeliveryFee() {
+      return cart.length ? DELIVERY_FEE : 0;
+    }
+
+    function getCouponDiscount() {
+      if (!activeCoupon || !cart.length) return 0;
+
+      if (activeCoupon.type === 'percent') {
+        return getCartSubtotal() * (activeCoupon.value / 100);
+      }
+
+      if (activeCoupon.type === 'delivery') {
+        return Math.min(getDeliveryFee(), activeCoupon.value);
+      }
+
+      return 0;
     }
 
     function getCartQuantity() {
@@ -2988,6 +3279,10 @@
 
     function renderCart() {
       cartCount.textContent = String(getCartQuantity());
+      cartSubtotal.textContent = formatPrice(getCartSubtotal());
+      deliveryFee.textContent = formatPrice(getDeliveryFee());
+      discountValue.textContent = `-${formatPrice(getCouponDiscount())}`;
+      discountLine.hidden = !getCouponDiscount();
       cartTotal.textContent = formatPrice(getCartTotal());
       checkoutOpen.disabled = cart.length === 0;
 
@@ -3000,7 +3295,7 @@
         <article class="cart-item">
           <div>
             <strong>${escapeHtml(item.name)}</strong>
-            <small>${escapeHtml(item.options.join(', '))}</small>
+            ${item.options.length ? `<small>${escapeHtml(item.options.join(', '))}</small>` : ''}
             ${item.notes ? `<small>Note: ${escapeHtml(item.notes)}</small>` : ''}
           </div>
           <div class="cart-item-actions">
@@ -3014,6 +3309,30 @@
           </div>
         </article>
       `).join('');
+    }
+
+    function applyCoupon() {
+      const code = couponCode.value.trim().toUpperCase();
+
+      if (!code) {
+        activeCoupon = null;
+        couponMessage.textContent = '';
+        renderCart();
+        return;
+      }
+
+      const coupon = couponCodes[code];
+
+      if (!coupon) {
+        activeCoupon = null;
+        couponMessage.textContent = 'Coupon not found.';
+        renderCart();
+        return;
+      }
+
+      activeCoupon = { code, ...coupon };
+      couponMessage.textContent = `${coupon.label} applied.`;
+      renderCart();
     }
 
     function openCart() {
@@ -3054,13 +3373,22 @@
 
       cart.forEach((item, index) => {
         lines.push(`${index + 1}. ${item.quantity} x ${item.name} - ${formatPrice(item.unitPrice * item.quantity)}`);
-        lines.push(`   Options: ${item.options.join(', ')}`);
+        if (item.options.length) {
+          lines.push(`   Options: ${item.options.join(', ')}`);
+        }
         if (item.notes) {
           lines.push(`   Note: ${item.notes}`);
         }
       });
 
       lines.push('');
+      lines.push(`Subtotal: ${formatPrice(getCartSubtotal())}`);
+      lines.push(`Delivery: ${formatPrice(getDeliveryFee())}`);
+
+      if (activeCoupon) {
+        lines.push(`Coupon: ${activeCoupon.code} (${activeCoupon.label}) -${formatPrice(getCouponDiscount())}`);
+      }
+
       lines.push(`Estimated total: ${formatPrice(getCartTotal())}`);
 
       if (customer.notes) {
@@ -3071,8 +3399,13 @@
     }
 
     function getWhatsAppUrl(message) {
-      const base = WHATSAPP_NUMBER ? `https://wa.me/${WHATSAPP_NUMBER}` : 'https://wa.me/';
+      const number = getBranch().whatsappNumber || WHATSAPP_NUMBER;
+      const base = number ? `https://wa.me/${number}` : 'https://wa.me/';
       return `${base}?text=${encodeURIComponent(message)}`;
+    }
+
+    function openBranchMap() {
+      window.open(getBranch().mapUrl, '_blank', 'noopener');
     }
 
     function showPage() {
@@ -3123,6 +3456,24 @@
 
     [cartOpen, cartOpenSecondary].forEach((button) => {
       button.addEventListener('click', openCart);
+    });
+
+    websiteOrderChoice.addEventListener('click', () => {
+      menuGrid.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    });
+    continueShopping.addEventListener('click', closeCart);
+    applyCouponButton.addEventListener('click', applyCoupon);
+
+    couponCode.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        applyCoupon();
+      }
+    });
+
+    mapOpenLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      openBranchMap();
     });
 
     categoryTabs.addEventListener('click', (event) => {
