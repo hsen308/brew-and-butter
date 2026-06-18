@@ -3,14 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Brew &amp; Butter | Good Coffee. Good Day.</title>
-  <meta name="description" content="Brew & Butter is a specialty coffee and pastry spot on Riad El Solh Street in Downtown Beirut.">
+  <title>Brew &amp; Butter | Coffee, Food &amp; Study Spots in Beirut</title>
+  <meta name="description" content="Order coffee, pastries, sandwiches, and powerbowls from Brew & Butter in Beirut. Open Mon - Sun, 8 AM - 11 PM with free Wi-Fi, study tables, COD delivery, pickup, WhatsApp ordering, and Toters.">
   <meta name="theme-color" content="#f8f1e6">
 
-  <meta property="og:title" content="Brew & Butter | Good Coffee. Good Day.">
-  <meta property="og:description" content="Specialty coffee, golden pastries, and mornings worth staying for in Downtown Beirut.">
+  <meta property="og:title" content="Brew & Butter | Coffee, Food & Study Spots in Beirut">
+  <meta property="og:description" content="Choose Downtown Beirut or Mousaytbe, order through WhatsApp, or find a table with free Wi-Fi. Open daily 8 AM - 11 PM.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="photos/og.jpg">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CafeOrCoffeeShop",
+      "name": "Brew & Butter",
+      "image": "photos/og.jpg",
+      "telephone": "+96170786131",
+      "servesCuisine": ["Coffee", "Pastries", "Sandwiches", "Powerbowls"],
+      "paymentAccepted": "Cash on delivery",
+      "amenityFeature": [
+        { "@type": "LocationFeatureSpecification", "name": "Free Wi-Fi", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Study area", "value": true }
+      ],
+      "openingHoursSpecification": [{
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "08:00",
+        "closes": "23:00"
+      }],
+      "department": [
+        {
+          "@type": "CafeOrCoffeeShop",
+          "name": "Brew & Butter Beirut Downtown",
+          "address": "Riad El Solh Street, Beirut Downtown",
+          "hasMap": "https://maps.app.goo.gl/ivsNw6WE26BhJt158"
+        },
+        {
+          "@type": "CafeOrCoffeeShop",
+          "name": "Brew & Butter Mousaytbe",
+          "address": "Mousaytbe, Beirut",
+          "hasMap": "https://www.google.com/maps/search/?api=1&query=Brew%20and%20Butter%20Mousaytbe%20Beirut"
+        }
+      ]
+    }
+  </script>
 
   <link rel="icon" href="photos/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -674,6 +709,39 @@
       transform: rotate(7deg);
     }
 
+    .service-band {
+      padding: 34px 0;
+      border-block: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .service-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .service-card {
+      display: grid;
+      gap: 8px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffaf0;
+    }
+
+    .service-card strong {
+      font-size: .84rem;
+      font-weight: 900;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .service-card span {
+      color: var(--muted);
+      font-size: .94rem;
+      line-height: 1.5;
+    }
+
     .menu-section {
       position: relative;
       padding: 110px 0;
@@ -1329,6 +1397,30 @@
       font-size: 1rem;
     }
 
+    .branch-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .branch-meta span,
+    .product-tag,
+    .service-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 6px 10px;
+      border: 1px solid rgba(36, 23, 15, .18);
+      border-radius: 999px;
+      background: #fff6df;
+      color: var(--ink);
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
     .branch-cards {
       display: grid;
       gap: 14px;
@@ -1368,6 +1460,14 @@
       font-weight: 700;
     }
 
+    .branch-card small {
+      color: var(--ink);
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
     .active-branch {
       display: inline-flex;
       align-items: center;
@@ -1387,47 +1487,57 @@
     }
 
     .menu-family-strip {
-      display: grid;
-      gap: 12px;
       margin: 12px 0 16px;
     }
 
-    .menu-family-card {
-      min-height: 118px;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: end;
-      gap: 16px;
-      padding: 18px;
-      border: 2px solid var(--line);
-      border-radius: 8px;
+    .menu-family-tabs {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
       background: var(--white);
-      text-align: left;
-      cursor: pointer;
-      transition: transform .2s var(--ease), border-color .2s ease, box-shadow .2s ease;
+      box-shadow: 0 12px 28px rgba(36, 23, 15, .06);
     }
 
-    .menu-family-card:hover,
-    .menu-family-card.is-active {
-      border-color: var(--ink);
-      box-shadow: 0 14px 32px rgba(36, 23, 15, .08);
-      transform: translateY(-2px);
-    }
-
-    .menu-family-card strong {
-      font-family: "Anton", sans-serif;
-      font-size: clamp(3rem, 9vw, 5.8rem);
-      font-weight: 400;
-      line-height: .82;
-      text-transform: uppercase;
-    }
-
-    .menu-family-card span {
+    .menu-family-tab {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 15px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
       color: var(--muted);
-      font-family: "Caveat", cursive;
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .2s ease, color .2s ease, transform .2s var(--ease);
+    }
+
+    .menu-family-tab:hover,
+    .menu-family-tab.is-active {
+      background: var(--ink);
+      color: var(--white);
+      transform: translateY(-1px);
+    }
+
+    .menu-family-tab strong {
+      font-family: "Anton", sans-serif;
       font-size: 1.35rem;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .menu-family-tab span {
+      font-family: "Caveat", cursive;
+      font-size: 1.12rem;
       font-weight: 700;
-      white-space: nowrap;
+      text-transform: lowercase;
     }
 
     .order-choice {
@@ -1481,6 +1591,26 @@
       border-radius: 8px;
       background: var(--white);
       box-shadow: 0 14px 32px rgba(36, 23, 15, .06);
+    }
+
+    .product-media {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      background: var(--paper-deep);
+    }
+
+    .product-media img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+    }
+
+    .product-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 9px;
     }
 
     .product-card h3 {
@@ -1903,6 +2033,95 @@
       gap: 14px;
     }
 
+    .fulfillment-choice,
+    .checkout-summary {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffaf0;
+    }
+
+    .fulfillment-choice legend,
+    .checkout-summary strong {
+      color: var(--ink);
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .fulfillment-options {
+      display: grid;
+      gap: 8px;
+    }
+
+    .fulfillment-options label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 44px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .fulfillment-options input {
+      accent-color: var(--red);
+    }
+
+    .checkout-note,
+    .checkout-summary span {
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.5;
+    }
+
+    .mobile-action-bar {
+      position: fixed;
+      right: 12px;
+      bottom: 12px;
+      left: 12px;
+      z-index: 490;
+      display: none;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+      padding: 8px;
+      border: 1px solid rgba(36, 23, 15, .16);
+      border-radius: 999px;
+      background: rgba(255, 253, 247, .96);
+      box-shadow: 0 16px 40px rgba(36, 23, 15, .18);
+      backdrop-filter: blur(16px);
+    }
+
+    .mobile-action-bar a,
+    .mobile-action-bar button {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink);
+      font-size: .68rem;
+      font-weight: 900;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .mobile-action-bar a:first-child {
+      background: var(--red);
+      color: var(--white);
+    }
+
     .form-error {
       min-height: 20px;
       color: var(--red);
@@ -1998,8 +2217,8 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .menu-family-strip {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      .service-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
       }
 
       .option-grid,
@@ -2009,6 +2228,10 @@
     }
 
     @media (max-width: 899px) {
+      body {
+        padding-bottom: 78px;
+      }
+
       .site-header {
         padding-block: 10px;
         background: rgba(248, 241, 230, .94);
@@ -2067,6 +2290,10 @@
 
       .hero-visual {
         order: -1;
+      }
+
+      .mobile-action-bar {
+        display: grid;
       }
     }
 
@@ -2253,15 +2480,23 @@
       <div class="branch-gate-head">
         <p class="eyebrow">Brew &amp; Butter</p>
         <h2 id="branchGateTitle" class="display">Choose your branch.</h2>
+        <div class="branch-meta" aria-label="Branch services">
+          <span>Mon - Sun, 8 AM - 11 PM</span>
+          <span>Free Wi-Fi</span>
+          <span>Study area</span>
+          <span>Cash on delivery</span>
+        </div>
       </div>
       <div class="branch-cards">
         <button class="branch-card" type="button" data-branch-card="downtown">
-          <strong>Downtown Beirut</strong>
-          <span>Riad El Solh Street / coffee, pastries, sandwiches</span>
+          <strong>Beirut Downtown</strong>
+          <span>Riad El Solh Street</span>
+          <small>Choose this branch</small>
         </button>
         <button class="branch-card" type="button" data-branch-card="mousaytbe">
-          <strong>Mousaytbe</strong>
-          <span>Coffee, pastries, sandwiches, and Powerbowls</span>
+          <strong>Mousaytbe, Beirut</strong>
+          <span>Mousaytbe branch location</span>
+          <small>Choose this branch</small>
         </button>
       </div>
     </div>
@@ -2298,14 +2533,15 @@
         <div class="hero-copy">
           <p class="eyebrow hero-kicker"><span id="heroBranch">Downtown Beirut</span> &bull; Good mornings start here</p>
           <h1 id="hero-title" class="display hero-title">
-            <span class="line"><span>Brew.</span></span>
-            <span class="line"><span>Butter.</span></span>
-            <span class="line"><span>Repeat.</span></span>
+            <span class="line"><span>Order.</span></span>
+            <span class="line"><span>Study.</span></span>
+            <span class="line"><span>Stay.</span></span>
           </h1>
-          <p class="hero-support">Specialty coffee, golden pastries, sandwiches, bowls, and a checkout that sends the order straight to WhatsApp.</p>
+          <p class="hero-support">Coffee, pastries, sandwiches, powerbowls, free Wi-Fi, and a WhatsApp checkout for pickup or COD delivery.</p>
           <div class="hero-actions">
-            <a class="button" href="#menu">Explore the menu</a>
-            <a class="button button--outline" href="#visit">Find us</a>
+            <a class="button" href="#menu">Start order</a>
+            <a id="heroTotersLink" class="button button--outline" href="https://totersapp.com/nVnd" target="_blank" rel="noopener">Order on Toters</a>
+            <a id="heroDirectionsLink" class="button button--outline" href="https://maps.app.goo.gl/ivsNw6WE26BhJt158" target="_blank" rel="noopener">Get directions</a>
           </div>
 
           <div class="trust-strip" aria-label="Cafe highlights">
@@ -2314,12 +2550,16 @@
               <span id="heroNeighborhood">Downtown Beirut</span>
             </div>
             <div class="trust-item">
-              <strong>5.0 Google</strong>
-              <span>Loved locally</span>
+              <strong>Mon - Sun</strong>
+              <span>8 AM - 11 PM</span>
             </div>
             <div class="trust-item">
-              <strong>Fresh daily</strong>
-              <span>Coffee and bakes</span>
+              <strong>Free Wi-Fi</strong>
+              <span>Good study area</span>
+            </div>
+            <div class="trust-item">
+              <strong>COD only</strong>
+              <span>Cash on delivery</span>
             </div>
           </div>
           <svg class="doodle doodle-heart hero-heart" viewBox="0 0 64 58" aria-hidden="true">
@@ -2352,8 +2592,8 @@
         <div class="story-copy reveal">
           <p class="eyebrow">The story</p>
           <h2 id="story-title" class="display section-title">Two halves of a good morning.</h2>
-          <p class="section-copy">Brew is the coffee. Butter is everything flaky, golden, and worth ordering beside it. Together, they make the kind of morning people come back for.</p>
-          <p class="story-note">A small cafe with big morning energy.</p>
+          <p class="section-copy">Brew is the coffee. Butter is everything flaky, golden, and worth ordering beside it. Bring a laptop, grab a table, and stay for the work session.</p>
+          <p class="story-note">Free Wi-Fi, calm tables, and big morning energy.</p>
           <svg class="doodle story-squiggle" viewBox="0 0 160 54" aria-hidden="true">
             <path pathLength="1" d="M4 34 C20 6 36 50 52 24 S84 44 100 20 S132 42 156 10" stroke-width="7"></path>
           </svg>
@@ -2366,6 +2606,27 @@
         <path pathLength="1" d="M10 20 H52 V42 C52 54 43 61 31 61 C19 61 10 54 10 42 Z M52 27 H61 C72 27 72 45 60 47 H52" stroke-width="5"></path>
         <path pathLength="1" d="M18 12 C22 7 25 14 29 8 M38 12 C42 7 45 14 49 8" stroke-width="5"></path>
       </svg>
+    </section>
+
+    <section class="service-band" aria-label="Ordering and cafe details">
+      <div class="shell service-grid">
+        <div class="service-card">
+          <strong>Open daily</strong>
+          <span>Mon - Sun, 8 AM - 11 PM at both branches.</span>
+        </div>
+        <div class="service-card">
+          <strong>Free Wi-Fi</strong>
+          <span>A good study area for laptop work, coffee breaks, and long mornings.</span>
+        </div>
+        <div class="service-card">
+          <strong>Order your way</strong>
+          <span>Use the website checkout, pickup from the branch, or order through Toters.</span>
+        </div>
+        <div class="service-card">
+          <strong>Cash on delivery</strong>
+          <span>Payment is COD only for website delivery orders.</span>
+        </div>
+      </div>
     </section>
 
     <section id="menu" class="menu-section" aria-labelledby="menu-title">
@@ -2496,6 +2757,18 @@
             <div class="visit-detail">
               <strong>Neighborhood</strong>
               <span id="visitNeighborhood">Downtown Beirut</span>
+            </div>
+            <div class="visit-detail">
+              <strong>Hours</strong>
+              <span>Mon - Sun, 8 AM - 11 PM</span>
+            </div>
+            <div class="visit-detail">
+              <strong>Good for</strong>
+              <span>Free Wi-Fi and study area</span>
+            </div>
+            <div class="visit-detail">
+              <strong>Payment</strong>
+              <span>Cash on delivery</span>
             </div>
           </div>
         </div>
@@ -2633,6 +2906,20 @@
         <button id="checkoutClose" class="close-button" type="button" aria-label="Close checkout">x</button>
       </div>
       <form id="checkoutForm" class="checkout-body">
+        <fieldset class="fulfillment-choice">
+          <legend>Order type</legend>
+          <div class="fulfillment-options">
+            <label>
+              <span>Delivery <small>$2 delivery fee</small></span>
+              <input type="radio" name="deliveryMode" value="delivery" checked>
+            </label>
+            <label>
+              <span>Pickup <small>No delivery fee</small></span>
+              <input type="radio" name="deliveryMode" value="pickup">
+            </label>
+          </div>
+        </fieldset>
+        <div id="checkoutSummary" class="checkout-summary" aria-live="polite"></div>
         <div class="form-grid">
           <div class="field">
             <label for="firstName">First name</label>
@@ -2646,11 +2933,12 @@
             <label for="customerPhone">Phone number</label>
             <input id="customerPhone" name="customerPhone" autocomplete="tel" inputmode="tel" required>
           </div>
-          <div class="field">
+          <div id="deliveryLocationField" class="field">
             <label for="deliveryLocation">Location</label>
             <input id="deliveryLocation" name="deliveryLocation" autocomplete="street-address" required>
           </div>
         </div>
+        <p class="checkout-note">Payment: Cash on delivery. The branch will manually confirm coupons and totals on WhatsApp.</p>
         <div class="field">
           <label for="checkoutNotes">Order notes</label>
           <textarea id="checkoutNotes" name="checkoutNotes"></textarea>
@@ -2661,9 +2949,18 @@
     </div>
   </section>
 
+  <nav id="mobileActionBar" class="mobile-action-bar" aria-label="Quick mobile actions">
+    <a id="mobileActionOrder" href="#menu">Order</a>
+    <button id="mobileActionCart" type="button">Cart <span id="mobileActionCount">0</span></button>
+    <a id="mobileActionWhatsapp" href="https://wa.me/96170786131" target="_blank" rel="noopener">WhatsApp</a>
+    <a id="mobileActionDirections" href="https://maps.app.goo.gl/ivsNw6WE26BhJt158" target="_blank" rel="noopener">Map</a>
+  </nav>
+
   <script>
     const WHATSAPP_NUMBER = "96170786131";
     const DELIVERY_FEE = 2;
+    const BUSINESS_HOURS = 'Mon - Sun, 8 AM - 11 PM';
+    const PAYMENT_METHOD = 'Cash on delivery';
     const couponCodes = {
       BREW10: {
         label: '10% off items',
@@ -2686,6 +2983,11 @@
     const branchSwitchVisit = document.getElementById('branchSwitchVisit');
     const cartOpen = document.getElementById('cartOpen');
     const cartOpenSecondary = document.getElementById('cartOpenSecondary');
+    const mobileActionCart = document.getElementById('mobileActionCart');
+    const mobileActionCount = document.getElementById('mobileActionCount');
+    const mobileActionOrder = document.getElementById('mobileActionOrder');
+    const mobileActionWhatsapp = document.getElementById('mobileActionWhatsapp');
+    const mobileActionDirections = document.getElementById('mobileActionDirections');
     const cartClose = document.getElementById('cartClose');
     const cartDrawer = document.getElementById('cartDrawer');
     const cartList = document.getElementById('cartList');
@@ -2702,9 +3004,14 @@
     const couponMessage = document.getElementById('couponMessage');
     const websiteOrderChoice = document.getElementById('websiteOrderChoice');
     const totersOrderLink = document.getElementById('totersOrderLink');
+    const heroTotersLink = document.getElementById('heroTotersLink');
+    const heroDirectionsLink = document.getElementById('heroDirectionsLink');
     const checkoutModal = document.getElementById('checkoutModal');
     const checkoutClose = document.getElementById('checkoutClose');
     const checkoutForm = document.getElementById('checkoutForm');
+    const checkoutSummary = document.getElementById('checkoutSummary');
+    const deliveryLocationField = document.getElementById('deliveryLocationField');
+    const deliveryLocation = document.getElementById('deliveryLocation');
     const checkoutError = document.getElementById('checkoutError');
     const itemModal = document.getElementById('itemModal');
     const itemModalClose = document.getElementById('itemModalClose');
@@ -2975,8 +3282,8 @@
       }
     ];
 
-    function product(id, name, category, price, description, options, nutrition = null) {
-      return { id, name, category, price, description, options, nutrition };
+    function product(id, name, category, price, description, options, nutrition = null, details = {}) {
+      return { id, name, category, price, description, options, nutrition, ...details };
     }
 
     const coffeeItems = [
@@ -2984,15 +3291,15 @@
       product('americano', 'Americano', 'Coffee', 3, 'Espresso opened up with hot water.', americanoOptions),
       product('cappuccino', 'Cappuccino', 'Coffee', 4, 'Espresso, steamed milk, and foam.', milkCoffeeOptions),
       product('flat-white', 'Flat White', 'Coffee', 4.5, 'Double shot with smooth microfoam.', milkCoffeeOptions),
-      product('latte', 'Latte', 'Coffee', 4.5, 'Smooth espresso and milk.', milkCoffeeOptions),
+      product('latte', 'Latte', 'Coffee', 4.5, 'Smooth espresso and milk.', milkCoffeeOptions, null, { tags: ['Popular'], productImage: 'photos/photo_1_2026-06-15_18-28-18.jpg' }),
       product('spanish-latte', 'Spanish Latte', 'Coffee', 5, 'Sweet, creamy, and easy to love.', milkCoffeeOptions),
-      product('iced-matcha', 'Iced Matcha', 'Coffee', 5.5, 'Bright matcha served cold.', matchaOptions),
+      product('iced-matcha', 'Iced Matcha', 'Coffee', 5.5, 'Bright matcha served cold.', matchaOptions, null, { tags: ['Popular'], productImage: 'photos/photo_3_2026-06-15_18-28-18.jpg' }),
       product('cold-brew', 'Cold Brew', 'Coffee', 5, 'Slow steeped, chilled, and clean.', coldBrewOptions)
     ];
 
     const pastryItems = [
       product('cookie', 'Cookie', 'Pastries', 3, 'Soft center, golden edge.', cookieOptions),
-      product('butter-croissant', 'Butter Croissant', 'Pastries', 3, 'Flaky house classic.', simplePastryOptions),
+      product('butter-croissant', 'Butter Croissant', 'Pastries', 3, 'Flaky house classic.', simplePastryOptions, null, { tags: ['Popular'], productImage: 'photos/photo_5_2026-06-15_18-28-18.jpg' }),
       product('pain-au-chocolat', 'Pain au Chocolat', 'Pastries', 3.5, 'Buttery layers with chocolate.', simplePastryOptions),
       product('cinnamon-roll', 'Cinnamon Roll', 'Pastries', 4, 'Warm spice and glaze.', simplePastryOptions),
       product('eclair', 'Eclair', 'Pastries', 4.5, 'Filled and finished daily.', simplePastryOptions),
@@ -3002,40 +3309,50 @@
     const sandwichItems = [
       product('turkey-croissant', 'Turkey Croissant', 'Sandwiches', 6.5, 'Turkey, cheese, greens, and house sauce.', sandwichOptions, { calories: 520, protein: 29 }),
       product('halloumi-pesto', 'Halloumi Pesto Sandwich', 'Sandwiches', 6.5, 'Grilled halloumi, pesto, tomato, and greens.', sandwichOptions, { calories: 610, protein: 24 }),
-      product('chicken-avocado', 'Chicken Avocado Sandwich', 'Sandwiches', 7.5, 'Chicken, avocado, lettuce, and sauce.', sandwichOptions, { calories: 640, protein: 38 }),
+      product('chicken-avocado', 'Chicken Avocado Sandwich', 'Sandwiches', 7.5, 'Chicken, avocado, lettuce, and sauce.', sandwichOptions, { calories: 640, protein: 38 }, { tags: ['Popular', 'High protein'], productImage: 'photos/brunch.JPG' }),
       product('tuna-melt', 'Tuna Melt', 'Sandwiches', 6.75, 'Tuna, melted cheese, pickles, and toast.', sandwichOptions, { calories: 560, protein: 34 })
     ];
 
     const bowlItems = [
-      product('chicken-caesar-bowl', 'Chicken Caesar Bowl', 'Powerbowls', 9, 'Chicken, greens, parmesan, croutons, and Caesar dressing.', bowlOptions, { calories: 690, protein: 46 }),
-      product('tuna-protein-bowl', 'Tuna Protein Bowl', 'Powerbowls', 8.5, 'Tuna, egg, corn, greens, and house dressing.', bowlOptions, { calories: 620, protein: 42 }),
+      product('chicken-caesar-bowl', 'Chicken Caesar Bowl', 'Powerbowls', 9, 'Chicken, greens, parmesan, croutons, and Caesar dressing.', bowlOptions, { calories: 690, protein: 46 }, { tags: ['High protein'], productImage: 'photos/brunch.JPG' }),
+      product('tuna-protein-bowl', 'Tuna Protein Bowl', 'Powerbowls', 8.5, 'Tuna, egg, corn, greens, and house dressing.', bowlOptions, { calories: 620, protein: 42 }, { tags: ['High protein'] }),
       product('halloumi-quinoa-bowl', 'Halloumi Quinoa Bowl', 'Powerbowls', 9, 'Halloumi, quinoa, avocado, tomato, and greens.', bowlOptions, { calories: 740, protein: 31 }),
-      product('salmon-avocado-bowl', 'Salmon Avocado Bowl', 'Powerbowls', 11, 'Salmon, avocado, rice, greens, and sesame sauce.', bowlOptions, { calories: 780, protein: 44 })
+      product('salmon-avocado-bowl', 'Salmon Avocado Bowl', 'Powerbowls', 11, 'Salmon, avocado, rice, greens, and sesame sauce.', bowlOptions, { calories: 780, protein: 44 }, { tags: ['High protein'] })
     ];
 
     const branches = {
       downtown: {
         name: 'Downtown Beirut',
         short: 'Downtown',
+        area: 'Beirut Downtown',
+        exactLocation: 'Riad El Solh Street',
         address: 'Riad El Solh Street',
         neighborhood: 'Downtown Beirut',
+        hours: BUSINESS_HOURS,
+        features: 'Free Wi-Fi and study area',
+        payment: PAYMENT_METHOD,
         mapUrl: 'https://maps.app.goo.gl/ivsNw6WE26BhJt158',
         mapQuery: 'Brew and Butter Riad El Solh Beirut',
         whatsappNumber: WHATSAPP_NUMBER,
         totersUrl: 'https://totersapp.com/nVnd',
-        visit: 'Downtown is the original stop for coffee, pastries, and sandwiches near Riad El Solh Street.',
+        visit: 'Downtown is the original stop near Riad El Solh Street, open daily with free Wi-Fi, study tables, pickup, and COD delivery.',
         menu: [...coffeeItems, ...pastryItems, ...sandwichItems]
       },
       mousaytbe: {
         name: 'Mousaytbe',
         short: 'Mousaytbe',
+        area: 'Mousaytbe, Beirut',
+        exactLocation: 'Mousaytbe branch location',
         address: 'Mousaytbe, Beirut',
         neighborhood: 'Mousaytbe',
+        hours: BUSINESS_HOURS,
+        features: 'Free Wi-Fi and study area',
+        payment: PAYMENT_METHOD,
         mapUrl: 'https://www.google.com/maps/search/?api=1&query=Brew%20and%20Butter%20Mousaytbe%20Beirut',
         mapQuery: 'Brew and Butter Mousaytbe Beirut',
         whatsappNumber: WHATSAPP_NUMBER,
         totersUrl: 'https://totersapp.com/nVnd',
-        visit: 'Mousaytbe carries the same coffee and bakery favorites, plus Powerbowls with size choices and edits.',
+        visit: 'Mousaytbe is open daily with the same coffee and bakery favorites, plus Powerbowls, free Wi-Fi, study tables, pickup, and COD delivery.',
         menu: [...coffeeItems, ...pastryItems, ...sandwichItems, ...bowlItems]
       }
     };
@@ -3061,6 +3378,44 @@
 
     function formatPrice(value) {
       return money.format(value);
+    }
+
+    window.dataLayer = window.dataLayer || [];
+
+    function trackEvent(eventName, details = {}) {
+      window.dataLayer.push({
+        event: eventName,
+        branch: currentBranchId,
+        ...details
+      });
+    }
+
+    function getSelectedDeliveryMode() {
+      const selected = checkoutForm.querySelector('input[name="deliveryMode"]:checked');
+      return selected ? selected.value : 'delivery';
+    }
+
+    function getFulfillmentLabel(mode = getSelectedDeliveryMode()) {
+      return mode === 'pickup' ? 'Pickup' : 'Delivery';
+    }
+
+    function syncDeliveryLocationRequirement() {
+      const isDelivery = getSelectedDeliveryMode() === 'delivery';
+      deliveryLocationField.hidden = !isDelivery;
+      deliveryLocation.required = isDelivery;
+
+      if (!isDelivery) {
+        deliveryLocation.value = '';
+      }
+    }
+
+    function renderCheckoutSummary() {
+      const mode = getSelectedDeliveryMode();
+      checkoutSummary.innerHTML = `
+        <strong>${getFulfillmentLabel(mode)} order</strong>
+        <span>Subtotal: ${formatPrice(getCartSubtotal())} | Delivery: ${formatPrice(getDeliveryFee())} | Total: ${formatPrice(getCartTotal())}</span>
+        <span>Payment: ${PAYMENT_METHOD}. Coupons are checked manually by the branch.</span>
+      `;
     }
 
     function getBranch() {
@@ -3181,6 +3536,7 @@
       renderCart();
       closeBranchGate();
       setMenu(false);
+      trackEvent('branch_selected', { selectedBranch: branchId });
     }
 
     function updateBranchContent() {
@@ -3196,6 +3552,10 @@
       directionsLink.href = branch.mapUrl;
       whatsappBranchLink.href = `https://wa.me/${branch.whatsappNumber}`;
       totersOrderLink.href = branch.totersUrl;
+      heroDirectionsLink.href = branch.mapUrl;
+      heroTotersLink.href = branch.totersUrl;
+      mobileActionWhatsapp.href = `https://wa.me/${branch.whatsappNumber}`;
+      mobileActionDirections.href = branch.mapUrl;
       branchMap.src = `https://www.google.com/maps?q=${encodeURIComponent(branch.mapQuery)}&output=embed`;
       mapOpenLink.href = branch.mapUrl;
     }
