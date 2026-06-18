@@ -157,6 +157,10 @@ if ($adminConfig -notmatch 'name:\s*"image".*required:\s*false') {
   $failures.Add('CMS menu image field should be optional while the public menu is text-only')
 }
 
+if ($adminConfig -notmatch 'name:\s*"hero_image".*required:\s*false') {
+  $failures.Add('CMS hero image field should be optional because the site has a fallback hero image')
+}
+
 $doodleCount = ([regex]::Matches($html, '<svg class="doodle')).Count
 if ($doodleCount -lt 8) {
   $failures.Add("Expected at least 8 doodle SVGs; found $doodleCount")
