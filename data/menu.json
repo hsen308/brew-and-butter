@@ -1,38 +1,38 @@
 {
   "branches": [
     {
-      "id": "downtown",
+      "map_query": "Brew and Butter Riad El Solh Beirut",
+      "payment": "Cash on delivery",
+      "visit": "Downtown is the original stop near Riad El Solh Street, open daily with free Wi-Fi, study tables, pickup, and COD delivery.",
       "name": "Downtown Beirut",
-      "short": "Downtown",
+      "map_url": "https://maps.app.goo.gl/ivsNw6WE26BhJt158",
       "area": "Beirut Downtown",
-      "exact_location": "Riad El Solh Street",
-      "address": "Riad El Solh Street",
+      "phone": "+961 70 786 131",
       "neighborhood": "Downtown Beirut",
       "hours": "Mon - Sun, 8 AM - 11 PM",
+      "address": "Riad El Solh Street",
+      "exact_location": "Riad El Solh Street",
+      "id": "downtown",
+      "short": "Downtown",
       "features": "Free Wi-Fi and study area",
-      "payment": "Cash on delivery",
-      "phone": "+961 70 786 131",
-      "map_url": "https://maps.app.goo.gl/ivsNw6WE26BhJt158",
-      "map_query": "Brew and Butter Riad El Solh Beirut",
-      "toters_url": "https://totersapp.com/nVnd",
-      "visit": "Downtown is the original stop near Riad El Solh Street, open daily with free Wi-Fi, study tables, pickup, and COD delivery."
+      "toters_url": "https://totersapp.com/nVnd"
     },
     {
-      "id": "mousaytbe",
+      "map_query": "Brew and Butter Mousaytbe Beirut",
+      "payment": "Cash on delivery",
+      "visit": "Mousaytbe is open daily with the same coffee and bakery favorites, plus Powerbowls, free Wi-Fi, study tables, pickup, and COD delivery.",
       "name": "Mousaytbe",
-      "short": "Mousaytbe",
+      "map_url": "https://www.google.com/maps/search/?api=1&query=Brew%20and%20Butter%20Mousaytbe%20Beirut",
       "area": "Mousaytbe, Beirut",
-      "exact_location": "Mousaytbe, Beirut",
-      "address": "Mousaytbe, Beirut",
+      "phone": "+961 70 786 131",
       "neighborhood": "Mousaytbe",
       "hours": "Mon - Sun, 8 AM - 11 PM",
+      "address": "Mousaytbe, Beirut",
+      "exact_location": "Mousaytbe, Beirut",
+      "id": "mousaytbe",
+      "short": "Mousaytbe",
       "features": "Free Wi-Fi and study area",
-      "payment": "Cash on delivery",
-      "phone": "+961 70 786 131",
-      "map_url": "https://www.google.com/maps/search/?api=1&query=Brew%20and%20Butter%20Mousaytbe%20Beirut",
-      "map_query": "Brew and Butter Mousaytbe Beirut",
-      "toters_url": "https://totersapp.com/nVnd",
-      "visit": "Mousaytbe is open daily with the same coffee and bakery favorites, plus Powerbowls, free Wi-Fi, study tables, pickup, and COD delivery."
+      "toters_url": "https://totersapp.com/nVnd"
     }
   ],
   "categories": [
@@ -57,8 +57,11 @@
     {
       "name": "Espresso",
       "category": "Coffee",
-      "branches": ["downtown", "mousaytbe"],
-      "price": "$2.50",
+      "branches": [
+        "downtown",
+        "mousaytbe"
+      ],
+      "price": "2",
       "desc": "Short, bold, and fast.",
       "tags": [],
       "options": [
@@ -86,7 +89,10 @@
     {
       "name": "Americano",
       "category": "Coffee",
-      "branches": ["downtown", "mousaytbe"],
+      "branches": [
+        "downtown",
+        "mousaytbe"
+      ],
       "price": "$3.00",
       "desc": "Espresso opened up with hot water.",
       "tags": [],
@@ -153,7 +159,10 @@
     {
       "name": "Cappuccino",
       "category": "Coffee",
-      "branches": ["downtown", "mousaytbe"],
+      "branches": [
+        "downtown",
+        "mousaytbe"
+      ],
       "price": "$4.00",
       "desc": "Espresso, steamed milk, and foam.",
       "tags": [],
@@ -281,7 +290,10 @@
     {
       "name": "Flat White",
       "category": "Coffee",
-      "branches": ["downtown", "mousaytbe"],
+      "branches": [
+        "downtown",
+        "mousaytbe"
+      ],
       "price": "$4.50",
       "desc": "Double shot with smooth microfoam.",
       "tags": [],
@@ -372,10 +384,15 @@
     {
       "name": "Latte",
       "category": "Coffee",
-      "branches": ["downtown", "mousaytbe"],
+      "branches": [
+        "downtown",
+        "mousaytbe"
+      ],
       "price": "$4.50",
       "desc": "Smooth espresso and milk.",
-      "tags": ["Popular"],
+      "tags": [
+        "Popular"
+      ],
       "options": [
         {
           "name": "temperature",
@@ -500,7 +517,10 @@
     {
       "name": "Spanish Latte",
       "category": "Coffee",
-      "branches": ["downtown", "mousaytbe"],
+      "branches": [
+        "downtown",
+        "mousaytbe"
+      ],
       "price": "$5.00",
       "desc": "Sweet, creamy, and easy to love.",
       "tags": [],
@@ -604,10 +624,15 @@
     {
       "name": "Iced Matcha",
       "category": "Coffee",
-      "branches": ["downtown", "mousaytbe"],
+      "branches": [
+        "downtown",
+        "mousaytbe"
+      ],
       "price": "$5.50",
       "desc": "Bright matcha served cold.",
-      "tags": ["Popular"],
+      "tags": [
+        "Popular"
+      ],
       "options": [
         {
           "name": "milk",
@@ -689,7 +714,10 @@
     {
       "name": "Cold Brew",
       "category": "Coffee",
-      "branches": ["downtown", "mousaytbe"],
+      "branches": [
+        "downtown",
+        "mousaytbe"
+      ],
       "price": "$5.00",
       "desc": "Slow steeped, chilled, and clean.",
       "tags": [],
@@ -774,7 +802,10 @@
     {
       "name": "Cookie",
       "category": "Pastries",
-      "branches": ["downtown", "mousaytbe"],
+      "branches": [
+        "downtown",
+        "mousaytbe"
+      ],
       "price": "$3.00",
       "desc": "Soft center, golden edge.",
       "tags": [],
@@ -816,16 +847,24 @@
     {
       "name": "Butter Croissant",
       "category": "Pastries",
-      "branches": ["downtown", "mousaytbe"],
+      "branches": [
+        "downtown",
+        "mousaytbe"
+      ],
       "price": "$3.00",
       "desc": "Flaky house classic.",
-      "tags": ["Popular"],
+      "tags": [
+        "Popular"
+      ],
       "options": []
     },
     {
       "name": "Pain au Chocolat",
       "category": "Pastries",
-      "branches": ["downtown", "mousaytbe"],
+      "branches": [
+        "downtown",
+        "mousaytbe"
+      ],
       "price": "$3.50",
       "desc": "Buttery layers with chocolate.",
       "tags": [],
@@ -834,7 +873,10 @@
     {
       "name": "Cinnamon Roll",
       "category": "Pastries",
-      "branches": ["downtown", "mousaytbe"],
+      "branches": [
+        "downtown",
+        "mousaytbe"
+      ],
       "price": "$4.00",
       "desc": "Warm spice and glaze.",
       "tags": [],
@@ -843,7 +885,10 @@
     {
       "name": "Eclair",
       "category": "Pastries",
-      "branches": ["downtown", "mousaytbe"],
+      "branches": [
+        "downtown",
+        "mousaytbe"
+      ],
       "price": "$4.50",
       "desc": "Filled and finished daily.",
       "tags": [],
@@ -852,7 +897,10 @@
     {
       "name": "Basque Cheesecake",
       "category": "Pastries",
-      "branches": ["downtown", "mousaytbe"],
+      "branches": [
+        "downtown",
+        "mousaytbe"
+      ],
       "price": "$6.00",
       "desc": "Caramelized top, creamy center.",
       "tags": [],
@@ -892,107 +940,113 @@
       ]
     },
     {
-      "name": "Turkey Croissant",
-      "category": "Sandwiches",
-      "branches": ["downtown", "mousaytbe"],
-      "price": "$6.50",
-      "desc": "Turkey, cheese, greens, and house sauce.",
-      "calories": 520,
       "protein": 29,
-      "tags": [],
-      "options": [
-        {
-          "name": "bread",
-          "label": "Bread",
-          "type": "radio",
-          "choices": [
-            {
-              "label": "Sourdough",
-              "price": "$0.00",
-              "calories_delta": 0,
-              "protein_delta": 0
-            },
-            {
-              "label": "Croissant",
-              "price": "$0.75",
-              "calories_delta": 110,
-              "protein_delta": 2
-            },
-            {
-              "label": "Wrap",
-              "price": "$0.00",
-              "calories_delta": -40,
-              "protein_delta": -1
-            }
-          ]
-        },
-        {
-          "name": "sandwichAdds",
-          "label": "Add-ons",
-          "type": "checkbox",
-          "choices": [
-            {
-              "label": "Extra cheese",
-              "price": "$1.00",
-              "calories_delta": 90,
-              "protein_delta": 6
-            },
-            {
-              "label": "Avocado",
-              "price": "$1.25",
-              "calories_delta": 80,
-              "protein_delta": 1
-            },
-            {
-              "label": "Extra protein",
-              "price": "$2.00",
-              "calories_delta": 150,
-              "protein_delta": 22
-            }
-          ]
-        },
-        {
-          "name": "sandwichRemove",
-          "label": "Remove stuff",
-          "type": "checkbox",
-          "choices": [
-            {
-              "label": "No tomato",
-              "price": "$0.00",
-              "calories_delta": -10,
-              "protein_delta": 0
-            },
-            {
-              "label": "No pickles",
-              "price": "$0.00",
-              "calories_delta": -5,
-              "protein_delta": 0
-            },
-            {
-              "label": "No sauce",
-              "price": "$0.00",
-              "calories_delta": -90,
-              "protein_delta": 0
-            },
-            {
-              "label": "No lettuce",
-              "price": "$0.00",
-              "calories_delta": -5,
-              "protein_delta": 0
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Halloumi Pesto Sandwich",
-      "category": "Sandwiches",
-      "branches": ["downtown", "mousaytbe"],
+      "calories": 520,
       "price": "$6.50",
-      "desc": "Grilled halloumi, pesto, tomato, and greens.",
-      "calories": 610,
+      "name": "Turkey Croissant",
+      "branches": [
+        "downtown",
+        "mousaytbe"
+      ],
+      "desc": "Turkey, cheese, greens, and house sauce.",
+      "tags": [],
+      "category": "Sandwiches",
+      "options": [
+        {
+          "name": "bread",
+          "label": "Bread",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Sourdough",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Croissant",
+              "price": "$0.75",
+              "calories_delta": 110,
+              "protein_delta": 2
+            },
+            {
+              "label": "Wrap",
+              "price": "$0.00",
+              "calories_delta": -40,
+              "protein_delta": -1
+            }
+          ]
+        },
+        {
+          "name": "sandwichAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Extra cheese",
+              "price": "$1.00",
+              "calories_delta": 90,
+              "protein_delta": 6
+            },
+            {
+              "label": "Avocado",
+              "price": "$1.25",
+              "calories_delta": 80,
+              "protein_delta": 1
+            },
+            {
+              "label": "Extra protein",
+              "price": "$2.00",
+              "calories_delta": 150,
+              "protein_delta": 22
+            }
+          ]
+        },
+        {
+          "name": "sandwichRemove",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "No tomato",
+              "price": "$0.00",
+              "calories_delta": -10,
+              "protein_delta": 0
+            },
+            {
+              "label": "No pickles",
+              "price": "$0.00",
+              "calories_delta": -5,
+              "protein_delta": 0
+            },
+            {
+              "label": "No sauce",
+              "price": "$0.00",
+              "calories_delta": -90,
+              "protein_delta": 0
+            },
+            {
+              "label": "No lettuce",
+              "price": "$0.00",
+              "calories_delta": -5,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
       "protein": 24,
+      "calories": 610,
+      "price": "$6.50",
+      "name": "Halloumi Pesto Sandwich",
+      "branches": [
+        "downtown",
+        "mousaytbe"
+      ],
+      "desc": "Grilled halloumi, pesto, tomato, and greens.",
       "tags": [],
+      "category": "Sandwiches",
       "options": [
         {
           "name": "bread",
@@ -1072,107 +1126,20 @@
       ]
     },
     {
-      "name": "Chicken Avocado Sandwich",
-      "category": "Sandwiches",
-      "branches": ["downtown", "mousaytbe"],
-      "price": "$7.50",
-      "desc": "Chicken, avocado, lettuce, and sauce.",
-      "calories": 640,
       "protein": 38,
-      "tags": ["Popular", "High protein"],
-      "options": [
-        {
-          "name": "bread",
-          "label": "Bread",
-          "type": "radio",
-          "choices": [
-            {
-              "label": "Sourdough",
-              "price": "$0.00",
-              "calories_delta": 0,
-              "protein_delta": 0
-            },
-            {
-              "label": "Croissant",
-              "price": "$0.75",
-              "calories_delta": 110,
-              "protein_delta": 2
-            },
-            {
-              "label": "Wrap",
-              "price": "$0.00",
-              "calories_delta": -40,
-              "protein_delta": -1
-            }
-          ]
-        },
-        {
-          "name": "sandwichAdds",
-          "label": "Add-ons",
-          "type": "checkbox",
-          "choices": [
-            {
-              "label": "Extra cheese",
-              "price": "$1.00",
-              "calories_delta": 90,
-              "protein_delta": 6
-            },
-            {
-              "label": "Avocado",
-              "price": "$1.25",
-              "calories_delta": 80,
-              "protein_delta": 1
-            },
-            {
-              "label": "Extra protein",
-              "price": "$2.00",
-              "calories_delta": 150,
-              "protein_delta": 22
-            }
-          ]
-        },
-        {
-          "name": "sandwichRemove",
-          "label": "Remove stuff",
-          "type": "checkbox",
-          "choices": [
-            {
-              "label": "No tomato",
-              "price": "$0.00",
-              "calories_delta": -10,
-              "protein_delta": 0
-            },
-            {
-              "label": "No pickles",
-              "price": "$0.00",
-              "calories_delta": -5,
-              "protein_delta": 0
-            },
-            {
-              "label": "No sauce",
-              "price": "$0.00",
-              "calories_delta": -90,
-              "protein_delta": 0
-            },
-            {
-              "label": "No lettuce",
-              "price": "$0.00",
-              "calories_delta": -5,
-              "protein_delta": 0
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Tuna Melt",
+      "calories": 640,
+      "price": "$7.50",
+      "name": "Chicken Avocado Sandwich",
+      "branches": [
+        "downtown",
+        "mousaytbe"
+      ],
+      "desc": "Chicken, avocado, lettuce, and sauce.",
+      "tags": [
+        "Popular",
+        "High protein"
+      ],
       "category": "Sandwiches",
-      "branches": ["downtown", "mousaytbe"],
-      "price": "$6.75",
-      "desc": "Tuna, melted cheese, pickles, and toast.",
-      "calories": 560,
-      "protein": 34,
-      "tags": [],
       "options": [
         {
           "name": "bread",
@@ -1258,200 +1225,114 @@
       ]
     },
     {
-      "name": "Chicken Caesar Bowl",
-      "category": "Powerbowls",
-      "branches": ["mousaytbe"],
-      "price": "$9.00",
-      "desc": "Chicken, greens, parmesan, croutons, and Caesar dressing.",
-      "calories": 690,
-      "protein": 46,
-      "tags": ["High protein"],
-      "options": [
-        {
-          "name": "size",
-          "label": "Size",
-          "type": "radio",
-          "choices": [
-            {
-              "label": "Regular bowl",
-              "price": "$0.00",
-              "calories_delta": 0,
-              "protein_delta": 0
-            },
-            {
-              "label": "Large bowl",
-              "price": "$3.00",
-              "calories_delta": 180,
-              "protein_delta": 8
-            }
-          ]
-        },
-        {
-          "name": "bowlAdds",
-          "label": "Add-ons",
-          "type": "checkbox",
-          "choices": [
-            {
-              "label": "Extra chicken",
-              "price": "$2.50",
-              "calories_delta": 160,
-              "protein_delta": 30
-            },
-            {
-              "label": "Boiled egg",
-              "price": "$1.25",
-              "calories_delta": 75,
-              "protein_delta": 6
-            },
-            {
-              "label": "Avocado",
-              "price": "$1.50",
-              "calories_delta": 80,
-              "protein_delta": 1
-            },
-            {
-              "label": "Feta",
-              "price": "$1.00",
-              "calories_delta": 70,
-              "protein_delta": 4
-            }
-          ]
-        },
-        {
-          "name": "bowlRemove",
-          "label": "Remove stuff",
-          "type": "checkbox",
-          "choices": [
-            {
-              "label": "No onions",
-              "price": "$0.00",
-              "calories_delta": -10,
-              "protein_delta": 0
-            },
-            {
-              "label": "No tomatoes",
-              "price": "$0.00",
-              "calories_delta": -20,
-              "protein_delta": -1
-            },
-            {
-              "label": "No corn",
-              "price": "$0.00",
-              "calories_delta": -60,
-              "protein_delta": -2
-            },
-            {
-              "label": "Dressing on the side",
-              "price": "$0.00",
-              "calories_delta": 0,
-              "protein_delta": 0
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Tuna Protein Bowl",
-      "category": "Powerbowls",
-      "branches": ["mousaytbe"],
-      "price": "$8.50",
-      "desc": "Tuna, egg, corn, greens, and house dressing.",
-      "calories": 620,
-      "protein": 42,
-      "tags": ["High protein"],
-      "options": [
-        {
-          "name": "size",
-          "label": "Size",
-          "type": "radio",
-          "choices": [
-            {
-              "label": "Regular bowl",
-              "price": "$0.00",
-              "calories_delta": 0,
-              "protein_delta": 0
-            },
-            {
-              "label": "Large bowl",
-              "price": "$3.00",
-              "calories_delta": 180,
-              "protein_delta": 8
-            }
-          ]
-        },
-        {
-          "name": "bowlAdds",
-          "label": "Add-ons",
-          "type": "checkbox",
-          "choices": [
-            {
-              "label": "Extra chicken",
-              "price": "$2.50",
-              "calories_delta": 160,
-              "protein_delta": 30
-            },
-            {
-              "label": "Boiled egg",
-              "price": "$1.25",
-              "calories_delta": 75,
-              "protein_delta": 6
-            },
-            {
-              "label": "Avocado",
-              "price": "$1.50",
-              "calories_delta": 80,
-              "protein_delta": 1
-            },
-            {
-              "label": "Feta",
-              "price": "$1.00",
-              "calories_delta": 70,
-              "protein_delta": 4
-            }
-          ]
-        },
-        {
-          "name": "bowlRemove",
-          "label": "Remove stuff",
-          "type": "checkbox",
-          "choices": [
-            {
-              "label": "No onions",
-              "price": "$0.00",
-              "calories_delta": -10,
-              "protein_delta": 0
-            },
-            {
-              "label": "No tomatoes",
-              "price": "$0.00",
-              "calories_delta": -20,
-              "protein_delta": -1
-            },
-            {
-              "label": "No corn",
-              "price": "$0.00",
-              "calories_delta": -60,
-              "protein_delta": -2
-            },
-            {
-              "label": "Dressing on the side",
-              "price": "$0.00",
-              "calories_delta": 0,
-              "protein_delta": 0
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Halloumi Quinoa Bowl",
-      "category": "Powerbowls",
-      "branches": ["mousaytbe"],
-      "price": "$9.00",
-      "desc": "Halloumi, quinoa, avocado, tomato, and greens.",
-      "calories": 740,
-      "protein": 31,
+      "protein": 34,
+      "calories": 560,
+      "price": "$6.75",
+      "name": "Tuna Melt",
+      "branches": [
+        "downtown",
+        "mousaytbe"
+      ],
+      "desc": "Tuna, melted cheese, pickles, and toast.",
       "tags": [],
+      "category": "Sandwiches",
+      "options": [
+        {
+          "name": "bread",
+          "label": "Bread",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Sourdough",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Croissant",
+              "price": "$0.75",
+              "calories_delta": 110,
+              "protein_delta": 2
+            },
+            {
+              "label": "Wrap",
+              "price": "$0.00",
+              "calories_delta": -40,
+              "protein_delta": -1
+            }
+          ]
+        },
+        {
+          "name": "sandwichAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Extra cheese",
+              "price": "$1.00",
+              "calories_delta": 90,
+              "protein_delta": 6
+            },
+            {
+              "label": "Avocado",
+              "price": "$1.25",
+              "calories_delta": 80,
+              "protein_delta": 1
+            },
+            {
+              "label": "Extra protein",
+              "price": "$2.00",
+              "calories_delta": 150,
+              "protein_delta": 22
+            }
+          ]
+        },
+        {
+          "name": "sandwichRemove",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "No tomato",
+              "price": "$0.00",
+              "calories_delta": -10,
+              "protein_delta": 0
+            },
+            {
+              "label": "No pickles",
+              "price": "$0.00",
+              "calories_delta": -5,
+              "protein_delta": 0
+            },
+            {
+              "label": "No sauce",
+              "price": "$0.00",
+              "calories_delta": -90,
+              "protein_delta": 0
+            },
+            {
+              "label": "No lettuce",
+              "price": "$0.00",
+              "calories_delta": -5,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "protein": 46,
+      "calories": 690,
+      "price": "$9.00",
+      "name": "Chicken Caesar Bowl",
+      "branches": [
+        "mousaytbe"
+      ],
+      "desc": "Chicken, greens, parmesan, croutons, and Caesar dressing.",
+      "tags": [
+        "High protein"
+      ],
+      "category": "Powerbowls",
       "options": [
         {
           "name": "size",
@@ -1537,14 +1418,210 @@
       ]
     },
     {
-      "name": "Salmon Avocado Bowl",
+      "protein": 42,
+      "calories": 620,
+      "price": "$8.50",
+      "name": "Tuna Protein Bowl",
+      "branches": [
+        "mousaytbe"
+      ],
+      "desc": "Tuna, egg, corn, greens, and house dressing.",
+      "tags": [
+        "High protein"
+      ],
       "category": "Powerbowls",
-      "branches": ["mousaytbe"],
-      "price": "$11.00",
-      "desc": "Salmon, avocado, rice, greens, and sesame sauce.",
-      "calories": 780,
+      "options": [
+        {
+          "name": "size",
+          "label": "Size",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Regular bowl",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Large bowl",
+              "price": "$3.00",
+              "calories_delta": 180,
+              "protein_delta": 8
+            }
+          ]
+        },
+        {
+          "name": "bowlAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Extra chicken",
+              "price": "$2.50",
+              "calories_delta": 160,
+              "protein_delta": 30
+            },
+            {
+              "label": "Boiled egg",
+              "price": "$1.25",
+              "calories_delta": 75,
+              "protein_delta": 6
+            },
+            {
+              "label": "Avocado",
+              "price": "$1.50",
+              "calories_delta": 80,
+              "protein_delta": 1
+            },
+            {
+              "label": "Feta",
+              "price": "$1.00",
+              "calories_delta": 70,
+              "protein_delta": 4
+            }
+          ]
+        },
+        {
+          "name": "bowlRemove",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "No onions",
+              "price": "$0.00",
+              "calories_delta": -10,
+              "protein_delta": 0
+            },
+            {
+              "label": "No tomatoes",
+              "price": "$0.00",
+              "calories_delta": -20,
+              "protein_delta": -1
+            },
+            {
+              "label": "No corn",
+              "price": "$0.00",
+              "calories_delta": -60,
+              "protein_delta": -2
+            },
+            {
+              "label": "Dressing on the side",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "protein": 31,
+      "calories": 740,
+      "price": "$9.00",
+      "name": "Halloumi Quinoa Bowl",
+      "branches": [
+        "mousaytbe"
+      ],
+      "desc": "Halloumi, quinoa, avocado, tomato, and greens.",
+      "tags": [],
+      "category": "Powerbowls",
+      "options": [
+        {
+          "name": "size",
+          "label": "Size",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Regular bowl",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Large bowl",
+              "price": "$3.00",
+              "calories_delta": 180,
+              "protein_delta": 8
+            }
+          ]
+        },
+        {
+          "name": "bowlAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Extra chicken",
+              "price": "$2.50",
+              "calories_delta": 160,
+              "protein_delta": 30
+            },
+            {
+              "label": "Boiled egg",
+              "price": "$1.25",
+              "calories_delta": 75,
+              "protein_delta": 6
+            },
+            {
+              "label": "Avocado",
+              "price": "$1.50",
+              "calories_delta": 80,
+              "protein_delta": 1
+            },
+            {
+              "label": "Feta",
+              "price": "$1.00",
+              "calories_delta": 70,
+              "protein_delta": 4
+            }
+          ]
+        },
+        {
+          "name": "bowlRemove",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "No onions",
+              "price": "$0.00",
+              "calories_delta": -10,
+              "protein_delta": 0
+            },
+            {
+              "label": "No tomatoes",
+              "price": "$0.00",
+              "calories_delta": -20,
+              "protein_delta": -1
+            },
+            {
+              "label": "No corn",
+              "price": "$0.00",
+              "calories_delta": -60,
+              "protein_delta": -2
+            },
+            {
+              "label": "Dressing on the side",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
       "protein": 44,
-      "tags": ["High protein"],
+      "calories": 780,
+      "price": "$11.00",
+      "name": "Salmon Avocado Bowl",
+      "branches": [
+        "mousaytbe"
+      ],
+      "desc": "Salmon, avocado, rice, greens, and sesame sauce.",
+      "tags": [
+        "High protein"
+      ],
+      "category": "Powerbowls",
       "options": [
         {
           "name": "size",
