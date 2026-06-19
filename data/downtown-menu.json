@@ -1226,6 +1226,17 @@
           "price": "2"
         }
       ]
+    },
+    {
+      "family": "butter",
+      "name": "example",
+      "items": [
+        {
+          "name": "fries",
+          "price": "4",
+          "desc": "fries"
+        }
+      ]
     }
   ]
 }
