@@ -3510,26 +3510,6 @@
       };
     }
 
-    function normalizeCmsBranchPrices(item) {
-      if (Array.isArray(item?.branch_prices) && item.branch_prices.length) {
-        return item.branch_prices
-          .map((row) => ({
-            branchId: slugifyId(row?.branch || row?.branch_id || row?.id, ''),
-            price: parseCmsPrice(row?.price)
-          }))
-          .filter((row) => row.branchId);
-      }
-
-      const itemBranchIds = normalizeStringList(item?.branches || item?.branch_ids || item?.branch);
-      const branchesForItem = itemBranchIds.length ? itemBranchIds.map((branchId) => slugifyId(branchId, branchId)) : [...branchOrder];
-      const sharedPrice = parseCmsPrice(item?.price);
-
-      return branchesForItem.map((branchId) => ({
-        branchId,
-        price: sharedPrice
-      }));
-    }
-
     function normalizeCmsNutrition(item) {
       const calories = parseOptionalCmsNumber(item?.calories ?? item?.nutrition?.calories);
       const protein = parseOptionalCmsNumber(item?.protein ?? item?.nutrition?.protein);
@@ -3542,22 +3522,19 @@
       };
     }
 
-    function normalizeCmsMenuItem(item, index) {
+    function normalizeCmsBranchMenuItem(item, index, categoryName) {
       const name = String(item?.name || '').trim() || `Menu item ${index + 1}`;
       const description = String(item?.desc || item?.description || '').trim();
-      const id = String(item?.id || '').trim() || slugifyMenuItem(name, index);
+      const id = String(item?.id || '').trim() || slugifyMenuItem(`${categoryName}-${name}`, index);
       const options = Array.isArray(item?.options)
         ? item.options.map((group, groupIndex) => normalizeCmsOptionGroup(group, groupIndex, id)).filter(Boolean)
         : [];
-      const branchPrices = normalizeCmsBranchPrices(item);
 
       return {
         id,
         name,
-        category: String(item?.category || '').trim() || 'Menu',
-        branches: branchPrices.map((row) => row.branchId),
-        branchPrices,
-        price: branchPrices[0]?.price || parseCmsPrice(item?.price),
+        category: categoryName || 'Menu',
+        price: parseCmsPrice(item?.price),
         description,
         options,
         nutrition: normalizeCmsNutrition(item),
@@ -3566,7 +3543,33 @@
       };
     }
 
-    let cmsMenuItems = null;
+    function normalizeCmsBranchMenuCategory(category, index) {
+      const normalizedCategory = normalizeCmsCategory(category, index);
+      const items = Array.isArray(category?.items)
+        ? category.items.map((item, itemIndex) => normalizeCmsBranchMenuItem(item, itemIndex, normalizedCategory.name)).filter((item) => item.name)
+        : [];
+
+      return {
+        ...normalizedCategory,
+        items
+      };
+    }
+
+    function normalizeCmsBranchMenu(menuData, branchId) {
+      const branch = normalizeCmsBranch(menuData?.branch || { id: branchId }, 0);
+      const categories = Array.isArray(menuData?.categories)
+        ? menuData.categories.map(normalizeCmsBranchMenuCategory).filter((category) => category.name)
+        : [];
+
+      return {
+        branch: {
+          ...branch,
+          id: branchId
+        },
+        categories,
+        items: categories.flatMap((category) => category.items)
+      };
+    }
 
     function formatCafeNameHtml(name) {
       return escapeHtml(name).replace(/\s+(?:and|&)\s+/i, ' <span>&amp;</span> ');
@@ -3612,55 +3615,49 @@
       updateBranchContent();
     }
 
-    function applyCmsMenu(menuData) {
-      const cmsBranches = Array.isArray(menuData?.branches)
-        ? menuData.branches.map(normalizeCmsBranch).filter((branch) => branch.id && branch.name)
-        : [];
+    function applyCmsBranchMenu(branchId, menuData) {
+      const normalizedMenu = normalizeCmsBranchMenu(menuData, branchId);
 
-      if (cmsBranches.length) {
-        branchOrder = cmsBranches.map((branch) => branch.id);
-        cmsBranches.forEach((branch) => {
-          branches[branch.id] = branch;
-        });
+      if (!normalizedMenu.categories.length) return;
+
+      if (!branchOrder.includes(branchId)) {
+        branchOrder.push(branchId);
       }
 
-      const cmsCategories = Array.isArray(menuData?.categories)
-        ? menuData.categories.map(normalizeCmsCategory).filter((category) => category.name)
-        : [];
+      branches[branchId] = {
+        ...branches[branchId],
+        ...normalizedMenu.branch,
+        categories: normalizedMenu.categories.map((category) => ({
+          name: category.name,
+          family: category.family
+        })),
+        menu: normalizedMenu.items
+      };
+    }
 
-      if (cmsCategories.length) {
-        categoryConfig = cmsCategories;
+    async function loadCmsData() {
+      try {
+        const settingsResponse = await fetch('data/setting.json');
+        if (!settingsResponse.ok) throw new Error('Settings fetch failed');
+        applyCmsSettings(await settingsResponse.json());
+      } catch (error) {
+        console.warn('Using fallback settings.', error);
       }
 
-      const items = Array.isArray(menuData?.items)
-        ? menuData.items.map(normalizeCmsMenuItem).filter((item) => item.name)
-        : [];
+      const branchMenuFiles = [
+        ['downtown', 'data/downtown-menu.json'],
+        ['mousaytbe', 'data/mousaytbe-menu.json']
+      ];
 
-      if (!items.length) {
-        renderBranchCards();
-        updateBranchContent();
-        renderMenu();
-        renderCart();
-        return;
-      }
-
-      cmsMenuItems = items;
-      branchOrder.forEach((branchId) => {
-        if (branches[branchId]) {
-          branches[branchId].menu = [];
+      for (const [branchId, menuPath] of branchMenuFiles) {
+        try {
+          const menuResponse = await fetch(menuPath);
+          if (!menuResponse.ok) throw new Error(`${branchId} menu fetch failed`);
+          applyCmsBranchMenu(branchId, await menuResponse.json());
+        } catch (error) {
+          console.warn(`Using fallback ${branchId} menu.`, error);
         }
-      });
-
-      cmsMenuItems.forEach((item) => {
-        item.branchPrices.forEach((branchPrice) => {
-          if (branches[branchPrice.branchId]) {
-            branches[branchPrice.branchId].menu.push({
-              ...item,
-              price: branchPrice.price
-            });
-          }
-        });
-      });
+      }
 
       if (!branches[currentBranchId] || !branchOrder.includes(currentBranchId)) {
         currentBranchId = branchOrder[0] || 'downtown';
@@ -3673,24 +3670,6 @@
       renderCart();
     }
 
-    async function loadCmsData() {
-      try {
-        const settingsResponse = await fetch('data/setting.json');
-        if (!settingsResponse.ok) throw new Error('Settings fetch failed');
-        applyCmsSettings(await settingsResponse.json());
-      } catch (error) {
-        console.warn('Using fallback settings.', error);
-      }
-
-      try {
-        const menuResponse = await fetch('data/menu.json');
-        if (!menuResponse.ok) throw new Error('Menu fetch failed');
-        applyCmsMenu(await menuResponse.json());
-      } catch (error) {
-        console.warn('Using fallback menu.', error);
-      }
-    }
-
     function getBranch() {
       return branches[currentBranchId] || branches[branchOrder[0]] || branches.downtown;
     }
@@ -3700,8 +3679,9 @@
     }
 
     function getCategories() {
-      const branchCategories = [...new Set(getBranch().menu.map((item) => item.category).filter(Boolean))];
-      const configuredCategories = categoryConfig
+      const branch = getBranch();
+      const branchCategories = [...new Set(branch.menu.map((item) => item.category).filter(Boolean))];
+      const configuredCategories = (branch.categories || categoryConfig)
         .map((category) => category.name)
         .filter((category) => branchCategories.includes(category));
       const extraCategories = branchCategories.filter((category) => !configuredCategories.includes(category));
@@ -3710,7 +3690,8 @@
     }
 
     function getCategoryFamily(category) {
-      const config = categoryConfig.find((item) => item.name === category);
+      const branch = getBranch();
+      const config = (branch.categories || categoryConfig).find((item) => item.name === category);
       return config?.family === 'brew' ? 'brew' : 'butter';
     }
 

@@ -20,16 +20,15 @@ collections:
           - { label: "Phone Number", name: "phone", widget: "string" }
           - { label: "Address", name: "address", widget: "string" }
           - { label: "Hero Image Path", name: "hero_image", widget: "string", required: false, default: "", hint: "Optional. Example: photos/croissant coffee and store front.JPG" }
-      - name: "menu"
-        label: "Menu Catalog"
-        file: "data/menu.json"
+      - name: "downtownMenu"
+        label: "Downtown Menu"
+        file: "data/downtown-menu.json"
         fields:
-          - label: "Branches"
-            name: "branches"
-            widget: "list"
-            summary: "{{fields.name}}"
+          - label: "Branch Info"
+            name: "branch"
+            widget: "object"
             fields:
-              - { label: "Branch ID", name: "id", widget: "string", hint: "Use stable lowercase IDs like downtown or mousaytbe. Items use this ID." }
+              - { label: "Branch ID", name: "id", widget: "string", hint: "Keep this as downtown." }
               - { label: "Branch Name", name: "name", widget: "string" }
               - { label: "Short Name", name: "short", widget: "string", required: false }
               - { label: "Area", name: "area", widget: "string" }
@@ -48,43 +47,100 @@ collections:
             name: "categories"
             widget: "list"
             summary: "{{fields.name}}"
+            hint: "Add, rename, reorder, or delete categories for Downtown only."
             fields:
               - { label: "Category Name", name: "name", widget: "string" }
               - { label: "Family", name: "family", widget: "select", options: ["brew", "butter"], default: "butter", hint: "brew shows under drinks. butter shows under food." }
-          - label: "Items"
-            name: "items"
-            widget: "list"
-            summary: "{{fields.name}} - {{fields.category}}"
-            fields:
-              - { label: "Item Name", name: "name", widget: "string" }
-              - { label: "Category", name: "category", widget: "string", hint: "Must match one of the category names above, like Coffee or Powerbowls." }
-              - label: "Branch Prices / Availability"
-                name: "branch_prices"
-                widget: "list"
-                summary: "{{fields.branch}} - {{fields.price}}"
-                hint: "Add one row per branch that sells this item. The item will not show in branches missing from this list."
-                fields:
-                  - { label: "Branch", name: "branch", widget: "select", options: ["downtown", "mousaytbe"] }
-                  - { label: "Price", name: "price", widget: "string" }
-              - { label: "Description", name: "desc", widget: "string" }
-              - { label: "Calories", name: "calories", widget: "number", required: false, value_type: "int" }
-              - { label: "Protein (g)", name: "protein", widget: "number", required: false, value_type: "float" }
-              - { label: "Tags", name: "tags", widget: "list", required: false, field: { label: "Tag", name: "tag", widget: "string" } }
-              - label: "Options"
-                name: "options"
+              - label: "Items"
+                name: "items"
                 widget: "list"
                 required: false
-                summary: "{{fields.label}}"
+                summary: "{{fields.name}} - {{fields.price}}"
+                hint: "These items appear only under this category in the Downtown menu."
                 fields:
-                  - { label: "Option Name", name: "name", widget: "string", hint: "Use a stable lowercase name like milk or bowlAdds." }
-                  - { label: "Option Label", name: "label", widget: "string" }
-                  - { label: "Type", name: "type", widget: "select", options: ["radio", "checkbox"], default: "checkbox" }
-                  - label: "Choices"
-                    name: "choices"
+                  - { label: "Item Name", name: "name", widget: "string" }
+                  - { label: "Price", name: "price", widget: "string" }
+                  - { label: "Description", name: "desc", widget: "string" }
+                  - { label: "Calories", name: "calories", widget: "number", required: false, value_type: "int" }
+                  - { label: "Protein (g)", name: "protein", widget: "number", required: false, value_type: "float" }
+                  - { label: "Tags", name: "tags", widget: "list", required: false, field: { label: "Tag", name: "tag", widget: "string" } }
+                  - label: "Options"
+                    name: "options"
                     widget: "list"
+                    required: false
                     summary: "{{fields.label}}"
                     fields:
-                      - { label: "Choice Label", name: "label", widget: "string" }
-                      - { label: "Extra Price", name: "price", widget: "string", default: "$0.00" }
-                      - { label: "Calories Change", name: "calories_delta", widget: "number", required: false, value_type: "int", default: 0 }
-                      - { label: "Protein Change (g)", name: "protein_delta", widget: "number", required: false, value_type: "float", default: 0 }
+                      - { label: "Option Name", name: "name", widget: "string", hint: "Use a stable lowercase name like milk or bowlAdds." }
+                      - { label: "Option Label", name: "label", widget: "string" }
+                      - { label: "Type", name: "type", widget: "select", options: ["radio", "checkbox"], default: "checkbox" }
+                      - label: "Choices"
+                        name: "choices"
+                        widget: "list"
+                        summary: "{{fields.label}}"
+                        fields:
+                          - { label: "Choice Label", name: "label", widget: "string" }
+                          - { label: "Extra Price", name: "price", widget: "string", default: "$0.00" }
+                          - { label: "Calories Change", name: "calories_delta", widget: "number", required: false, value_type: "int", default: 0 }
+                          - { label: "Protein Change (g)", name: "protein_delta", widget: "number", required: false, value_type: "float", default: 0 }
+      - name: "mousaytbeMenu"
+        label: "Mousaytbe Menu"
+        file: "data/mousaytbe-menu.json"
+        fields:
+          - label: "Branch Info"
+            name: "branch"
+            widget: "object"
+            fields:
+              - { label: "Branch ID", name: "id", widget: "string", hint: "Keep this as mousaytbe." }
+              - { label: "Branch Name", name: "name", widget: "string" }
+              - { label: "Short Name", name: "short", widget: "string", required: false }
+              - { label: "Area", name: "area", widget: "string" }
+              - { label: "Exact Location", name: "exact_location", widget: "string" }
+              - { label: "Address", name: "address", widget: "string" }
+              - { label: "Neighborhood", name: "neighborhood", widget: "string", required: false }
+              - { label: "Hours", name: "hours", widget: "string", default: "Mon - Sun, 8 AM - 11 PM" }
+              - { label: "Features", name: "features", widget: "string", default: "Free Wi-Fi and study area" }
+              - { label: "Payment", name: "payment", widget: "string", default: "Cash on delivery" }
+              - { label: "Phone / WhatsApp", name: "phone", widget: "string" }
+              - { label: "Google Maps Link", name: "map_url", widget: "string" }
+              - { label: "Map Search Query", name: "map_query", widget: "string" }
+              - { label: "Toters Link", name: "toters_url", widget: "string", required: false }
+              - { label: "Visit Copy", name: "visit", widget: "text" }
+          - label: "Categories"
+            name: "categories"
+            widget: "list"
+            summary: "{{fields.name}}"
+            hint: "Add, rename, reorder, or delete categories for Mousaytbe only."
+            fields:
+              - { label: "Category Name", name: "name", widget: "string" }
+              - { label: "Family", name: "family", widget: "select", options: ["brew", "butter"], default: "butter", hint: "brew shows under drinks. butter shows under food." }
+              - label: "Items"
+                name: "items"
+                widget: "list"
+                required: false
+                summary: "{{fields.name}} - {{fields.price}}"
+                hint: "These items appear only under this category in the Mousaytbe menu."
+                fields:
+                  - { label: "Item Name", name: "name", widget: "string" }
+                  - { label: "Price", name: "price", widget: "string" }
+                  - { label: "Description", name: "desc", widget: "string" }
+                  - { label: "Calories", name: "calories", widget: "number", required: false, value_type: "int" }
+                  - { label: "Protein (g)", name: "protein", widget: "number", required: false, value_type: "float" }
+                  - { label: "Tags", name: "tags", widget: "list", required: false, field: { label: "Tag", name: "tag", widget: "string" } }
+                  - label: "Options"
+                    name: "options"
+                    widget: "list"
+                    required: false
+                    summary: "{{fields.label}}"
+                    fields:
+                      - { label: "Option Name", name: "name", widget: "string", hint: "Use a stable lowercase name like milk or bowlAdds." }
+                      - { label: "Option Label", name: "label", widget: "string" }
+                      - { label: "Type", name: "type", widget: "select", options: ["radio", "checkbox"], default: "checkbox" }
+                      - label: "Choices"
+                        name: "choices"
+                        widget: "list"
+                        summary: "{{fields.label}}"
+                        fields:
+                          - { label: "Choice Label", name: "label", widget: "string" }
+                          - { label: "Extra Price", name: "price", widget: "string", default: "$0.00" }
+                          - { label: "Calories Change", name: "calories_delta", widget: "number", required: false, value_type: "int", default: 0 }
+                          - { label: "Protein Change (g)", name: "protein_delta", widget: "number", required: false, value_type: "float", default: 0 }

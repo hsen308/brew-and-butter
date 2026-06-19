@@ -2,8 +2,11 @@ $html = Get-Content -LiteralPath (Join-Path $PSScriptRoot '..\index.html') -Raw
 $projectRoot = Resolve-Path (Join-Path $PSScriptRoot '..')
 $settingsPath = Join-Path $projectRoot 'data\setting.json'
 $settingsJson = Get-Content -LiteralPath $settingsPath -Raw | ConvertFrom-Json
-$menuPath = Join-Path $projectRoot 'data\menu.json'
-$menuJson = Get-Content -LiteralPath $menuPath -Raw | ConvertFrom-Json
+$downtownMenuPath = Join-Path $projectRoot 'data\downtown-menu.json'
+$mousaytbeMenuPath = Join-Path $projectRoot 'data\mousaytbe-menu.json'
+$oldSharedMenuPath = Join-Path $projectRoot 'data\menu.json'
+$downtownMenuJson = Get-Content -LiteralPath $downtownMenuPath -Raw | ConvertFrom-Json
+$mousaytbeMenuJson = Get-Content -LiteralPath $mousaytbeMenuPath -Raw | ConvertFrom-Json
 $adminConfig = Get-Content -LiteralPath (Join-Path $projectRoot 'admin\config.yml') -Raw
 $adminIndex = Get-Content -LiteralPath (Join-Path $projectRoot 'admin\index.html') -Raw
 $failures = [System.Collections.Generic.List[string]]::new()
@@ -37,12 +40,14 @@ Require-Match 'BREW20' '20 percent coupon code is missing'
 Require-Match 'applyCoupon' 'Coupon apply behavior is missing'
 Require-Match 'couponCode' 'Coupon code input is missing'
 Require-Match "fetch\('data/setting\.json'\)" 'CMS settings fetch is missing'
-Require-Match "fetch\('data/menu\.json'\)" 'CMS menu fetch is missing'
+Require-Match "'data/downtown-menu\.json'" 'Downtown branch menu path is missing'
+Require-Match "'data/mousaytbe-menu\.json'" 'Mousaytbe branch menu path is missing'
+Require-Match 'fetch\(menuPath\)' 'Branch menu fetch loop is missing'
 Require-Match 'loadCmsData' 'CMS data loader is missing'
 Require-Match 'applyCmsSettings' 'CMS settings renderer is missing'
-Require-Match 'applyCmsMenu' 'CMS menu renderer is missing'
-Require-Match 'normalizeCmsMenuItem' 'CMS menu item normalizer is missing'
-Require-Match 'cmsMenuItems' 'CMS menu fallback state is missing'
+Require-Match 'applyCmsBranchMenu' 'CMS branch menu renderer is missing'
+Require-Match 'normalizeCmsBranchMenuItem' 'CMS branch menu item normalizer is missing'
+Require-Match 'normalizeCmsBranchMenu' 'CMS branch menu normalizer is missing'
 Require-Match 'catch' 'CMS fetch needs a fallback path'
 Require-Match 'heroImage' 'Hero image should be replaceable from setting.json'
 Require-Match 'id="branchGate"' 'Missing first-screen branch selector'
@@ -131,6 +136,7 @@ Forbid-Match 'productImage|product-media' 'Menu item cards should not show photo
 Forbid-Match "Iced', price: \.5" 'Iced drink option should not cost extra'
 Forbid-Match 'FREEDELIVERY' 'Free delivery coupon should be removed'
 Forbid-Match 'Included' 'Free unselected options should not be labeled Included'
+Forbid-Match "fetch\('data/menu\.json'\)" 'Site should use branch-specific menu files, not the old shared menu file'
 
 if ($settingsJson.phone -match 'X{2,}' -or [string]::IsNullOrWhiteSpace($settingsJson.phone)) {
   $failures.Add('CMS setting phone still uses a placeholder')
@@ -148,65 +154,54 @@ if (-not [string]::IsNullOrWhiteSpace($settingsJson.hero_image)) {
   }
 }
 
-if (-not $menuJson.items -or $menuJson.items.Count -lt 20) {
-  $failures.Add("CMS menu should include the full menu, not demo items only; found $($menuJson.items.Count)")
+function Get-BranchMenuItems($MenuJson) {
+  @($MenuJson.categories | ForEach-Object { $_.items } | Where-Object { $_ })
 }
 
-if (-not $menuJson.branches -or $menuJson.branches.Count -lt 2) {
-  $failures.Add('CMS catalog should include editable branch records for both branches')
-}
+function Assert-BranchMenu($MenuJson, [string]$BranchId, [int]$MinimumItems, [string[]]$RequiredCategories) {
+  if ($MenuJson.branch.id -ne $BranchId) {
+    $failures.Add("Branch menu file should identify itself as $BranchId")
+  }
 
-if (-not $menuJson.categories -or $menuJson.categories.Count -lt 4) {
-  $failures.Add('CMS catalog should include editable menu categories')
-}
+  if (-not $MenuJson.categories -or $MenuJson.categories.Count -lt $RequiredCategories.Count) {
+    $failures.Add("$BranchId branch menu should include editable categories")
+  }
 
-$branchIds = @($menuJson.branches | ForEach-Object { $_.id })
-foreach ($requiredBranch in @('downtown', 'mousaytbe')) {
-  if ($branchIds -notcontains $requiredBranch) {
-    $failures.Add("CMS catalog is missing branch id: $requiredBranch")
+  $categoryNames = @($MenuJson.categories | ForEach-Object { $_.name })
+  foreach ($requiredCategory in $RequiredCategories) {
+    if ($categoryNames -notcontains $requiredCategory) {
+      $failures.Add("$BranchId branch menu is missing category: $requiredCategory")
+    }
+  }
+
+  $branchItems = @(Get-BranchMenuItems $MenuJson)
+  if ($branchItems.Count -lt $MinimumItems) {
+    $failures.Add("$BranchId branch menu should include the full branch menu; found $($branchItems.Count)")
+  }
+
+  $itemsWithoutPrice = @($branchItems | Where-Object { [string]::IsNullOrWhiteSpace($_.price) })
+  if ($itemsWithoutPrice.Count) {
+    $failures.Add("$BranchId branch menu has items without prices")
   }
 }
 
-$categoryNames = @($menuJson.categories | ForEach-Object { $_.name })
-foreach ($requiredCategory in @('Coffee', 'Pastries', 'Sandwiches', 'Powerbowls')) {
-  if ($categoryNames -notcontains $requiredCategory) {
-    $failures.Add("CMS catalog is missing category: $requiredCategory")
-  }
+Assert-BranchMenu $downtownMenuJson 'downtown' 18 @('Coffee', 'Pastries', 'Sandwiches')
+Assert-BranchMenu $mousaytbeMenuJson 'mousaytbe' 22 @('Coffee', 'Pastries', 'Sandwiches', 'Powerbowls')
+
+$allBranchMenuItems = @((Get-BranchMenuItems $downtownMenuJson) + (Get-BranchMenuItems $mousaytbeMenuJson))
+
+$itemsWithNutrition = @($allBranchMenuItems | Where-Object { $_.calories -ne $null -and $_.protein -ne $null })
+if ($itemsWithNutrition.Count -lt 12) {
+  $failures.Add('Branch menu files should expose calories and protein for sandwiches and powerbowls')
 }
 
-$itemsWithBranchPrices = @($menuJson.items | Where-Object { $_.branch_prices -and $_.branch_prices.Count -gt 0 })
-if ($itemsWithBranchPrices.Count -lt $menuJson.items.Count) {
-  $failures.Add('Every CMS menu item should declare branch-specific prices and availability')
-}
-
-$branchPriceRows = @($menuJson.items | ForEach-Object { $_.branch_prices } | Where-Object { $_ })
-$invalidBranchPriceRows = @($branchPriceRows | Where-Object { [string]::IsNullOrWhiteSpace($_.branch) -or [string]::IsNullOrWhiteSpace($_.price) })
-if ($invalidBranchPriceRows.Count) {
-  $failures.Add('Every branch-specific price row should include a branch and a price')
-}
-
-$sharedPriceItems = @($menuJson.items | Where-Object { $_.price -or $_.branches })
-if ($sharedPriceItems.Count) {
-  $failures.Add('CMS menu items should use branch_prices instead of shared item-level price/branches')
-}
-
-$itemsWithCategories = @($menuJson.items | Where-Object { -not [string]::IsNullOrWhiteSpace($_.category) })
-if ($itemsWithCategories.Count -lt $menuJson.items.Count) {
-  $failures.Add('Every CMS menu item should declare a category')
-}
-
-$itemsWithNutrition = @($menuJson.items | Where-Object { $_.calories -ne $null -and $_.protein -ne $null })
-if ($itemsWithNutrition.Count -lt 8) {
-  $failures.Add('CMS catalog should expose calories and protein for sandwiches and powerbowls')
-}
-
-$itemsWithOptions = @($menuJson.items | Where-Object { $_.options -and $_.options.Count -gt 0 })
-if ($itemsWithOptions.Count -lt 12) {
-  $failures.Add('CMS catalog should expose item option groups for ordering customizations')
+$itemsWithOptions = @($allBranchMenuItems | Where-Object { $_.options -and $_.options.Count -gt 0 })
+if ($itemsWithOptions.Count -lt 20) {
+  $failures.Add('Branch menu files should expose item option groups for ordering customizations')
 }
 
 $choicesWithNutritionDelta = @(
-  $menuJson.items |
+  $allBranchMenuItems |
     Where-Object { $_.options } |
     ForEach-Object { $_.options } |
     Where-Object { $_.choices } |
@@ -242,10 +237,18 @@ if ($vercelConfig -notmatch '"source"\s*:\s*"/admin"' -or $vercelConfig -notmatc
   $failures.Add('Vercel should redirect /admin to /admin/ so Decap loads admin/config.yml reliably')
 }
 
-foreach ($requiredAdminField in @('name:\s*"branches"', 'name:\s*"categories"', 'name:\s*"category"', 'name:\s*"branch_prices"', 'name:\s*"options"', 'name:\s*"choices"', 'name:\s*"calories"', 'name:\s*"protein"', 'name:\s*"calories_delta"', 'name:\s*"protein_delta"')) {
+foreach ($requiredAdminField in @('file:\s*"data/downtown-menu\.json"', 'file:\s*"data/mousaytbe-menu\.json"', 'label:\s*"Downtown Menu"', 'label:\s*"Mousaytbe Menu"', 'name:\s*"branch"', 'name:\s*"categories"', 'name:\s*"items"', 'name:\s*"options"', 'name:\s*"choices"', 'name:\s*"calories"', 'name:\s*"protein"', 'name:\s*"calories_delta"', 'name:\s*"protein_delta"')) {
   if ($adminConfig -notmatch $requiredAdminField) {
-    $failures.Add("CMS admin config is missing editable catalog field: $requiredAdminField")
+    $failures.Add("CMS admin config is missing branch-first menu field: $requiredAdminField")
   }
+}
+
+if ($adminConfig -match 'file:\s*"data/menu\.json"|name:\s*"branch_prices"') {
+  $failures.Add('CMS admin config should use branch-first menu files, not the old shared menu catalog')
+}
+
+if (Test-Path -LiteralPath $oldSharedMenuPath) {
+  $failures.Add('Old shared data/menu.json should be removed so editors use branch-specific menu files')
 }
 
 $doodleCount = ([regex]::Matches($html, '<svg class="doodle')).Count
