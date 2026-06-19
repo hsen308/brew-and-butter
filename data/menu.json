@@ -1803,6 +1803,16 @@
           "price": "$11.00"
         }
       ]
+    },
+    {
+      "name": "fries",
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "2"
+        }
+      ],
+      "desc": "fries"
     }
   ]
 }
