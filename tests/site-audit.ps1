@@ -5,6 +5,7 @@ $settingsJson = Get-Content -LiteralPath $settingsPath -Raw | ConvertFrom-Json
 $menuPath = Join-Path $projectRoot 'data\menu.json'
 $menuJson = Get-Content -LiteralPath $menuPath -Raw | ConvertFrom-Json
 $adminConfig = Get-Content -LiteralPath (Join-Path $projectRoot 'admin\config.yml') -Raw
+$adminIndex = Get-Content -LiteralPath (Join-Path $projectRoot 'admin\index.html') -Raw
 $failures = [System.Collections.Generic.List[string]]::new()
 
 function Require-Match([string]$Pattern, [string]$Message) {
@@ -211,6 +212,14 @@ if ($adminConfig -match 'name:\s*"image"') {
 
 if ($adminConfig -notmatch 'name:\s*"hero_image".*widget:\s*"string".*required:\s*false') {
   $failures.Add('CMS hero image should be an optional text path because the site has a fallback hero image')
+}
+
+if ($adminIndex -match 'CMS_MANUAL_INIT|CMS\.init\(\s*\{|collections:\s*\[') {
+  $failures.Add('Admin page should load admin/config.yml instead of keeping a separate hardcoded CMS config')
+}
+
+if ($adminIndex -notmatch 'decap-cms') {
+  $failures.Add('Admin page should load Decap CMS')
 }
 
 foreach ($requiredAdminField in @('name:\s*"branches"', 'name:\s*"categories"', 'name:\s*"category"', 'name:\s*"branches"', 'name:\s*"options"', 'name:\s*"choices"', 'name:\s*"calories"', 'name:\s*"protein"', 'name:\s*"calories_delta"', 'name:\s*"protein_delta"')) {
