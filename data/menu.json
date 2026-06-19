@@ -1,136 +1,1633 @@
 {
+  "branches": [
+    {
+      "id": "downtown",
+      "name": "Downtown Beirut",
+      "short": "Downtown",
+      "area": "Beirut Downtown",
+      "exact_location": "Riad El Solh Street",
+      "address": "Riad El Solh Street",
+      "neighborhood": "Downtown Beirut",
+      "hours": "Mon - Sun, 8 AM - 11 PM",
+      "features": "Free Wi-Fi and study area",
+      "payment": "Cash on delivery",
+      "phone": "+961 70 786 131",
+      "map_url": "https://maps.app.goo.gl/ivsNw6WE26BhJt158",
+      "map_query": "Brew and Butter Riad El Solh Beirut",
+      "toters_url": "https://totersapp.com/nVnd",
+      "visit": "Downtown is the original stop near Riad El Solh Street, open daily with free Wi-Fi, study tables, pickup, and COD delivery."
+    },
+    {
+      "id": "mousaytbe",
+      "name": "Mousaytbe",
+      "short": "Mousaytbe",
+      "area": "Mousaytbe, Beirut",
+      "exact_location": "Mousaytbe, Beirut",
+      "address": "Mousaytbe, Beirut",
+      "neighborhood": "Mousaytbe",
+      "hours": "Mon - Sun, 8 AM - 11 PM",
+      "features": "Free Wi-Fi and study area",
+      "payment": "Cash on delivery",
+      "phone": "+961 70 786 131",
+      "map_url": "https://www.google.com/maps/search/?api=1&query=Brew%20and%20Butter%20Mousaytbe%20Beirut",
+      "map_query": "Brew and Butter Mousaytbe Beirut",
+      "toters_url": "https://totersapp.com/nVnd",
+      "visit": "Mousaytbe is open daily with the same coffee and bakery favorites, plus Powerbowls, free Wi-Fi, study tables, pickup, and COD delivery."
+    }
+  ],
+  "categories": [
+    {
+      "name": "Coffee",
+      "family": "brew"
+    },
+    {
+      "name": "Pastries",
+      "family": "butter"
+    },
+    {
+      "name": "Sandwiches",
+      "family": "butter"
+    },
+    {
+      "name": "Powerbowls",
+      "family": "butter"
+    }
+  ],
   "items": [
     {
       "name": "Espresso",
+      "category": "Coffee",
+      "branches": ["downtown", "mousaytbe"],
       "price": "$2.50",
       "desc": "Short, bold, and fast.",
-      "image": ""
+      "tags": [],
+      "options": [
+        {
+          "name": "blackCoffeeAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Extra shot",
+              "price": "$1.00",
+              "calories_delta": 5,
+              "protein_delta": 0
+            },
+            {
+              "label": "Sweetener",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Americano",
+      "category": "Coffee",
+      "branches": ["downtown", "mousaytbe"],
       "price": "$3.00",
       "desc": "Espresso opened up with hot water.",
-      "image": ""
+      "tags": [],
+      "options": [
+        {
+          "name": "temperature",
+          "label": "Temperature",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Hot",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Iced",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        },
+        {
+          "name": "blackCoffeeAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Extra shot",
+              "price": "$1.00",
+              "calories_delta": 5,
+              "protein_delta": 0
+            },
+            {
+              "label": "Sweetener",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        },
+        {
+          "name": "americanoAdjustments",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Less ice",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "No sugar",
+              "price": "$0.00",
+              "calories_delta": -40,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Cappuccino",
+      "category": "Coffee",
+      "branches": ["downtown", "mousaytbe"],
       "price": "$4.00",
       "desc": "Espresso, steamed milk, and foam.",
-      "image": ""
+      "tags": [],
+      "options": [
+        {
+          "name": "temperature",
+          "label": "Temperature",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Hot",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Iced",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        },
+        {
+          "name": "milk",
+          "label": "Type of milk",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Regular milk",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Skim milk",
+              "price": "$0.00",
+              "calories_delta": -25,
+              "protein_delta": 1
+            },
+            {
+              "label": "Oat milk",
+              "price": "$1.00",
+              "calories_delta": 35,
+              "protein_delta": -1
+            },
+            {
+              "label": "Almond milk",
+              "price": "$1.00",
+              "calories_delta": -20,
+              "protein_delta": -2
+            },
+            {
+              "label": "Lactose-free milk",
+              "price": "$0.75",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        },
+        {
+          "name": "coffeeAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Extra shot",
+              "price": "$1.00",
+              "calories_delta": 5,
+              "protein_delta": 0
+            },
+            {
+              "label": "Vanilla",
+              "price": "$0.50",
+              "calories_delta": 40,
+              "protein_delta": 0
+            },
+            {
+              "label": "Caramel",
+              "price": "$0.50",
+              "calories_delta": 45,
+              "protein_delta": 0
+            },
+            {
+              "label": "Sweetener",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Decaf",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        },
+        {
+          "name": "coffeeRemove",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "No foam",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Less ice",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "No sugar",
+              "price": "$0.00",
+              "calories_delta": -40,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Flat White",
+      "category": "Coffee",
+      "branches": ["downtown", "mousaytbe"],
       "price": "$4.50",
       "desc": "Double shot with smooth microfoam.",
-      "image": ""
+      "tags": [],
+      "options": [
+        {
+          "name": "milk",
+          "label": "Type of milk",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Regular milk",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Skim milk",
+              "price": "$0.00",
+              "calories_delta": -25,
+              "protein_delta": 1
+            },
+            {
+              "label": "Oat milk",
+              "price": "$1.00",
+              "calories_delta": 35,
+              "protein_delta": -1
+            },
+            {
+              "label": "Almond milk",
+              "price": "$1.00",
+              "calories_delta": -20,
+              "protein_delta": -2
+            },
+            {
+              "label": "Lactose-free milk",
+              "price": "$0.75",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        },
+        {
+          "name": "coffeeAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Extra shot",
+              "price": "$1.00",
+              "calories_delta": 5,
+              "protein_delta": 0
+            },
+            {
+              "label": "Sweetener",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Decaf",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        },
+        {
+          "name": "coffeeRemove",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "No foam",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "No sugar",
+              "price": "$0.00",
+              "calories_delta": -40,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Latte",
+      "category": "Coffee",
+      "branches": ["downtown", "mousaytbe"],
       "price": "$4.50",
       "desc": "Smooth espresso and milk.",
-      "image": ""
+      "tags": ["Popular"],
+      "options": [
+        {
+          "name": "temperature",
+          "label": "Temperature",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Hot",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Iced",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        },
+        {
+          "name": "milk",
+          "label": "Type of milk",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Regular milk",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Skim milk",
+              "price": "$0.00",
+              "calories_delta": -25,
+              "protein_delta": 1
+            },
+            {
+              "label": "Oat milk",
+              "price": "$1.00",
+              "calories_delta": 35,
+              "protein_delta": -1
+            },
+            {
+              "label": "Almond milk",
+              "price": "$1.00",
+              "calories_delta": -20,
+              "protein_delta": -2
+            },
+            {
+              "label": "Lactose-free milk",
+              "price": "$0.75",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        },
+        {
+          "name": "coffeeAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Extra shot",
+              "price": "$1.00",
+              "calories_delta": 5,
+              "protein_delta": 0
+            },
+            {
+              "label": "Vanilla",
+              "price": "$0.50",
+              "calories_delta": 40,
+              "protein_delta": 0
+            },
+            {
+              "label": "Caramel",
+              "price": "$0.50",
+              "calories_delta": 45,
+              "protein_delta": 0
+            },
+            {
+              "label": "Sweetener",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Decaf",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        },
+        {
+          "name": "coffeeRemove",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "No foam",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Less ice",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "No sugar",
+              "price": "$0.00",
+              "calories_delta": -40,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Spanish Latte",
+      "category": "Coffee",
+      "branches": ["downtown", "mousaytbe"],
       "price": "$5.00",
       "desc": "Sweet, creamy, and easy to love.",
-      "image": ""
+      "tags": [],
+      "options": [
+        {
+          "name": "temperature",
+          "label": "Temperature",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Hot",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Iced",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        },
+        {
+          "name": "milk",
+          "label": "Type of milk",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Regular milk",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Skim milk",
+              "price": "$0.00",
+              "calories_delta": -25,
+              "protein_delta": 1
+            },
+            {
+              "label": "Oat milk",
+              "price": "$1.00",
+              "calories_delta": 35,
+              "protein_delta": -1
+            },
+            {
+              "label": "Almond milk",
+              "price": "$1.00",
+              "calories_delta": -20,
+              "protein_delta": -2
+            }
+          ]
+        },
+        {
+          "name": "coffeeAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Extra shot",
+              "price": "$1.00",
+              "calories_delta": 5,
+              "protein_delta": 0
+            },
+            {
+              "label": "Sweetener",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Decaf",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        },
+        {
+          "name": "coffeeRemove",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Less ice",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "No sugar",
+              "price": "$0.00",
+              "calories_delta": -40,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Iced Matcha",
+      "category": "Coffee",
+      "branches": ["downtown", "mousaytbe"],
       "price": "$5.50",
       "desc": "Bright matcha served cold.",
-      "image": ""
+      "tags": ["Popular"],
+      "options": [
+        {
+          "name": "milk",
+          "label": "Type of milk",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Regular milk",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Skim milk",
+              "price": "$0.00",
+              "calories_delta": -25,
+              "protein_delta": 1
+            },
+            {
+              "label": "Oat milk",
+              "price": "$1.00",
+              "calories_delta": 35,
+              "protein_delta": -1
+            },
+            {
+              "label": "Almond milk",
+              "price": "$1.00",
+              "calories_delta": -20,
+              "protein_delta": -2
+            }
+          ]
+        },
+        {
+          "name": "matchaAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Vanilla",
+              "price": "$0.50",
+              "calories_delta": 40,
+              "protein_delta": 0
+            },
+            {
+              "label": "Caramel",
+              "price": "$0.50",
+              "calories_delta": 45,
+              "protein_delta": 0
+            },
+            {
+              "label": "Sweetener",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        },
+        {
+          "name": "matchaRemove",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Less ice",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "No sugar",
+              "price": "$0.00",
+              "calories_delta": -40,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Cold Brew",
+      "category": "Coffee",
+      "branches": ["downtown", "mousaytbe"],
       "price": "$5.00",
       "desc": "Slow steeped, chilled, and clean.",
-      "image": ""
+      "tags": [],
+      "options": [
+        {
+          "name": "milk",
+          "label": "Type of milk",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "No milk",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Regular milk",
+              "price": "$0.00",
+              "calories_delta": 35,
+              "protein_delta": 2
+            },
+            {
+              "label": "Oat milk",
+              "price": "$1.00",
+              "calories_delta": 50,
+              "protein_delta": 1
+            },
+            {
+              "label": "Almond milk",
+              "price": "$1.00",
+              "calories_delta": 15,
+              "protein_delta": 0
+            }
+          ]
+        },
+        {
+          "name": "coldBrewAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Sweetener",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Vanilla",
+              "price": "$0.50",
+              "calories_delta": 40,
+              "protein_delta": 0
+            },
+            {
+              "label": "Caramel",
+              "price": "$0.50",
+              "calories_delta": 45,
+              "protein_delta": 0
+            }
+          ]
+        },
+        {
+          "name": "coldBrewRemove",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Less ice",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "No sugar",
+              "price": "$0.00",
+              "calories_delta": -40,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Cookie",
+      "category": "Pastries",
+      "branches": ["downtown", "mousaytbe"],
       "price": "$3.00",
       "desc": "Soft center, golden edge.",
-      "image": ""
+      "tags": [],
+      "options": [
+        {
+          "name": "cookieServe",
+          "label": "Serve",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Regular",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Warm it",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        },
+        {
+          "name": "cookieAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Chocolate dip",
+              "price": "$0.75",
+              "calories_delta": 80,
+              "protein_delta": 1
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Butter Croissant",
+      "category": "Pastries",
+      "branches": ["downtown", "mousaytbe"],
       "price": "$3.00",
       "desc": "Flaky house classic.",
-      "image": ""
+      "tags": ["Popular"],
+      "options": []
     },
     {
       "name": "Pain au Chocolat",
+      "category": "Pastries",
+      "branches": ["downtown", "mousaytbe"],
       "price": "$3.50",
       "desc": "Buttery layers with chocolate.",
-      "image": ""
+      "tags": [],
+      "options": []
     },
     {
       "name": "Cinnamon Roll",
+      "category": "Pastries",
+      "branches": ["downtown", "mousaytbe"],
       "price": "$4.00",
       "desc": "Warm spice and glaze.",
-      "image": ""
+      "tags": [],
+      "options": []
     },
     {
       "name": "Eclair",
+      "category": "Pastries",
+      "branches": ["downtown", "mousaytbe"],
       "price": "$4.50",
       "desc": "Filled and finished daily.",
-      "image": ""
+      "tags": [],
+      "options": []
     },
     {
       "name": "Basque Cheesecake",
+      "category": "Pastries",
+      "branches": ["downtown", "mousaytbe"],
       "price": "$6.00",
       "desc": "Caramelized top, creamy center.",
-      "image": ""
+      "tags": [],
+      "options": [
+        {
+          "name": "cheesecakeServe",
+          "label": "Serve",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Regular",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Cold",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        },
+        {
+          "name": "cheesecakeAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Berry sauce",
+              "price": "$0.75",
+              "calories_delta": 60,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Turkey Croissant",
+      "category": "Sandwiches",
+      "branches": ["downtown", "mousaytbe"],
       "price": "$6.50",
       "desc": "Turkey, cheese, greens, and house sauce.",
-      "image": ""
+      "calories": 520,
+      "protein": 29,
+      "tags": [],
+      "options": [
+        {
+          "name": "bread",
+          "label": "Bread",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Sourdough",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Croissant",
+              "price": "$0.75",
+              "calories_delta": 110,
+              "protein_delta": 2
+            },
+            {
+              "label": "Wrap",
+              "price": "$0.00",
+              "calories_delta": -40,
+              "protein_delta": -1
+            }
+          ]
+        },
+        {
+          "name": "sandwichAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Extra cheese",
+              "price": "$1.00",
+              "calories_delta": 90,
+              "protein_delta": 6
+            },
+            {
+              "label": "Avocado",
+              "price": "$1.25",
+              "calories_delta": 80,
+              "protein_delta": 1
+            },
+            {
+              "label": "Extra protein",
+              "price": "$2.00",
+              "calories_delta": 150,
+              "protein_delta": 22
+            }
+          ]
+        },
+        {
+          "name": "sandwichRemove",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "No tomato",
+              "price": "$0.00",
+              "calories_delta": -10,
+              "protein_delta": 0
+            },
+            {
+              "label": "No pickles",
+              "price": "$0.00",
+              "calories_delta": -5,
+              "protein_delta": 0
+            },
+            {
+              "label": "No sauce",
+              "price": "$0.00",
+              "calories_delta": -90,
+              "protein_delta": 0
+            },
+            {
+              "label": "No lettuce",
+              "price": "$0.00",
+              "calories_delta": -5,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Halloumi Pesto Sandwich",
+      "category": "Sandwiches",
+      "branches": ["downtown", "mousaytbe"],
       "price": "$6.50",
       "desc": "Grilled halloumi, pesto, tomato, and greens.",
-      "image": ""
+      "calories": 610,
+      "protein": 24,
+      "tags": [],
+      "options": [
+        {
+          "name": "bread",
+          "label": "Bread",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Sourdough",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Croissant",
+              "price": "$0.75",
+              "calories_delta": 110,
+              "protein_delta": 2
+            },
+            {
+              "label": "Wrap",
+              "price": "$0.00",
+              "calories_delta": -40,
+              "protein_delta": -1
+            }
+          ]
+        },
+        {
+          "name": "sandwichAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Extra cheese",
+              "price": "$1.00",
+              "calories_delta": 90,
+              "protein_delta": 6
+            },
+            {
+              "label": "Avocado",
+              "price": "$1.25",
+              "calories_delta": 80,
+              "protein_delta": 1
+            },
+            {
+              "label": "Extra protein",
+              "price": "$2.00",
+              "calories_delta": 150,
+              "protein_delta": 22
+            }
+          ]
+        },
+        {
+          "name": "sandwichRemove",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "No tomato",
+              "price": "$0.00",
+              "calories_delta": -10,
+              "protein_delta": 0
+            },
+            {
+              "label": "No sauce",
+              "price": "$0.00",
+              "calories_delta": -90,
+              "protein_delta": 0
+            },
+            {
+              "label": "No lettuce",
+              "price": "$0.00",
+              "calories_delta": -5,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Chicken Avocado Sandwich",
+      "category": "Sandwiches",
+      "branches": ["downtown", "mousaytbe"],
       "price": "$7.50",
       "desc": "Chicken, avocado, lettuce, and sauce.",
-      "image": ""
+      "calories": 640,
+      "protein": 38,
+      "tags": ["Popular", "High protein"],
+      "options": [
+        {
+          "name": "bread",
+          "label": "Bread",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Sourdough",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Croissant",
+              "price": "$0.75",
+              "calories_delta": 110,
+              "protein_delta": 2
+            },
+            {
+              "label": "Wrap",
+              "price": "$0.00",
+              "calories_delta": -40,
+              "protein_delta": -1
+            }
+          ]
+        },
+        {
+          "name": "sandwichAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Extra cheese",
+              "price": "$1.00",
+              "calories_delta": 90,
+              "protein_delta": 6
+            },
+            {
+              "label": "Avocado",
+              "price": "$1.25",
+              "calories_delta": 80,
+              "protein_delta": 1
+            },
+            {
+              "label": "Extra protein",
+              "price": "$2.00",
+              "calories_delta": 150,
+              "protein_delta": 22
+            }
+          ]
+        },
+        {
+          "name": "sandwichRemove",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "No tomato",
+              "price": "$0.00",
+              "calories_delta": -10,
+              "protein_delta": 0
+            },
+            {
+              "label": "No pickles",
+              "price": "$0.00",
+              "calories_delta": -5,
+              "protein_delta": 0
+            },
+            {
+              "label": "No sauce",
+              "price": "$0.00",
+              "calories_delta": -90,
+              "protein_delta": 0
+            },
+            {
+              "label": "No lettuce",
+              "price": "$0.00",
+              "calories_delta": -5,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Tuna Melt",
+      "category": "Sandwiches",
+      "branches": ["downtown", "mousaytbe"],
       "price": "$6.75",
       "desc": "Tuna, melted cheese, pickles, and toast.",
-      "image": ""
+      "calories": 560,
+      "protein": 34,
+      "tags": [],
+      "options": [
+        {
+          "name": "bread",
+          "label": "Bread",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Sourdough",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Croissant",
+              "price": "$0.75",
+              "calories_delta": 110,
+              "protein_delta": 2
+            },
+            {
+              "label": "Wrap",
+              "price": "$0.00",
+              "calories_delta": -40,
+              "protein_delta": -1
+            }
+          ]
+        },
+        {
+          "name": "sandwichAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Extra cheese",
+              "price": "$1.00",
+              "calories_delta": 90,
+              "protein_delta": 6
+            },
+            {
+              "label": "Avocado",
+              "price": "$1.25",
+              "calories_delta": 80,
+              "protein_delta": 1
+            },
+            {
+              "label": "Extra protein",
+              "price": "$2.00",
+              "calories_delta": 150,
+              "protein_delta": 22
+            }
+          ]
+        },
+        {
+          "name": "sandwichRemove",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "No tomato",
+              "price": "$0.00",
+              "calories_delta": -10,
+              "protein_delta": 0
+            },
+            {
+              "label": "No pickles",
+              "price": "$0.00",
+              "calories_delta": -5,
+              "protein_delta": 0
+            },
+            {
+              "label": "No sauce",
+              "price": "$0.00",
+              "calories_delta": -90,
+              "protein_delta": 0
+            },
+            {
+              "label": "No lettuce",
+              "price": "$0.00",
+              "calories_delta": -5,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Chicken Caesar Bowl",
+      "category": "Powerbowls",
+      "branches": ["mousaytbe"],
       "price": "$9.00",
       "desc": "Chicken, greens, parmesan, croutons, and Caesar dressing.",
-      "image": ""
+      "calories": 690,
+      "protein": 46,
+      "tags": ["High protein"],
+      "options": [
+        {
+          "name": "size",
+          "label": "Size",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Regular bowl",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Large bowl",
+              "price": "$3.00",
+              "calories_delta": 180,
+              "protein_delta": 8
+            }
+          ]
+        },
+        {
+          "name": "bowlAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Extra chicken",
+              "price": "$2.50",
+              "calories_delta": 160,
+              "protein_delta": 30
+            },
+            {
+              "label": "Boiled egg",
+              "price": "$1.25",
+              "calories_delta": 75,
+              "protein_delta": 6
+            },
+            {
+              "label": "Avocado",
+              "price": "$1.50",
+              "calories_delta": 80,
+              "protein_delta": 1
+            },
+            {
+              "label": "Feta",
+              "price": "$1.00",
+              "calories_delta": 70,
+              "protein_delta": 4
+            }
+          ]
+        },
+        {
+          "name": "bowlRemove",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "No onions",
+              "price": "$0.00",
+              "calories_delta": -10,
+              "protein_delta": 0
+            },
+            {
+              "label": "No tomatoes",
+              "price": "$0.00",
+              "calories_delta": -20,
+              "protein_delta": -1
+            },
+            {
+              "label": "No corn",
+              "price": "$0.00",
+              "calories_delta": -60,
+              "protein_delta": -2
+            },
+            {
+              "label": "Dressing on the side",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Tuna Protein Bowl",
+      "category": "Powerbowls",
+      "branches": ["mousaytbe"],
       "price": "$8.50",
       "desc": "Tuna, egg, corn, greens, and house dressing.",
-      "image": ""
+      "calories": 620,
+      "protein": 42,
+      "tags": ["High protein"],
+      "options": [
+        {
+          "name": "size",
+          "label": "Size",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Regular bowl",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Large bowl",
+              "price": "$3.00",
+              "calories_delta": 180,
+              "protein_delta": 8
+            }
+          ]
+        },
+        {
+          "name": "bowlAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Extra chicken",
+              "price": "$2.50",
+              "calories_delta": 160,
+              "protein_delta": 30
+            },
+            {
+              "label": "Boiled egg",
+              "price": "$1.25",
+              "calories_delta": 75,
+              "protein_delta": 6
+            },
+            {
+              "label": "Avocado",
+              "price": "$1.50",
+              "calories_delta": 80,
+              "protein_delta": 1
+            },
+            {
+              "label": "Feta",
+              "price": "$1.00",
+              "calories_delta": 70,
+              "protein_delta": 4
+            }
+          ]
+        },
+        {
+          "name": "bowlRemove",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "No onions",
+              "price": "$0.00",
+              "calories_delta": -10,
+              "protein_delta": 0
+            },
+            {
+              "label": "No tomatoes",
+              "price": "$0.00",
+              "calories_delta": -20,
+              "protein_delta": -1
+            },
+            {
+              "label": "No corn",
+              "price": "$0.00",
+              "calories_delta": -60,
+              "protein_delta": -2
+            },
+            {
+              "label": "Dressing on the side",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Halloumi Quinoa Bowl",
+      "category": "Powerbowls",
+      "branches": ["mousaytbe"],
       "price": "$9.00",
       "desc": "Halloumi, quinoa, avocado, tomato, and greens.",
-      "image": ""
+      "calories": 740,
+      "protein": 31,
+      "tags": [],
+      "options": [
+        {
+          "name": "size",
+          "label": "Size",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Regular bowl",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Large bowl",
+              "price": "$3.00",
+              "calories_delta": 180,
+              "protein_delta": 8
+            }
+          ]
+        },
+        {
+          "name": "bowlAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Extra chicken",
+              "price": "$2.50",
+              "calories_delta": 160,
+              "protein_delta": 30
+            },
+            {
+              "label": "Boiled egg",
+              "price": "$1.25",
+              "calories_delta": 75,
+              "protein_delta": 6
+            },
+            {
+              "label": "Avocado",
+              "price": "$1.50",
+              "calories_delta": 80,
+              "protein_delta": 1
+            },
+            {
+              "label": "Feta",
+              "price": "$1.00",
+              "calories_delta": 70,
+              "protein_delta": 4
+            }
+          ]
+        },
+        {
+          "name": "bowlRemove",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "No onions",
+              "price": "$0.00",
+              "calories_delta": -10,
+              "protein_delta": 0
+            },
+            {
+              "label": "No tomatoes",
+              "price": "$0.00",
+              "calories_delta": -20,
+              "protein_delta": -1
+            },
+            {
+              "label": "No corn",
+              "price": "$0.00",
+              "calories_delta": -60,
+              "protein_delta": -2
+            },
+            {
+              "label": "Dressing on the side",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Salmon Avocado Bowl",
+      "category": "Powerbowls",
+      "branches": ["mousaytbe"],
       "price": "$11.00",
       "desc": "Salmon, avocado, rice, greens, and sesame sauce.",
-      "image": ""
+      "calories": 780,
+      "protein": 44,
+      "tags": ["High protein"],
+      "options": [
+        {
+          "name": "size",
+          "label": "Size",
+          "type": "radio",
+          "choices": [
+            {
+              "label": "Regular bowl",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            },
+            {
+              "label": "Large bowl",
+              "price": "$3.00",
+              "calories_delta": 180,
+              "protein_delta": 8
+            }
+          ]
+        },
+        {
+          "name": "bowlAdds",
+          "label": "Add-ons",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "Extra chicken",
+              "price": "$2.50",
+              "calories_delta": 160,
+              "protein_delta": 30
+            },
+            {
+              "label": "Boiled egg",
+              "price": "$1.25",
+              "calories_delta": 75,
+              "protein_delta": 6
+            },
+            {
+              "label": "Avocado",
+              "price": "$1.50",
+              "calories_delta": 80,
+              "protein_delta": 1
+            },
+            {
+              "label": "Feta",
+              "price": "$1.00",
+              "calories_delta": 70,
+              "protein_delta": 4
+            }
+          ]
+        },
+        {
+          "name": "bowlRemove",
+          "label": "Remove stuff",
+          "type": "checkbox",
+          "choices": [
+            {
+              "label": "No onions",
+              "price": "$0.00",
+              "calories_delta": -10,
+              "protein_delta": 0
+            },
+            {
+              "label": "No tomatoes",
+              "price": "$0.00",
+              "calories_delta": -20,
+              "protein_delta": -1
+            },
+            {
+              "label": "No corn",
+              "price": "$0.00",
+              "calories_delta": -60,
+              "protein_delta": -2
+            },
+            {
+              "label": "Dressing on the side",
+              "price": "$0.00",
+              "calories_delta": 0,
+              "protein_delta": 0
+            }
+          ]
+        }
+      ]
     }
   ]
 }

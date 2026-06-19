@@ -2931,6 +2931,7 @@
     const navToggle = document.getElementById('navToggle');
     const navLinks = document.getElementById('navLinks');
     const branchGate = document.getElementById('branchGate');
+    const branchCards = branchGate.querySelector('.branch-cards');
     const branchSwitch = document.getElementById('branchSwitch');
     const branchSwitchVisit = document.getElementById('branchSwitchVisit');
     const cartOpen = document.getElementById('cartOpen');
@@ -3310,6 +3311,13 @@
       }
     };
 
+    let branchOrder = ['downtown', 'mousaytbe'];
+    let categoryConfig = [
+      { name: 'Coffee', family: 'brew' },
+      { name: 'Pastries', family: 'butter' },
+      { name: 'Sandwiches', family: 'butter' },
+      { name: 'Powerbowls', family: 'butter' }
+    ];
     let currentBranchId = 'downtown';
     let activeCategory = 'Coffee';
     let cart = [];
@@ -3388,29 +3396,152 @@
       return match ? Number(match[0]) : 0;
     }
 
-    function slugifyMenuItem(name, index) {
-      const slug = String(name || '')
+    function parseOptionalCmsNumber(value) {
+      if (typeof value === 'number' && Number.isFinite(value)) return value;
+
+      const text = String(value ?? '').trim();
+      if (!text) return null;
+
+      const match = text.replace(',', '.').match(/-?\d+(\.\d+)?/);
+      return match ? Number(match[0]) : null;
+    }
+
+    function slugifyId(value, fallback) {
+      const slug = String(value || '')
         .trim()
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-+|-+$/g, '');
 
-      return `cms-${slug || 'item'}-${index}`;
+      return slug || fallback;
+    }
+
+    function slugifyMenuItem(name, index) {
+      return `cms-${slugifyId(name, 'item')}-${index}`;
+    }
+
+    function normalizeStringList(value) {
+      if (Array.isArray(value)) {
+        return value
+          .map((item) => typeof item === 'object' ? item?.id || item?.name || item?.label || '' : item)
+          .map((item) => String(item || '').trim())
+          .filter(Boolean);
+      }
+
+      if (typeof value === 'string') {
+        return value.split(',').map((item) => item.trim()).filter(Boolean);
+      }
+
+      return [];
+    }
+
+    function normalizeCmsCategory(category, index) {
+      if (typeof category === 'string') {
+        return {
+          name: category.trim(),
+          family: category.trim().toLowerCase() === 'coffee' ? 'brew' : 'butter'
+        };
+      }
+
+      const name = String(category?.name || '').trim() || `Category ${index + 1}`;
+      const family = String(category?.family || '').trim().toLowerCase() === 'brew' ? 'brew' : 'butter';
+
+      return { name, family };
+    }
+
+    function normalizeCmsBranch(branch, index) {
+      const id = slugifyId(branch?.id || branch?.name, `branch-${index + 1}`);
+      const fallback = branches[id] || {};
+      const name = String(branch?.name || fallback.name || id).trim();
+      const area = String(branch?.area || fallback.area || name).trim();
+      const exactLocation = String(branch?.exact_location || branch?.exactLocation || fallback.exactLocation || branch?.address || fallback.address || area).trim();
+      const address = String(branch?.address || fallback.address || exactLocation).trim();
+      const phoneNumber = normalizeWhatsappNumber(branch?.phone || branch?.whatsapp_number || branch?.whatsappNumber || fallback.whatsappNumber || WHATSAPP_NUMBER);
+
+      return {
+        ...fallback,
+        id,
+        name,
+        short: String(branch?.short || fallback.short || name).trim(),
+        area,
+        exactLocation,
+        address,
+        neighborhood: String(branch?.neighborhood || fallback.neighborhood || area).trim(),
+        hours: String(branch?.hours || fallback.hours || BUSINESS_HOURS).trim(),
+        features: String(branch?.features || fallback.features || 'Free Wi-Fi and study area').trim(),
+        payment: String(branch?.payment || fallback.payment || PAYMENT_METHOD).trim(),
+        mapUrl: String(branch?.map_url || branch?.mapUrl || fallback.mapUrl || '').trim(),
+        mapQuery: String(branch?.map_query || branch?.mapQuery || fallback.mapQuery || address || name).trim(),
+        whatsappNumber: phoneNumber,
+        totersUrl: String(branch?.toters_url || branch?.totersUrl || fallback.totersUrl || '').trim(),
+        visit: String(branch?.visit || fallback.visit || `${name} is open daily with free Wi-Fi, study tables, pickup, and COD delivery.`).trim(),
+        menu: []
+      };
+    }
+
+    function normalizeCmsChoice(choice, index) {
+      const label = String(choice?.label || choice?.name || '').trim() || `Choice ${index + 1}`;
+      const caloriesDelta = parseOptionalCmsNumber(choice?.calories_delta ?? choice?.caloriesDelta ?? choice?.nutritionDelta?.calories) || 0;
+      const proteinDelta = parseOptionalCmsNumber(choice?.protein_delta ?? choice?.proteinDelta ?? choice?.nutritionDelta?.protein) || 0;
+
+      return {
+        label,
+        price: parseCmsPrice(choice?.price),
+        nutritionDelta: {
+          calories: caloriesDelta,
+          protein: proteinDelta
+        }
+      };
+    }
+
+    function normalizeCmsOptionGroup(group, index, itemId) {
+      const label = String(group?.label || group?.name || '').trim() || `Option ${index + 1}`;
+      const choices = Array.isArray(group?.choices)
+        ? group.choices.map(normalizeCmsChoice).filter((choice) => choice.label)
+        : [];
+
+      if (!choices.length) return null;
+
+      return {
+        name: slugifyId(group?.name || label, `${itemId}-option-${index + 1}`),
+        label,
+        type: group?.type === 'radio' ? 'radio' : 'checkbox',
+        choices
+      };
+    }
+
+    function normalizeCmsNutrition(item) {
+      const calories = parseOptionalCmsNumber(item?.calories ?? item?.nutrition?.calories);
+      const protein = parseOptionalCmsNumber(item?.protein ?? item?.nutrition?.protein);
+
+      if (calories === null && protein === null) return null;
+
+      return {
+        calories: calories || 0,
+        protein: protein || 0
+      };
     }
 
     function normalizeCmsMenuItem(item, index) {
       const name = String(item?.name || '').trim() || `Menu item ${index + 1}`;
       const description = String(item?.desc || item?.description || '').trim();
+      const id = String(item?.id || '').trim() || slugifyMenuItem(name, index);
+      const itemBranchIds = normalizeStringList(item?.branches || item?.branch_ids || item?.branch);
+      const branchesForItem = itemBranchIds.length ? itemBranchIds.map((branchId) => slugifyId(branchId, branchId)) : [...branchOrder];
+      const options = Array.isArray(item?.options)
+        ? item.options.map((group, groupIndex) => normalizeCmsOptionGroup(group, groupIndex, id)).filter(Boolean)
+        : [];
 
       return {
-        id: slugifyMenuItem(name, index),
+        id,
         name,
-        category: 'Menu',
+        category: String(item?.category || '').trim() || 'Menu',
+        branches: branchesForItem,
         price: parseCmsPrice(item?.price),
         description,
-        options: [],
-        nutrition: null,
-        tags: item?.tags || [],
+        options,
+        nutrition: normalizeCmsNutrition(item),
+        tags: normalizeStringList(item?.tags),
         image: item?.image || ''
       };
     }
@@ -3442,8 +3573,6 @@
       if (address) {
         branches.downtown.address = address;
         branches.downtown.exactLocation = address;
-        const downtownLocation = document.querySelector('[data-branch-card="downtown"] span');
-        if (downtownLocation) downtownLocation.textContent = address;
       }
 
       if (phoneNumber) {
@@ -3459,21 +3588,64 @@
         }
       }
 
+      renderBranchCards();
       updateBranchContent();
     }
 
     function applyCmsMenu(menuData) {
+      const cmsBranches = Array.isArray(menuData?.branches)
+        ? menuData.branches.map(normalizeCmsBranch).filter((branch) => branch.id && branch.name)
+        : [];
+
+      if (cmsBranches.length) {
+        branchOrder = cmsBranches.map((branch) => branch.id);
+        cmsBranches.forEach((branch) => {
+          branches[branch.id] = branch;
+        });
+      }
+
+      const cmsCategories = Array.isArray(menuData?.categories)
+        ? menuData.categories.map(normalizeCmsCategory).filter((category) => category.name)
+        : [];
+
+      if (cmsCategories.length) {
+        categoryConfig = cmsCategories;
+      }
+
       const items = Array.isArray(menuData?.items)
         ? menuData.items.map(normalizeCmsMenuItem).filter((item) => item.name)
         : [];
 
-      if (!items.length) return;
+      if (!items.length) {
+        renderBranchCards();
+        updateBranchContent();
+        renderMenu();
+        renderCart();
+        return;
+      }
 
       cmsMenuItems = items;
-      Object.values(branches).forEach((branch) => {
-        branch.menu = cmsMenuItems;
+      branchOrder.forEach((branchId) => {
+        if (branches[branchId]) {
+          branches[branchId].menu = [];
+        }
       });
+
+      cmsMenuItems.forEach((item) => {
+        item.branches.forEach((branchId) => {
+          if (branches[branchId]) {
+            branches[branchId].menu.push(item);
+          }
+        });
+      });
+
+      if (!branches[currentBranchId] || !branchOrder.includes(currentBranchId)) {
+        currentBranchId = branchOrder[0] || 'downtown';
+      }
+
       activeCategory = getCategories()[0] || 'Menu';
+      renderBranchCards();
+      updateBranchContent();
       renderMenu();
       renderCart();
     }
@@ -3497,7 +3669,7 @@
     }
 
     function getBranch() {
-      return branches[currentBranchId];
+      return branches[currentBranchId] || branches[branchOrder[0]] || branches.downtown;
     }
 
     function getProduct(productId) {
@@ -3505,11 +3677,18 @@
     }
 
     function getCategories() {
-      return [...new Set(getBranch().menu.map((item) => item.category))];
+      const branchCategories = [...new Set(getBranch().menu.map((item) => item.category).filter(Boolean))];
+      const configuredCategories = categoryConfig
+        .map((category) => category.name)
+        .filter((category) => branchCategories.includes(category));
+      const extraCategories = branchCategories.filter((category) => !configuredCategories.includes(category));
+
+      return [...configuredCategories, ...extraCategories];
     }
 
     function getCategoryFamily(category) {
-      return category === 'Coffee' ? 'brew' : 'butter';
+      const config = categoryConfig.find((item) => item.name === category);
+      return config?.family === 'brew' ? 'brew' : 'butter';
     }
 
     function getFamilyCategories(family) {
@@ -3587,6 +3766,20 @@
       header.classList.toggle('is-scrolled', window.scrollY > 24);
     }, { passive: true });
 
+    function renderBranchCards() {
+      const cards = branchOrder
+        .map((branchId) => branches[branchId])
+        .filter(Boolean);
+
+      branchCards.innerHTML = cards.map((branch) => `
+        <button class="branch-card" type="button" data-branch-card="${escapeHtml(branch.id || '')}">
+          <strong>${escapeHtml(branch.area || branch.name)}</strong>
+          <span>${escapeHtml(branch.exactLocation || branch.address || branch.neighborhood || '')}</span>
+          <small>${escapeHtml(branch.hours || BUSINESS_HOURS)}</small>
+        </button>
+      `).join('');
+    }
+
     function openBranchGate() {
       branchGate.classList.add('is-open');
       document.body.classList.add('gate-open');
@@ -3640,6 +3833,13 @@
 
     function renderMenu() {
       const categories = getCategories();
+
+      if (!categories.length) {
+        menuFamilyStrip.innerHTML = '';
+        categoryTabs.innerHTML = '';
+        menuGrid.innerHTML = '<p class="empty-cart">No menu items are available for this branch yet.</p>';
+        return;
+      }
 
       if (!categories.includes(activeCategory)) {
         activeCategory = categories[0];
@@ -4044,8 +4244,10 @@
       });
     }
 
-    branchGate.querySelectorAll('[data-branch-card]').forEach((button) => {
-      button.addEventListener('click', () => selectBranch(button.dataset.branchCard));
+    branchCards.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-branch-card]');
+      if (!button) return;
+      selectBranch(button.dataset.branchCard);
     });
 
     [branchSwitch, branchSwitchVisit].forEach((button) => {
@@ -4230,6 +4432,7 @@
       }
     });
 
+    renderBranchCards();
     updateBranchContent();
     syncDeliveryLocationRequirement();
     renderMenu();

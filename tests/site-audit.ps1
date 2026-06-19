@@ -139,9 +139,7 @@ if ($settingsJson.address -match 'Your Address Here|placeholder' -or [string]::I
   $failures.Add('CMS setting address still uses a placeholder')
 }
 
-if ([string]::IsNullOrWhiteSpace($settingsJson.hero_image)) {
-  $failures.Add('CMS setting hero image is empty')
-} else {
+if (-not [string]::IsNullOrWhiteSpace($settingsJson.hero_image)) {
   $heroPath = $settingsJson.hero_image -replace '^/', ''
   $resolvedHeroPath = Join-Path $projectRoot $heroPath
   if (-not (Test-Path -LiteralPath $resolvedHeroPath)) {
@@ -153,12 +151,72 @@ if (-not $menuJson.items -or $menuJson.items.Count -lt 20) {
   $failures.Add("CMS menu should include the full menu, not demo items only; found $($menuJson.items.Count)")
 }
 
-if ($adminConfig -notmatch 'name:\s*"image".*required:\s*false') {
-  $failures.Add('CMS menu image field should be optional while the public menu is text-only')
+if (-not $menuJson.branches -or $menuJson.branches.Count -lt 2) {
+  $failures.Add('CMS catalog should include editable branch records for both branches')
 }
 
-if ($adminConfig -notmatch 'name:\s*"hero_image".*required:\s*false') {
-  $failures.Add('CMS hero image field should be optional because the site has a fallback hero image')
+if (-not $menuJson.categories -or $menuJson.categories.Count -lt 4) {
+  $failures.Add('CMS catalog should include editable menu categories')
+}
+
+$branchIds = @($menuJson.branches | ForEach-Object { $_.id })
+foreach ($requiredBranch in @('downtown', 'mousaytbe')) {
+  if ($branchIds -notcontains $requiredBranch) {
+    $failures.Add("CMS catalog is missing branch id: $requiredBranch")
+  }
+}
+
+$categoryNames = @($menuJson.categories | ForEach-Object { $_.name })
+foreach ($requiredCategory in @('Coffee', 'Pastries', 'Sandwiches', 'Powerbowls')) {
+  if ($categoryNames -notcontains $requiredCategory) {
+    $failures.Add("CMS catalog is missing category: $requiredCategory")
+  }
+}
+
+$itemsWithBranches = @($menuJson.items | Where-Object { $_.branches -and $_.branches.Count -gt 0 })
+if ($itemsWithBranches.Count -lt $menuJson.items.Count) {
+  $failures.Add('Every CMS menu item should declare which branches sell it')
+}
+
+$itemsWithCategories = @($menuJson.items | Where-Object { -not [string]::IsNullOrWhiteSpace($_.category) })
+if ($itemsWithCategories.Count -lt $menuJson.items.Count) {
+  $failures.Add('Every CMS menu item should declare a category')
+}
+
+$itemsWithNutrition = @($menuJson.items | Where-Object { $_.calories -ne $null -and $_.protein -ne $null })
+if ($itemsWithNutrition.Count -lt 8) {
+  $failures.Add('CMS catalog should expose calories and protein for sandwiches and powerbowls')
+}
+
+$itemsWithOptions = @($menuJson.items | Where-Object { $_.options -and $_.options.Count -gt 0 })
+if ($itemsWithOptions.Count -lt 12) {
+  $failures.Add('CMS catalog should expose item option groups for ordering customizations')
+}
+
+$choicesWithNutritionDelta = @(
+  $menuJson.items |
+    Where-Object { $_.options } |
+    ForEach-Object { $_.options } |
+    Where-Object { $_.choices } |
+    ForEach-Object { $_.choices } |
+    Where-Object { $_.calories_delta -ne $null -or $_.protein_delta -ne $null -or $_.nutritionDelta }
+)
+if ($choicesWithNutritionDelta.Count -lt 12) {
+  $failures.Add('CMS option choices should expose nutrition deltas for customized nutrition facts')
+}
+
+if ($adminConfig -match 'name:\s*"image"') {
+  $failures.Add('CMS menu image field should be removed while the public menu is text-only')
+}
+
+if ($adminConfig -notmatch 'name:\s*"hero_image".*widget:\s*"string".*required:\s*false') {
+  $failures.Add('CMS hero image should be an optional text path because the site has a fallback hero image')
+}
+
+foreach ($requiredAdminField in @('name:\s*"branches"', 'name:\s*"categories"', 'name:\s*"category"', 'name:\s*"branches"', 'name:\s*"options"', 'name:\s*"choices"', 'name:\s*"calories"', 'name:\s*"protein"', 'name:\s*"calories_delta"', 'name:\s*"protein_delta"')) {
+  if ($adminConfig -notmatch $requiredAdminField) {
+    $failures.Add("CMS admin config is missing editable catalog field: $requiredAdminField")
+  }
 }
 
 $doodleCount = ([regex]::Matches($html, '<svg class="doodle')).Count
