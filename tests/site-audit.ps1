@@ -222,6 +222,15 @@ if ($adminIndex -notmatch 'decap-cms') {
   $failures.Add('Admin page should load Decap CMS')
 }
 
+if ($adminIndex -notmatch '<base href="/admin/"') {
+  $failures.Add('Admin page should set /admin/ as the base path so config.yml does not 404 at /admin')
+}
+
+$vercelConfig = Get-Content -LiteralPath (Join-Path $projectRoot 'vercel.json') -Raw
+if ($vercelConfig -notmatch '"source"\s*:\s*"/admin"' -or $vercelConfig -notmatch '"destination"\s*:\s*"/admin/"') {
+  $failures.Add('Vercel should redirect /admin to /admin/ so Decap loads admin/config.yml reliably')
+}
+
 foreach ($requiredAdminField in @('name:\s*"branches"', 'name:\s*"categories"', 'name:\s*"category"', 'name:\s*"branches"', 'name:\s*"options"', 'name:\s*"choices"', 'name:\s*"calories"', 'name:\s*"protein"', 'name:\s*"calories_delta"', 'name:\s*"protein_delta"')) {
   if ($adminConfig -notmatch $requiredAdminField) {
     $failures.Add("CMS admin config is missing editable catalog field: $requiredAdminField")
