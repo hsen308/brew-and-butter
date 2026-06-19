@@ -24,7 +24,9 @@
         {
           "name": "Espresso",
           "desc": "Short, bold, and fast.",
-          "tags": [],
+          "tags": [
+            "popular"
+          ],
           "options": [
             {
               "name": "blackCoffeeAdds",
@@ -42,11 +44,18 @@
                   "price": "$0.00",
                   "calories_delta": 0,
                   "protein_delta": 0
+                },
+                {
+                  "price": "$0.5",
+                  "calories_delta": 0,
+                  "protein_delta": 0,
+                  "label": "half shot"
                 }
               ]
             }
           ],
-          "price": "2"
+          "price": "2.5$",
+          "protein": -1
         },
         {
           "name": "Americano",
