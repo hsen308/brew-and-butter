@@ -3510,6 +3510,26 @@
       };
     }
 
+    function normalizeCmsBranchPrices(item) {
+      if (Array.isArray(item?.branch_prices) && item.branch_prices.length) {
+        return item.branch_prices
+          .map((row) => ({
+            branchId: slugifyId(row?.branch || row?.branch_id || row?.id, ''),
+            price: parseCmsPrice(row?.price)
+          }))
+          .filter((row) => row.branchId);
+      }
+
+      const itemBranchIds = normalizeStringList(item?.branches || item?.branch_ids || item?.branch);
+      const branchesForItem = itemBranchIds.length ? itemBranchIds.map((branchId) => slugifyId(branchId, branchId)) : [...branchOrder];
+      const sharedPrice = parseCmsPrice(item?.price);
+
+      return branchesForItem.map((branchId) => ({
+        branchId,
+        price: sharedPrice
+      }));
+    }
+
     function normalizeCmsNutrition(item) {
       const calories = parseOptionalCmsNumber(item?.calories ?? item?.nutrition?.calories);
       const protein = parseOptionalCmsNumber(item?.protein ?? item?.nutrition?.protein);
@@ -3526,18 +3546,18 @@
       const name = String(item?.name || '').trim() || `Menu item ${index + 1}`;
       const description = String(item?.desc || item?.description || '').trim();
       const id = String(item?.id || '').trim() || slugifyMenuItem(name, index);
-      const itemBranchIds = normalizeStringList(item?.branches || item?.branch_ids || item?.branch);
-      const branchesForItem = itemBranchIds.length ? itemBranchIds.map((branchId) => slugifyId(branchId, branchId)) : [...branchOrder];
       const options = Array.isArray(item?.options)
         ? item.options.map((group, groupIndex) => normalizeCmsOptionGroup(group, groupIndex, id)).filter(Boolean)
         : [];
+      const branchPrices = normalizeCmsBranchPrices(item);
 
       return {
         id,
         name,
         category: String(item?.category || '').trim() || 'Menu',
-        branches: branchesForItem,
-        price: parseCmsPrice(item?.price),
+        branches: branchPrices.map((row) => row.branchId),
+        branchPrices,
+        price: branchPrices[0]?.price || parseCmsPrice(item?.price),
         description,
         options,
         nutrition: normalizeCmsNutrition(item),
@@ -3632,9 +3652,12 @@
       });
 
       cmsMenuItems.forEach((item) => {
-        item.branches.forEach((branchId) => {
-          if (branches[branchId]) {
-            branches[branchId].menu.push(item);
+        item.branchPrices.forEach((branchPrice) => {
+          if (branches[branchPrice.branchId]) {
+            branches[branchPrice.branchId].menu.push({
+              ...item,
+              price: branchPrice.price
+            });
           }
         });
       });

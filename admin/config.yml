@@ -58,8 +58,14 @@ collections:
             fields:
               - { label: "Item Name", name: "name", widget: "string" }
               - { label: "Category", name: "category", widget: "string", hint: "Must match one of the category names above, like Coffee or Powerbowls." }
-              - { label: "Branches", name: "branches", widget: "select", multiple: true, options: ["downtown", "mousaytbe"], hint: "Choose which branches sell this item." }
-              - { label: "Price", name: "price", widget: "string" }
+              - label: "Branch Prices / Availability"
+                name: "branch_prices"
+                widget: "list"
+                summary: "{{fields.branch}} - {{fields.price}}"
+                hint: "Add one row per branch that sells this item. The item will not show in branches missing from this list."
+                fields:
+                  - { label: "Branch", name: "branch", widget: "select", options: ["downtown", "mousaytbe"] }
+                  - { label: "Price", name: "price", widget: "string" }
               - { label: "Description", name: "desc", widget: "string" }
               - { label: "Calories", name: "calories", widget: "number", required: false, value_type: "int" }
               - { label: "Protein (g)", name: "protein", widget: "number", required: false, value_type: "float" }

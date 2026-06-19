@@ -174,9 +174,20 @@ foreach ($requiredCategory in @('Coffee', 'Pastries', 'Sandwiches', 'Powerbowls'
   }
 }
 
-$itemsWithBranches = @($menuJson.items | Where-Object { $_.branches -and $_.branches.Count -gt 0 })
-if ($itemsWithBranches.Count -lt $menuJson.items.Count) {
-  $failures.Add('Every CMS menu item should declare which branches sell it')
+$itemsWithBranchPrices = @($menuJson.items | Where-Object { $_.branch_prices -and $_.branch_prices.Count -gt 0 })
+if ($itemsWithBranchPrices.Count -lt $menuJson.items.Count) {
+  $failures.Add('Every CMS menu item should declare branch-specific prices and availability')
+}
+
+$branchPriceRows = @($menuJson.items | ForEach-Object { $_.branch_prices } | Where-Object { $_ })
+$invalidBranchPriceRows = @($branchPriceRows | Where-Object { [string]::IsNullOrWhiteSpace($_.branch) -or [string]::IsNullOrWhiteSpace($_.price) })
+if ($invalidBranchPriceRows.Count) {
+  $failures.Add('Every branch-specific price row should include a branch and a price')
+}
+
+$sharedPriceItems = @($menuJson.items | Where-Object { $_.price -or $_.branches })
+if ($sharedPriceItems.Count) {
+  $failures.Add('CMS menu items should use branch_prices instead of shared item-level price/branches')
 }
 
 $itemsWithCategories = @($menuJson.items | Where-Object { -not [string]::IsNullOrWhiteSpace($_.category) })
@@ -231,7 +242,7 @@ if ($vercelConfig -notmatch '"source"\s*:\s*"/admin"' -or $vercelConfig -notmatc
   $failures.Add('Vercel should redirect /admin to /admin/ so Decap loads admin/config.yml reliably')
 }
 
-foreach ($requiredAdminField in @('name:\s*"branches"', 'name:\s*"categories"', 'name:\s*"category"', 'name:\s*"branches"', 'name:\s*"options"', 'name:\s*"choices"', 'name:\s*"calories"', 'name:\s*"protein"', 'name:\s*"calories_delta"', 'name:\s*"protein_delta"')) {
+foreach ($requiredAdminField in @('name:\s*"branches"', 'name:\s*"categories"', 'name:\s*"category"', 'name:\s*"branch_prices"', 'name:\s*"options"', 'name:\s*"choices"', 'name:\s*"calories"', 'name:\s*"protein"', 'name:\s*"calories_delta"', 'name:\s*"protein_delta"')) {
   if ($adminConfig -notmatch $requiredAdminField) {
     $failures.Add("CMS admin config is missing editable catalog field: $requiredAdminField")
   }

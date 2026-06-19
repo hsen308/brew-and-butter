@@ -57,11 +57,6 @@
     {
       "name": "Espresso",
       "category": "Coffee",
-      "branches": [
-        "downtown",
-        "mousaytbe"
-      ],
-      "price": "2",
       "desc": "Short, bold, and fast.",
       "tags": [],
       "options": [
@@ -84,16 +79,21 @@
             }
           ]
         }
+      ],
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "2"
+        },
+        {
+          "branch": "mousaytbe",
+          "price": "2"
+        }
       ]
     },
     {
       "name": "Americano",
       "category": "Coffee",
-      "branches": [
-        "downtown",
-        "mousaytbe"
-      ],
-      "price": "$3.00",
       "desc": "Espresso opened up with hot water.",
       "tags": [],
       "options": [
@@ -154,16 +154,21 @@
             }
           ]
         }
+      ],
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "$3.00"
+        },
+        {
+          "branch": "mousaytbe",
+          "price": "$3.00"
+        }
       ]
     },
     {
       "name": "Cappuccino",
       "category": "Coffee",
-      "branches": [
-        "downtown",
-        "mousaytbe"
-      ],
-      "price": "$4.00",
       "desc": "Espresso, steamed milk, and foam.",
       "tags": [],
       "options": [
@@ -285,16 +290,21 @@
             }
           ]
         }
+      ],
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "$4.00"
+        },
+        {
+          "branch": "mousaytbe",
+          "price": "$4.00"
+        }
       ]
     },
     {
       "name": "Flat White",
       "category": "Coffee",
-      "branches": [
-        "downtown",
-        "mousaytbe"
-      ],
-      "price": "$4.50",
       "desc": "Double shot with smooth microfoam.",
       "tags": [],
       "options": [
@@ -379,16 +389,21 @@
             }
           ]
         }
+      ],
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "$4.50"
+        },
+        {
+          "branch": "mousaytbe",
+          "price": "$4.50"
+        }
       ]
     },
     {
       "name": "Latte",
       "category": "Coffee",
-      "branches": [
-        "downtown",
-        "mousaytbe"
-      ],
-      "price": "$4.50",
       "desc": "Smooth espresso and milk.",
       "tags": [
         "Popular"
@@ -512,16 +527,21 @@
             }
           ]
         }
+      ],
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "$4.50"
+        },
+        {
+          "branch": "mousaytbe",
+          "price": "$4.50"
+        }
       ]
     },
     {
       "name": "Spanish Latte",
       "category": "Coffee",
-      "branches": [
-        "downtown",
-        "mousaytbe"
-      ],
-      "price": "$5.00",
       "desc": "Sweet, creamy, and easy to love.",
       "tags": [],
       "options": [
@@ -619,16 +639,21 @@
             }
           ]
         }
+      ],
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "$5.00"
+        },
+        {
+          "branch": "mousaytbe",
+          "price": "$5.00"
+        }
       ]
     },
     {
       "name": "Iced Matcha",
       "category": "Coffee",
-      "branches": [
-        "downtown",
-        "mousaytbe"
-      ],
-      "price": "$5.50",
       "desc": "Bright matcha served cold.",
       "tags": [
         "Popular"
@@ -709,16 +734,21 @@
             }
           ]
         }
+      ],
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "$5.50"
+        },
+        {
+          "branch": "mousaytbe",
+          "price": "$5.50"
+        }
       ]
     },
     {
       "name": "Cold Brew",
       "category": "Coffee",
-      "branches": [
-        "downtown",
-        "mousaytbe"
-      ],
-      "price": "$5.00",
       "desc": "Slow steeped, chilled, and clean.",
       "tags": [],
       "options": [
@@ -797,16 +827,21 @@
             }
           ]
         }
+      ],
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "$5.00"
+        },
+        {
+          "branch": "mousaytbe",
+          "price": "$5.00"
+        }
       ]
     },
     {
       "name": "Cookie",
       "category": "Pastries",
-      "branches": [
-        "downtown",
-        "mousaytbe"
-      ],
-      "price": "$3.00",
       "desc": "Soft center, golden edge.",
       "tags": [],
       "options": [
@@ -842,66 +877,91 @@
             }
           ]
         }
+      ],
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "$3.00"
+        },
+        {
+          "branch": "mousaytbe",
+          "price": "$3.00"
+        }
       ]
     },
     {
       "name": "Butter Croissant",
       "category": "Pastries",
-      "branches": [
-        "downtown",
-        "mousaytbe"
-      ],
-      "price": "$3.00",
       "desc": "Flaky house classic.",
       "tags": [
         "Popular"
       ],
-      "options": []
+      "options": [],
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "$3.00"
+        },
+        {
+          "branch": "mousaytbe",
+          "price": "$3.00"
+        }
+      ]
     },
     {
       "name": "Pain au Chocolat",
       "category": "Pastries",
-      "branches": [
-        "downtown",
-        "mousaytbe"
-      ],
-      "price": "$3.50",
       "desc": "Buttery layers with chocolate.",
       "tags": [],
-      "options": []
+      "options": [],
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "$3.50"
+        },
+        {
+          "branch": "mousaytbe",
+          "price": "$3.50"
+        }
+      ]
     },
     {
       "name": "Cinnamon Roll",
       "category": "Pastries",
-      "branches": [
-        "downtown",
-        "mousaytbe"
-      ],
-      "price": "$4.00",
       "desc": "Warm spice and glaze.",
       "tags": [],
-      "options": []
+      "options": [],
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "$4.00"
+        },
+        {
+          "branch": "mousaytbe",
+          "price": "$4.00"
+        }
+      ]
     },
     {
       "name": "Eclair",
       "category": "Pastries",
-      "branches": [
-        "downtown",
-        "mousaytbe"
-      ],
-      "price": "$4.50",
       "desc": "Filled and finished daily.",
       "tags": [],
-      "options": []
+      "options": [],
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "$4.50"
+        },
+        {
+          "branch": "mousaytbe",
+          "price": "$4.50"
+        }
+      ]
     },
     {
       "name": "Basque Cheesecake",
       "category": "Pastries",
-      "branches": [
-        "downtown",
-        "mousaytbe"
-      ],
-      "price": "$6.00",
       "desc": "Caramelized top, creamy center.",
       "tags": [],
       "options": [
@@ -937,17 +997,22 @@
             }
           ]
         }
+      ],
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "$6.00"
+        },
+        {
+          "branch": "mousaytbe",
+          "price": "$6.00"
+        }
       ]
     },
     {
       "protein": 29,
       "calories": 520,
-      "price": "$6.50",
       "name": "Turkey Croissant",
-      "branches": [
-        "downtown",
-        "mousaytbe"
-      ],
       "desc": "Turkey, cheese, greens, and house sauce.",
       "tags": [],
       "category": "Sandwiches",
@@ -1033,17 +1098,22 @@
             }
           ]
         }
+      ],
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "$6.50"
+        },
+        {
+          "branch": "mousaytbe",
+          "price": "$6.50"
+        }
       ]
     },
     {
       "protein": 24,
       "calories": 610,
-      "price": "$6.50",
       "name": "Halloumi Pesto Sandwich",
-      "branches": [
-        "downtown",
-        "mousaytbe"
-      ],
       "desc": "Grilled halloumi, pesto, tomato, and greens.",
       "tags": [],
       "category": "Sandwiches",
@@ -1123,17 +1193,22 @@
             }
           ]
         }
+      ],
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "$6.50"
+        },
+        {
+          "branch": "mousaytbe",
+          "price": "$6.50"
+        }
       ]
     },
     {
       "protein": 38,
       "calories": 640,
-      "price": "$7.50",
       "name": "Chicken Avocado Sandwich",
-      "branches": [
-        "downtown",
-        "mousaytbe"
-      ],
       "desc": "Chicken, avocado, lettuce, and sauce.",
       "tags": [
         "Popular",
@@ -1222,17 +1297,22 @@
             }
           ]
         }
+      ],
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "$7.50"
+        },
+        {
+          "branch": "mousaytbe",
+          "price": "$7.50"
+        }
       ]
     },
     {
       "protein": 34,
       "calories": 560,
-      "price": "$6.75",
       "name": "Tuna Melt",
-      "branches": [
-        "downtown",
-        "mousaytbe"
-      ],
       "desc": "Tuna, melted cheese, pickles, and toast.",
       "tags": [],
       "category": "Sandwiches",
@@ -1318,16 +1398,22 @@
             }
           ]
         }
+      ],
+      "branch_prices": [
+        {
+          "branch": "downtown",
+          "price": "$6.75"
+        },
+        {
+          "branch": "mousaytbe",
+          "price": "$6.75"
+        }
       ]
     },
     {
       "protein": 46,
       "calories": 690,
-      "price": "$9.00",
       "name": "Chicken Caesar Bowl",
-      "branches": [
-        "mousaytbe"
-      ],
       "desc": "Chicken, greens, parmesan, croutons, and Caesar dressing.",
       "tags": [
         "High protein"
@@ -1415,16 +1501,18 @@
             }
           ]
         }
+      ],
+      "branch_prices": [
+        {
+          "branch": "mousaytbe",
+          "price": "$9.00"
+        }
       ]
     },
     {
       "protein": 42,
       "calories": 620,
-      "price": "$8.50",
       "name": "Tuna Protein Bowl",
-      "branches": [
-        "mousaytbe"
-      ],
       "desc": "Tuna, egg, corn, greens, and house dressing.",
       "tags": [
         "High protein"
@@ -1512,16 +1600,18 @@
             }
           ]
         }
+      ],
+      "branch_prices": [
+        {
+          "branch": "mousaytbe",
+          "price": "$8.50"
+        }
       ]
     },
     {
       "protein": 31,
       "calories": 740,
-      "price": "$9.00",
       "name": "Halloumi Quinoa Bowl",
-      "branches": [
-        "mousaytbe"
-      ],
       "desc": "Halloumi, quinoa, avocado, tomato, and greens.",
       "tags": [],
       "category": "Powerbowls",
@@ -1607,16 +1697,18 @@
             }
           ]
         }
+      ],
+      "branch_prices": [
+        {
+          "branch": "mousaytbe",
+          "price": "$9.00"
+        }
       ]
     },
     {
       "protein": 44,
       "calories": 780,
-      "price": "$11.00",
       "name": "Salmon Avocado Bowl",
-      "branches": [
-        "mousaytbe"
-      ],
       "desc": "Salmon, avocado, rice, greens, and sesame sauce.",
       "tags": [
         "High protein"
@@ -1703,6 +1795,12 @@
               "protein_delta": 0
             }
           ]
+        }
+      ],
+      "branch_prices": [
+        {
+          "branch": "mousaytbe",
+          "price": "$11.00"
         }
       ]
     }
